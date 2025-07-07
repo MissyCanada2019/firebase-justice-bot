@@ -5,6 +5,7 @@ import './globals.css';
 import { AuthProvider } from '@/hooks/use-auth';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://justice-bot.com'),
   title: 'JusticeBot.AI - Your Partner in Canadian Law',
   description:
     'AI-powered legal analysis, document summaries, and argument generation based on Canadian law. Specializing in Family, Criminal, and LTB matters with a focus on the Charter of Rights and Freedoms.',

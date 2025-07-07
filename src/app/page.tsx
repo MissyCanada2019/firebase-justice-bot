@@ -45,7 +45,7 @@ export default function Home() {
         <div className="relative px-6 lg:px-8">
           <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
             <div className="text-center">
-              <Icons.mapleLeaf className="text-accent h-16 w-16 mx-auto mb-4" />
+              <Icons.justiceBotLogo className="h-16 w-16 mx-auto mb-4" />
               <h1 className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
                 JusticeBot.AI
               </h1>
