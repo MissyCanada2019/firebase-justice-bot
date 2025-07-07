@@ -1,0 +1,93 @@
+'use client';
+
+import {
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+  SidebarContent,
+  SidebarSeparator,
+} from '@/components/ui/sidebar';
+import { Icons } from '@/components/icons';
+import {
+  BookOpen,
+  Gavel,
+  Home,
+  Landmark,
+  LifeBuoy,
+  Scale,
+  ShieldCheck,
+  FileText,
+  CreditCard,
+} from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Button } from '../ui/button';
+
+const menuItems = [
+  { href: '/dashboard', label: 'Dashboard', icon: Home },
+  {
+    href: '/dashboard/charter-analysis',
+    label: 'Charter Analysis',
+    icon: Gavel,
+  },
+  { href: '/dashboard/family-law', label: 'Family Law', icon: ShieldCheck },
+  { href: '/dashboard/criminal-law', label: 'Criminal Law', icon: Scale },
+  { href: '/dashboard/ltb-law', label: 'LTB Law', icon: Landmark },
+  {
+    href: '/dashboard/litigation-law',
+    label: 'Litigation Law',
+    icon: BookOpen,
+  },
+  {
+    href: '/dashboard/submit-dispute',
+    label: 'Submit Dispute',
+    icon: FileText,
+  },
+  { href: '/dashboard/billing', label: 'Billing', icon: CreditCard },
+];
+
+export function SidebarNav() {
+  const pathname = usePathname();
+
+  return (
+    <>
+      <SidebarHeader>
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <Icons.mapleLeaf className="w-8 h-8 text-accent" />
+          <span className="font-headline text-lg font-bold text-sidebar-foreground">
+            JusticeBot.AI
+          </span>
+        </Link>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarMenu>
+          {menuItems.map((item) => (
+            <SidebarMenuItem key={item.href}>
+              <Link href={item.href} passHref legacyBehavior>
+                <SidebarMenuButton
+                  isActive={pathname === item.href}
+                  tooltip={item.label}
+                >
+                  <item.icon className="w-5 h-5" />
+                  <span>{item.label}</span>
+                </SidebarMenuButton>
+              </Link>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarContent>
+      <SidebarFooter>
+        <SidebarSeparator />
+        <div className="p-2 flex flex-col gap-2">
+            <div className="p-4 rounded-lg bg-sidebar-accent/20 text-center text-sm">
+                <p className="font-bold text-sidebar-foreground">Need Help?</p>
+                <p className="text-sidebar-foreground/80 mt-1">Contact support or visit our help center.</p>
+                <Button variant="link" size="sm" className="text-accent-foreground mt-2">Get Support</Button>
+            </div>
+        </div>
+      </SidebarFooter>
+    </>
+  );
+}
