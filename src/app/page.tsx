@@ -6,8 +6,20 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Icons } from '@/components/icons';
 import { ArrowRight, Gavel, Scale, ShieldCheck } from 'lucide-react';
 import SiteHeader from '@/components/site-header';
+import { useAuth } from '@/hooks/use-auth';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Home() {
+  const { user, loading, signInWithGoogle } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push('/dashboard');
+    }
+  }, [user, loading, router]);
+
   const features = [
     {
       icon: <Gavel className="h-8 w-8 text-primary" />,
@@ -41,10 +53,8 @@ export default function Home() {
                 Your partner in navigating the complexities of Canadian law. AI-powered insights for everyday people.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Button asChild size="lg">
-                  <Link href="/dashboard">
-                    Login with Google <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+                <Button onClick={signInWithGoogle} size="lg" disabled={loading || user !== null}>
+                  Login with Google <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button asChild variant="link" size="lg">
                   <Link href="/about">

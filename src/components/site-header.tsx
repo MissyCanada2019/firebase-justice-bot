@@ -1,9 +1,15 @@
+'use client';
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons';
 import { MainNav } from './main-nav';
+import { useAuth } from '@/hooks/use-auth';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function SiteHeader() {
+  const { user, loading } = useAuth();
+
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -17,9 +23,13 @@ export default function SiteHeader() {
             <MainNav />
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Button asChild>
-            <Link href="/dashboard">Login</Link>
-          </Button>
+          {loading ? (
+            <Skeleton className="h-10 w-24" />
+          ) : (
+            <Button asChild>
+              <Link href="/dashboard">{user ? 'Go to Dashboard' : 'Login'}</Link>
+            </Button>
+          )}
         </div>
       </nav>
     </header>
