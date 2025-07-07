@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Icons } from '@/components/icons';
 import { MainNav } from './main-nav';
 import { useAuth } from '@/hooks/use-auth';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -15,7 +14,6 @@ export default function SiteHeader() {
       <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-            <Icons.justiceBotLogo className="h-8 w-8" />
             <span className="font-headline text-xl font-bold text-foreground">JusticeBot.AI</span>
           </Link>
         </div>

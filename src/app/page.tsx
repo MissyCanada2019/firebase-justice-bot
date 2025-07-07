@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Icons } from '@/components/icons';
 import { ArrowRight, Gavel, Scale, ShieldCheck } from 'lucide-react';
 import SiteHeader from '@/components/site-header';
 import { useAuth } from '@/hooks/use-auth';
@@ -39,13 +38,12 @@ export default function Home() {
   ];
 
   return (
-    <div className="relative isolate min-h-screen">
+    <div className="relative isolate min-h-screen flex flex-col">
       <SiteHeader />
-      <main>
+      <main className="flex-grow">
         <div className="relative px-6 lg:px-8">
           <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
             <div className="text-center">
-              <Icons.justiceBotLogo className="h-16 w-16 mx-auto mb-4" />
               <h1 className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
                 JusticeBot.AI
               </h1>
@@ -100,6 +98,11 @@ export default function Home() {
 
       <footer className="bg-background/80 mt-auto py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-foreground/60">
+           <div className="flex justify-center gap-x-6 mb-4">
+              <Link href="/terms-of-use" className="hover:text-primary transition-colors">Terms of Use</Link>
+              <Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link href="/government-inquiries" className="hover:text-primary transition-colors">Government Inquiries</Link>
+            </div>
           <p>&copy; {new Date().getFullYear()} JusticeBot.AI. All Rights Reserved.</p>
           <p className="mt-2">Made with <span className="text-accent">❤</span> in Canada</p>
         </div>

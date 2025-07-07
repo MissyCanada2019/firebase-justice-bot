@@ -9,13 +9,11 @@ import {
   SidebarContent,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
-import { Icons } from '@/components/icons';
 import {
   BookOpen,
   Gavel,
   Home,
   Landmark,
-  LifeBuoy,
   Scale,
   ShieldCheck,
   FileText,
@@ -55,7 +53,6 @@ export function SidebarNav() {
     <>
       <SidebarHeader>
         <Link href="/dashboard" className="flex items-center gap-2">
-          <Icons.justiceBotLogo className="w-8 h-8" />
           <span className="font-headline text-lg font-bold text-sidebar-foreground">
             JusticeBot.AI
           </span>
