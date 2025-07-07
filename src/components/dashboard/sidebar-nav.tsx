@@ -22,6 +22,7 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '../ui/button';
+import { Icons } from '../icons';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: Home },
@@ -53,6 +54,7 @@ export function SidebarNav() {
     <>
       <SidebarHeader>
         <Link href="/dashboard" className="flex items-center gap-2">
+          <Icons.justiceBotLogo className="h-8 w-auto" />
           <span className="font-headline text-lg font-bold text-sidebar-foreground">
             JusticeBot.AI
           </span>

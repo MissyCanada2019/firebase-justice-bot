@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { MainNav } from './main-nav';
 import { useAuth } from '@/hooks/use-auth';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Icons } from './icons';
 
 export default function SiteHeader() {
   const { user, loading } = useAuth();
@@ -14,6 +15,7 @@ export default function SiteHeader() {
       <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+            <Icons.justiceBotLogo className="h-8 w-auto" />
             <span className="font-headline text-xl font-bold text-foreground">JusticeBot.AI</span>
           </Link>
         </div>
