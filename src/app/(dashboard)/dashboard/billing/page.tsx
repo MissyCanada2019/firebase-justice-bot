@@ -1,14 +1,70 @@
+'use client';
+
+import { useState } from 'react';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CreditCard, Mail } from 'lucide-react';
+import { CreditCard, Mail, CheckCircle, ArrowRight } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
 export default function BillingPage() {
+  const [paymentStatus, setPaymentStatus] = useState<'pending' | 'success'>('pending');
+  const { toast } = useToast();
+
+  const handleSimulatedPayment = () => {
+    // In a real app, this would be handled by a payment provider's callback.
+    // Here, we simulate a successful payment.
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('justiceBotPaymentStatus', 'paid');
+        setPaymentStatus('success');
+        toast({
+          title: 'Payment Confirmed!',
+          description: 'You have successfully unlocked all features.',
+        });
+      }
+    } catch (e) {
+      console.error('Failed to update payment status:', e);
+      toast({
+        title: 'Payment Error',
+        description: 'Could not update your payment status. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  if (paymentStatus === 'success') {
+    return (
+       <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
+            <Card className="w-full max-w-lg text-center">
+                <CardHeader>
+                    <div className="mx-auto bg-green-100 p-4 rounded-full w-fit mb-4">
+                       <CheckCircle className="h-12 w-12 text-green-600" />
+                    </div>
+                    <CardTitle className="font-headline text-3xl">Payment Successful!</CardTitle>
+                    <CardDescription>
+                       You now have full access to all of JusticeBot.AI's features, including PDF downloads.
+                    </CardDescription>
+                </CardHeader>
+                <CardFooter className="flex justify-center">
+                    <Button asChild size="lg">
+                        <Link href="/dashboard/generate-form">
+                            Return to Form Generator <ArrowRight className="ml-2 h-5 w-5" />
+                        </Link>
+                    </Button>
+                </CardFooter>
+            </Card>
+        </div>
+    )
+  }
+
   return (
     <div className="space-y-8">
       <div className="flex items-center gap-4">
@@ -16,7 +72,7 @@ export default function BillingPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight font-headline">Billing & Payments</h1>
           <p className="text-muted-foreground">
-            Securely process payments for your case analysis and services.
+            Securely process payments to unlock premium features like PDF downloads.
           </p>
         </div>
       </div>
@@ -34,9 +90,9 @@ export default function BillingPage() {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
-              Click the button below to be redirected to PayPal's secure payment page. You will be able to enter the payment amount there.
+              Click the button below to be redirected to a secure payment page.
             </p>
-            <Button className="w-full">Pay with PayPal</Button>
+            <Button className="w-full" onClick={handleSimulatedPayment}>Pay with PayPal</Button>
           </CardContent>
         </Card>
 
@@ -58,8 +114,9 @@ export default function BillingPage() {
               teresa@justice-bot.com
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-              Please include your case name or user ID in the e-Transfer message for reference.
+              Include your case name or user ID in the message. Then click below to confirm.
             </p>
+            <Button className="w-full mt-4" variant="outline" onClick={handleSimulatedPayment}>Confirm e-Transfer Sent</Button>
           </CardContent>
         </Card>
       </div>
@@ -70,7 +127,7 @@ export default function BillingPage() {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              After making a payment, please allow up to 24 hours for it to be reflected in your account. You will receive an email confirmation once your payment has been processed. If you have any questions or issues with billing, please contact support.
+              After making a payment, your premium features will be unlocked immediately. You will receive an email confirmation once your payment has been processed. If you have any questions or issues with billing, please contact support.
             </p>
           </CardContent>
         </Card>

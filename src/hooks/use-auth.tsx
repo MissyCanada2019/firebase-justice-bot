@@ -5,12 +5,11 @@ import { onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup, signOut,
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { useToast } from './use-toast';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  isFreeTier: boolean;
   signInWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -23,6 +22,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const { toast } = useToast();
 
+  // This setting simulates the "first 1000 users" free tier.
+  // In a production app, this would be determined by checking the total user count on a secure backend.
+  const isFreeTier = process.env.NEXT_PUBLIC_FREE_TIER_ENABLED === 'true';
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -32,24 +35,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signInWithGoogle = async () => {
-    const isFreeTierEnabled = process.env.NEXT_PUBLIC_FREE_TIER_ENABLED === 'true';
-
-    if (isFreeTierEnabled) {
-      // TODO: In a production environment, this check must be done on the server
-      // using the Firebase Admin SDK to securely get the total number of users.
-      // This client-side check is for demonstration purposes only.
-      const isLimitReached = false; // Placeholder for the real server-side check.
-      
-      if (isLimitReached) {
-        toast({
-          title: 'Registration Closed',
-          description: 'We have reached our limit for free sign-ups. Please check back later!',
-          variant: 'destructive',
-        });
-        return;
-      }
-    }
-
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
@@ -63,7 +48,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error: any) {
       console.error("Error signing in with Google", error);
       if (error.code === 'auth/auth-domain-config-required') {
-        // Force the user to the troubleshooting page to fix the issue.
         router.push('/troubleshooting');
       } else {
          toast({
@@ -90,7 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loading, isFreeTier, signInWithGoogle, logout }}>
       {!loading && children}
     </AuthContext.Provider>
   );
