@@ -1,5 +1,6 @@
 import SiteHeader from '@/components/site-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ClientDate } from '@/components/client-date';
 
 export default function PrivacyPolicyPage() {
   return (
@@ -10,7 +11,7 @@ export default function PrivacyPolicyPage() {
           <Card>
             <CardHeader>
               <CardTitle className="font-headline text-4xl">Privacy Policy</CardTitle>
-              <p className="text-muted-foreground pt-2">Last Updated: {new Date().toLocaleDateString()}</p>
+              <p className="text-muted-foreground pt-2">Last Updated: <ClientDate /></p>
             </CardHeader>
             <CardContent className="space-y-6 text-foreground/80">
               <div className="space-y-2">
