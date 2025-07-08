@@ -52,7 +52,7 @@ export default function Home() {
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Button onClick={signInWithGoogle} size="lg" disabled={loading || user !== null}>
-                  Login with Google <ArrowRight className="ml-2 h-5 w-5" />
+                  Get Started with Google <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button asChild variant="link" size="lg">
                   <Link href="/about">
