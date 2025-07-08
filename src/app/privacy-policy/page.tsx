@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
               <div className="space-y-2">
                 <h2 className="text-xl font-bold font-headline text-foreground">1. Introduction</h2>
                 <p>
-                  JusticeBot.AI ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services (the "Service").
+                  JusticeBot.AI ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services (the "Service"). Our goal is to comply with Canada's Personal Information Protection and Electronic Documents Act (PIPEDA).
                 </p>
               </div>
               <div className="space-y-2">
@@ -25,13 +25,13 @@ export default function PrivacyPolicyPage() {
                 <p>We may collect the following types of information:</p>
                 <ul className="list-disc pl-6 space-y-1">
                     <li>
-                        <strong>Personal Information:</strong> Information you provide when you register, such as your name, email address, and payment information. Your Firebase authentication UID may be stored.
+                        <strong>Personal Information:</strong> Information you provide when you register via Google, such as your name, email address, and Google account identifier. We do not store your Google password.
                     </li>
                      <li>
-                        <strong>Case Information:</strong> Details and documents you upload related to your legal dispute. This may include sensitive personal information. We treat this with the highest level of confidentiality.
+                        <strong>Case Information:</strong> Details and text from documents you provide for analysis. This may include sensitive personal information. We do not permanently store this data unless you explicitly save a case (a future feature). Analysis is performed in memory and the data is discarded.
                     </li>
                      <li>
-                        <strong>Usage Data:</strong> Information about how you interact with the Service, such as your IP address, browser type, and pages visited. This is collected automatically.
+                        <strong>Usage Data:</strong> We may collect information about how you interact with the Service, such as your IP address and browser type, to monitor for security threats and improve the Service.
                     </li>
                 </ul>
               </div>
@@ -41,28 +41,28 @@ export default function PrivacyPolicyPage() {
                  <ul className="list-disc pl-6 space-y-1">
                     <li>Provide, operate, and maintain the Service.</li>
                     <li>Process your payments and manage your account.</li>
-                    <li>Analyze your case information to provide AI-powered summaries, scores, and recommendations.</li>
+                    <li>Analyze your case information to provide AI-powered summaries, scores, and recommendations. Your data is sent to our AI service provider (Google) for this purpose. We do not permit them to use this data to train their models.</li>
                     <li>Improve the Service and develop new features.</li>
                     <li>Communicate with you, including sending you updates and service-related notifications.</li>
-                    <li>Comply with legal obligations and protect our rights.</li>
+                    <li>Comply with legal obligations and enforce our terms.</li>
                 </ul>
               </div>
               <div className="space-y-2">
                 <h2 className="text-xl font-bold font-headline text-foreground">4. Data Security</h2>
                 <p>
-                  We implement a variety of security measures to maintain the safety of your personal information. All communications with our AI models and internal services are encrypted. However, no method of transmission over the Internet or method of electronic storage is 100% secure.
+                  We implement a variety of security measures to maintain the safety of your personal information. Your account is secured by Google Authentication. All data transmitted between your browser, our servers, and our AI service providers is encrypted using Transport Layer Security (TLS). However, no method of transmission over the Internet is 100% secure.
                 </p>
               </div>
               <div className="space-y-2">
                 <h2 className="text-xl font-bold font-headline text-foreground">5. Data Retention</h2>
                 <p>
-                  We will retain your personal information and case data only for as long as is necessary for the purposes set out in this Privacy Policy, or as required by law. You can request the deletion of your account and associated data at any time.
+                  We will retain your personal account information as long as your account is active. Information provided for one-time analyses is not stored. You can request the deletion of your account and associated personal data at any time by contacting us.
                 </p>
               </div>
                <div className="space-y-2">
                 <h2 className="text-xl font-bold font-headline text-foreground">6. Third-Party Services</h2>
                 <p>
-                  We use third-party services like Google (for AI models and authentication) and payment processors (e.g., Stripe, PayPal). These services have their own privacy policies, and we encourage you to review them. We are not responsible for the privacy practices of third parties.
+                  We use third-party services like Google (for AI models and authentication) and may use payment processors (e.g., PayPal). These services have their own privacy policies, and we encourage you to review them. We are not responsible for the privacy practices of third parties.
                 </p>
               </div>
               <div className="space-y-2">
