@@ -20,11 +20,8 @@ import { AssessDisputeMeritOutput } from '@/ai/flows/assess-dispute-merit';
 import { FilePlus2, Loader2, AlertCircle, Download, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useAuth } from '@/hooks/use-auth';
 
 export default function GenerateFormPage() {
-  const { user } = useAuth(); // We'll need this to check payment status later
   const [assessment, setAssessment] = useState<AssessDisputeMeritOutput | null>(null);
   const [formContent, setFormContent] = useState<GenerateLegalFormOutput | null>(null);
   const [loading, setLoading] = useState(false);
@@ -78,9 +75,29 @@ export default function GenerateFormPage() {
     }
   }
 
-  // Placeholder for checking download permissions.
-  // In a real app, this would check user.role from a database.
-  const canDownload = false; 
+  const handleDownload = () => {
+    if (!formContent) return;
+
+    let textContent = `Suggested Form: ${formContent.suggestedForm}\n\n`;
+    textContent += "========================================\n\n";
+
+    formContent.formSections.forEach(section => {
+        textContent += `SECTION: ${section.sectionTitle}\n\n`;
+        textContent += `${section.sectionContent}\n\n`;
+        textContent += "========================================\n\n";
+    });
+
+    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    const safeFilename = formContent.suggestedForm.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    link.download = `${safeFilename}_content.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   if (!assessment && !loading) {
     return (
@@ -188,24 +205,10 @@ export default function GenerateFormPage() {
                     ))}
                 </CardContent>
                 <CardFooter className="flex-wrap gap-4">
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                {/* The button is wrapped in a span for the tooltip to work when disabled */}
-                                <span tabIndex={0}>
-                                    <Button disabled={!canDownload}>
-                                        <Download className="mr-2 h-4 w-4" />
-                                        Download as PDF
-                                    </Button>
-                                </span>
-                            </TooltipTrigger>
-                            {!canDownload && (
-                                <TooltipContent>
-                                    <p>A one-time payment or subscription is required to download forms.</p>
-                                </TooltipContent>
-                            )}
-                        </Tooltip>
-                    </TooltipProvider>
+                    <Button onClick={handleDownload}>
+                        <Download className="mr-2 h-4 w-4" />
+                        Download as Text File
+                    </Button>
                 </CardFooter>
             </Card>
         )}
