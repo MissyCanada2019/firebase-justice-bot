@@ -4,6 +4,7 @@ import { useState, useEffect, createContext, useContext, ReactNode } from 'react
 import { onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
+import { useToast } from './use-toast';
 
 interface AuthContextType {
   user: User | null;
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -28,13 +30,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signInWithGoogle = async () => {
+    const isFreeTierEnabled = process.env.NEXT_PUBLIC_FREE_TIER_ENABLED === 'true';
+
+    if (isFreeTierEnabled) {
+      // TODO: In a production environment, this check must be done on the server
+      // using the Firebase Admin SDK to securely get the total number of users.
+      // This client-side check is for demonstration purposes only.
+      const isLimitReached = false; // Placeholder for the real server-side check.
+      
+      if (isLimitReached) {
+        toast({
+          title: 'Registration Closed',
+          description: 'We have reached our limit for free sign-ups. Please check back later!',
+          variant: 'destructive',
+        });
+        return;
+      }
+    }
+
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
       router.push('/dashboard');
     } catch (error) {
       console.error("Error signing in with Google", error);
-      // You could show a toast message here
+       toast({
+          title: 'Sign-in Failed',
+          description: 'Could not sign in with Google. Please try again.',
+          variant: 'destructive',
+      });
     }
   };
 
@@ -44,7 +68,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       router.push('/');
     } catch (error) {
       console.error("Error signing out", error);
-      // You could show a toast message here
+      toast({
+          title: 'Sign-out Failed',
+          description: 'An error occurred while signing out. Please try again.',
+          variant: 'destructive',
+      });
     }
   };
 

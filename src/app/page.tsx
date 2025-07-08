@@ -60,6 +60,9 @@ export default function Home() {
                   </Link>
                 </Button>
               </div>
+              <p className="mt-6 text-sm text-muted-foreground">
+                Psst... the first 1,000 users get free access for life!
+              </p>
             </div>
           </div>
         </div>
