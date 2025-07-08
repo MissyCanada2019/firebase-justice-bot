@@ -29,7 +29,7 @@ const FormSectionSchema = z.object({
 });
 
 export const GenerateLegalFormOutputSchema = z.object({
-    suggestedForm: z.string().describe('The name of the most appropriate legal form based on the case classification and details (e.g., "T2: Application about Tenant Rights").'),
+    suggestedForm: z.string().describe('The name of the most appropriate legal form based on the case classification and details (e.g., "T2: Application about Tenant Rights", "Form 8A: Application (Divorce)").'),
     formSections: z.array(FormSectionSchema).describe('An array of auto-filled sections for the legal form.'),
 });
 export type GenerateLegalFormOutput = z.infer<typeof GenerateLegalFormOutputSchema>;
@@ -44,7 +44,7 @@ const prompt = ai.definePrompt({
   output: {schema: GenerateLegalFormOutputSchema},
   system: `You are an expert Canadian legal assistant AI. Your task is to act as a form-filler.
 Based on the user's case details, you must:
-1.  Identify the single most appropriate legal form (e.g., "T2: Application about Tenant Rights", "Form 1: Application - Human Rights Tribunal of Ontario"). Use the provided case classification and suggested avenues to determine the best form.
+1.  Identify the single most appropriate legal form (e.g., "T2: Application about Tenant Rights", "Form 8A: Application (Divorce)", "Form 1: Application - Human Rights Tribunal of Ontario"). Use the provided case classification and suggested avenues to determine the best form.
 2.  Take the user's detailed narrative ('disputeDetails') and break it down into structured, formal content suitable for filling out a legal form.
 3.  Organize this content into logical sections, such as 'General Information', 'Reasons for Application', and 'Remedies Requested'.
 4.  Write the content for each section clearly and concisely, as if you were filling out the official document on the user's behalf.

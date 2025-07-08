@@ -11,7 +11,7 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 export const FindCourtAndAidInputSchema = z.object({
-  postalCode: z.string().describe('The user\'s postal code in Canada.'),
+  postalCode: z.string().describe("The user's postal code in Canada."),
   caseClassification: z
     .string()
     .describe('The classification of the legal issue (e.g., "Landlord/Tenant Dispute", "Family Law - Custody").'),

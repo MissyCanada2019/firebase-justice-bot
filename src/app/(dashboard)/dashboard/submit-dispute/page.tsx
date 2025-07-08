@@ -107,7 +107,8 @@ export default function SubmitDisputePage() {
                 title: 'Analysis Complete!',
                 description: 'Your case assessment is ready below.',
             });
-            form.reset();
+            // We don't reset the form so the user can see what they entered
+            // form.reset();
         } catch (error) {
             console.error(error);
             toast({
