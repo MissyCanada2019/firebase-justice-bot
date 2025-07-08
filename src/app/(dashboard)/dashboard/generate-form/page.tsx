@@ -17,7 +17,7 @@ import {
   GenerateLegalFormOutput,
 } from '@/ai/flows/generate-legal-form';
 import { AssessDisputeMeritOutput } from '@/ai/flows/assess-dispute-merit';
-import { FilePlus2, Loader2, AlertCircle, Download, Mail, FileText } from 'lucide-react';
+import { FilePlus2, Loader2, AlertCircle, Download, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -206,10 +206,6 @@ export default function GenerateFormPage() {
                             )}
                         </Tooltip>
                     </TooltipProvider>
-                     <Button variant="outline" disabled>
-                        <Mail className="mr-2 h-4 w-4" />
-                        Request Mail-out (Coming Soon)
-                    </Button>
                 </CardFooter>
             </Card>
         )}

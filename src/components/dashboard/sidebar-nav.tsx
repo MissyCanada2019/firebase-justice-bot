@@ -21,6 +21,8 @@ import {
   CalendarClock,
   FilePlus2,
   FileSearch,
+  MapPin,
+  Library,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -43,6 +45,16 @@ const menuItems = [
     href: '/dashboard/generate-form',
     label: 'Generate Form',
     icon: FilePlus2,
+  },
+  {
+    href: '/dashboard/court-locator',
+    label: 'Court Locator',
+    icon: MapPin,
+  },
+  {
+    href: '/dashboard/precedent-finder',
+    label: 'Precedent Finder',
+    icon: Library,
   },
   {
     href: '/dashboard/charter-analysis',

@@ -16,6 +16,8 @@ import {
   CalendarClock,
   FilePlus2,
   FileSearch,
+  MapPin,
+  Library,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -38,6 +40,18 @@ const features = [
     description: 'Auto-fill legal forms based on your case details.',
     icon: FilePlus2,
     href: '/dashboard/generate-form',
+  },
+  {
+    title: 'Court & Aid Locator',
+    description: 'Find the right courthouse and legal aid clinics near you.',
+    icon: MapPin,
+    href: '/dashboard/court-locator',
+  },
+  {
+    title: 'Precedent Finder',
+    description: 'See how similar cases have been decided in the past.',
+    icon: Library,
+    href: '/dashboard/precedent-finder',
   },
   {
     title: 'Charter Analysis',
