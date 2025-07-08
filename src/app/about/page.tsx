@@ -38,17 +38,17 @@ export default function AboutPage() {
             </div>
             <div className="space-y-8">
               <Image
-                src="https://placehold.co/600x400.png"
+                src="https://placehold.co/600x400.png?text=The+right+to+life,+liberty%0Aand+security+of+the+person.%0A%0A- Charter+of+Rights,+s.7"
                 data-ai-hint="woman working laptop"
-                alt="Teresa working on her legal case"
+                alt="Teresa working on her legal case, with a quote from the Charter of Rights and Freedoms."
                 className="w-full rounded-2xl object-cover shadow-xl"
                 width={600}
                 height={400}
               />
                <Image
-                src="https://placehold.co/600x400.png"
+                src="https://placehold.co/600x400.png?text=Equal+protection+and%0Aequal+benefit+of+the+law.%0A%0A- Charter+of+Rights,+s.15"
                 data-ai-hint="happy family outdoors"
-                alt="Teresa with her family"
+                alt="Teresa with her family, with a quote from the Charter of Rights and Freedoms."
                 className="w-full rounded-2xl object-cover shadow-xl"
                 width={600}
                 height={400}
