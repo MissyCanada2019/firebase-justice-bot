@@ -5,6 +5,8 @@ import { onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup, signOut,
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { useToast } from './use-toast';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 interface AuthContextType {
   user: User | null;
@@ -58,13 +60,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         router.push('/dashboard');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing in with Google", error);
-       toast({
-          title: 'Sign-in Failed',
-          description: 'Could not sign in with Google. Please try again.',
+      if (error.code === 'auth/auth-domain-config-required') {
+        toast({
+          title: 'Configuration Required',
+          description: (
+            <span>
+              Your app's domain isn't authorized. This is a final security step.
+              <Button asChild variant="link" className="p-0 ml-1 h-auto font-bold text-destructive-foreground underline">
+                <Link href="/troubleshooting">Click here for the fix.</Link>
+              </Button>
+            </span>
+          ),
           variant: 'destructive',
-      });
+          duration: Infinity, // Keep the toast visible
+        });
+      } else {
+         toast({
+            title: 'Sign-in Failed',
+            description: `An unexpected error occurred: ${error.message || 'Please try again.'}`,
+            variant: 'destructive',
+        });
+      }
     }
   };
 
