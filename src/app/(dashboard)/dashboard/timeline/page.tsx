@@ -149,38 +149,42 @@ export default function TimelinePage() {
         )}
 
         {timeline && (
-            <div className="relative pl-6 before:absolute before:inset-y-0 before:left-[1.2rem] before:w-0.5 before:bg-border">
+            <div className="space-y-8">
                 {timeline.timeline.map((step, index) => (
-                     <div key={index} className="relative mb-8">
-                         <div className="absolute -left-1.5 top-1.5 h-12 w-12 rounded-full bg-primary flex items-center justify-center ring-8 ring-background">
-                            <span className="text-xl font-bold text-primary-foreground">{index + 1}</span>
-                         </div>
-                         <Card className="ml-12">
-                            <CardHeader>
-                                <CardTitle className="font-headline text-xl">{step.title}</CardTitle>
-                                <div className="flex items-center text-sm text-muted-foreground gap-2 pt-1">
-                                    <Clock className="h-4 w-4" />
-                                    <span>Estimated Duration: {step.expectedDuration}</span>
-                                </div>
-                            </CardHeader>
-                            <CardContent className="space-y-4">
-                                <p className="text-foreground/90 whitespace-pre-wrap">{step.description}</p>
-                                {step.forms && step.forms.length > 0 && (
-                                    <div>
-                                        <h4 className="font-semibold flex items-center gap-2 mb-2 text-base">
-                                            <FileText className="h-4 w-4" />
-                                            Relevant Forms
-                                        </h4>
-                                        <div className="flex flex-wrap gap-2">
-                                            {step.forms.map((form, formIndex) => (
-                                                <Badge key={formIndex} variant="secondary">{form}</Badge>
-                                            ))}
-                                        </div>
+                     <div key={index} className="flex gap-x-4 md:gap-x-8">
+                        {/* Icon/Number Column */}
+                        <div className="relative flex-shrink-0">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground ring-8 ring-background">
+                                <span className="text-xl font-bold">{index + 1}</span>
+                            </div>
+                            {index < timeline.timeline.length - 1 && (
+                                <div className="absolute left-1/2 top-12 h-full w-0.5 -translate-x-1/2 bg-border" />
+                            )}
+                        </div>
+
+                        {/* Content Column */}
+                        <div className="flex-grow pt-1 pb-8">
+                            <h3 className="text-2xl font-bold font-headline">{step.title}</h3>
+                             <div className="flex items-center text-sm text-muted-foreground gap-2 mt-1 mb-4">
+                                <Clock className="h-4 w-4" />
+                                <span>Estimated Duration: {step.expectedDuration}</span>
+                            </div>
+                            <p className="text-foreground/90 whitespace-pre-wrap mb-6">{step.description}</p>
+                            {step.forms && step.forms.length > 0 && (
+                                <div className="bg-muted/50 p-4 rounded-lg">
+                                    <h4 className="font-semibold flex items-center gap-2 mb-2 text-base">
+                                        <FileText className="h-5 w-5" />
+                                        Relevant Forms
+                                    </h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {step.forms.map((form, formIndex) => (
+                                            <Badge key={formIndex} variant="secondary" className="text-sm">{form}</Badge>
+                                        ))}
                                     </div>
-                                )}
-                            </CardContent>
-                         </Card>
-                     </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 ))}
             </div>
         )}
