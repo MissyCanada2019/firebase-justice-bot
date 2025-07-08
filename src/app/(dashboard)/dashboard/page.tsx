@@ -15,6 +15,7 @@ import {
   ArrowRight,
   CalendarClock,
   FilePlus2,
+  FileSearch,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -43,6 +44,12 @@ const features = [
     description: 'Analyze documents against the Charter of Rights and Freedoms.',
     icon: Gavel,
     href: '/dashboard/charter-analysis',
+  },
+  {
+    title: 'Document Explainer',
+    description: 'Get plain-language explanations for any legal document or form.',
+    icon: FileSearch,
+    href: '/dashboard/document-explainer',
   },
   {
     title: 'Family Law',

@@ -20,6 +20,7 @@ import {
   CreditCard,
   CalendarClock,
   FilePlus2,
+  FileSearch,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -47,6 +48,11 @@ const menuItems = [
     href: '/dashboard/charter-analysis',
     label: 'Charter Analysis',
     icon: Gavel,
+  },
+  {
+    href: '/dashboard/document-explainer',
+    label: 'Document Explainer',
+    icon: FileSearch,
   },
   { href: '/dashboard/family-law', label: 'Family Law', icon: ShieldCheck },
   { href: '/dashboard/criminal-law', label: 'Criminal Law', icon: Scale },
