@@ -74,7 +74,7 @@ const menuItems = [
     label: 'Litigation Law',
     icon: BookOpen,
   },
-  { href: '/dashboard/billing', label: 'Billing', icon: CreditCard },
+  { href: '/dashboard/billing', label: 'Pricing & Plans', icon: CreditCard },
 ];
 
 export function SidebarNav() {

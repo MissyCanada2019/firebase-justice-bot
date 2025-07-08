@@ -28,11 +28,16 @@ export default function GenerateFormPage() {
   const [formContent, setFormContent] = useState<GenerateLegalFormOutput | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [hasPaid, setHasPaid] = useState(false);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const { toast } = useToast();
   const { isFreeTier } = useAuth();
 
   useEffect(() => {
+    const updateSubscriptionStatus = () => {
+       const subscription = localStorage.getItem('justiceBotSubscription');
+       setHasActiveSubscription(!!subscription);
+    }
+    
     try {
       if (typeof window !== 'undefined') {
         const storedAssessment = localStorage.getItem('caseAssessment');
@@ -40,11 +45,7 @@ export default function GenerateFormPage() {
           const parsedAssessment = JSON.parse(storedAssessment) as AssessDisputeMeritOutput;
           setAssessment(parsedAssessment);
         }
-        
-        const paymentStatus = localStorage.getItem('justiceBotPaymentStatus');
-        if (paymentStatus === 'paid') {
-          setHasPaid(true);
-        }
+        updateSubscriptionStatus();
       }
     } catch (e) {
         console.error("Error reading from local storage", e);
@@ -52,9 +53,9 @@ export default function GenerateFormPage() {
     }
 
     // Listen for storage changes to update payment status across tabs
-    const handleStorageChange = () => {
-      if (localStorage.getItem('justiceBotPaymentStatus') === 'paid') {
-        setHasPaid(true);
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'justiceBotSubscription') {
+        updateSubscriptionStatus();
       }
     };
     window.addEventListener('storage', handleStorageChange);
@@ -169,7 +170,7 @@ export default function GenerateFormPage() {
     );
   }
 
-  const canDownload = isFreeTier || hasPaid;
+  const canDownload = isFreeTier || hasActiveSubscription;
 
   return (
     <div className="space-y-8">
@@ -271,18 +272,22 @@ export default function GenerateFormPage() {
                         <Button asChild>
                             <Link href="/dashboard/billing">
                                 <Lock className="mr-2 h-4 w-4" />
-                                Unlock PDF Download
+                                Choose a Plan to Download
                             </Link>
                         </Button>
                     )}
-                    {!isFreeTier && !hasPaid && (
+                    
+                    {isFreeTier ? (
                         <p className="text-sm text-muted-foreground">
-                            A one-time payment is required to download the document as a PDF.
+                            Your free lifetime access includes unlimited PDF downloads.
                         </p>
-                    )}
-                     {isFreeTier && (
+                    ) : hasActiveSubscription ? (
+                         <p className="text-sm text-muted-foreground">
+                            Your active plan includes unlimited PDF downloads.
+                        </p>
+                    ) : (
                         <p className="text-sm text-muted-foreground">
-                            As an early user, you have free access to PDF downloads.
+                            A subscription or single document purchase is required to download.
                         </p>
                     )}
                 </CardFooter>
