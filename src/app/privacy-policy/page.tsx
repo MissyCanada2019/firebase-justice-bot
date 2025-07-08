@@ -28,7 +28,7 @@ export default function PrivacyPolicyPage() {
                         <strong>Personal Information:</strong> Information you provide when you register via Google, such as your name, email address, and Google account identifier. We do not store your Google password.
                     </li>
                      <li>
-                        <strong>Case Information:</strong> Details and text from documents you provide for analysis. This may include sensitive personal information. We do not permanently store this data unless you explicitly save a case (a future feature). Analysis is performed in memory and the data is discarded.
+                        <strong>Case Information:</strong> Details and text from documents you provide for analysis. By submitting this information, you consent to it being stored and associated with your account to enable core application features like generating timelines, finding precedents, and maintaining a case history for your convenience.
                     </li>
                      <li>
                         <strong>Usage Data:</strong> We may collect information about how you interact with the Service, such as your IP address and browser type, to monitor for security threats and improve the Service.

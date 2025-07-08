@@ -30,6 +30,7 @@ import { assessDisputeMerit, AssessDisputeMeritOutput } from '@/ai/flows/assess-
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const formSchema = z.object({
   caseName: z.string().min(2, {
@@ -39,6 +40,9 @@ const formSchema = z.object({
     message: 'Please provide at least 50 characters of detail.',
   }),
   evidence: z.custom<FileList>().optional(),
+  consent: z.literal(true, {
+    errorMap: () => ({ message: "You must accept the terms to proceed." }),
+  }),
 });
 
 export default function SubmitDisputePage() {
@@ -50,6 +54,7 @@ export default function SubmitDisputePage() {
         defaultValues: {
             caseName: '',
             disputeDetails: '',
+            consent: false,
         },
     });
 
@@ -209,6 +214,30 @@ export default function SubmitDisputePage() {
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
+                                )}
+                            />
+                             <FormField
+                                control={form.control}
+                                name="consent"
+                                render={({ field }) => (
+                                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                            disabled={loading}
+                                        />
+                                    </FormControl>
+                                    <div className="space-y-1 leading-none">
+                                    <FormLabel>
+                                        Acknowledge and Consent
+                                    </FormLabel>
+                                    <FormDescription>
+                                        I have read and agree to the <Link href="/terms-of-use" target="_blank" className="text-primary hover:underline">Terms of Use</Link> and <Link href="/privacy-policy" target="_blank" className="text-primary hover:underline">Privacy Policy</Link>. I consent to JusticeBot.AI processing and storing the information I provide to analyze my case and enable app features.
+                                    </FormDescription>
+                                     <FormMessage />
+                                    </div>
+                                </FormItem>
                                 )}
                             />
                         </CardContent>

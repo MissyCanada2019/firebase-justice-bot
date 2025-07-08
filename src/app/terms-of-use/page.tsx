@@ -40,6 +40,9 @@ export default function TermsOfUsePage() {
                 <p>
                   You are responsible for the accuracy of the information you provide to the Service. You agree not to use the Service for any unlawful purpose. You are solely responsible for all decisions and actions taken based on the information provided by the Service.
                 </p>
+                <p>
+                  By submitting information or documents ("User Content") to the Service, you grant JusticeBot.AI a license to use, process, store, and display your User Content solely for the purpose of providing and improving the Service for you. You affirm that you have the legal right to provide any User Content you submit.
+                </p>
               </div>
               <div className="space-y-2">
                 <h2 className="text-xl font-bold font-headline text-foreground">5. Limitation of Liability</h2>
