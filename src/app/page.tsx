@@ -106,6 +106,7 @@ export default function Home() {
               <Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
               <Link href="/government-inquiries" className="hover:text-primary transition-colors">Government Inquiries</Link>
               <Link href="/media-inquiries" className="hover:text-primary transition-colors">Media Inquiries</Link>
+              <Link href="/troubleshooting" className="hover:text-primary transition-colors">Troubleshooting</Link>
             </div>
           <p>&copy; {new Date().getFullYear()} JusticeBot.AI. All Rights Reserved.</p>
           <p className="mt-2">Made with <span className="text-accent">❤</span> in Canada</p>
