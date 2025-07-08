@@ -63,19 +63,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error: any) {
       console.error("Error signing in with Google", error);
       if (error.code === 'auth/auth-domain-config-required') {
-        toast({
-          title: 'Configuration Required',
-          description: (
-            <span>
-              Your app's domain isn't authorized. This is a final security step.
-              <Button asChild variant="link" className="p-0 ml-1 h-auto font-bold text-destructive-foreground underline">
-                <Link href="/troubleshooting">Click here for the fix.</Link>
-              </Button>
-            </span>
-          ),
-          variant: 'destructive',
-          duration: Infinity, // Keep the toast visible
-        });
+        // Force the user to the troubleshooting page to fix the issue.
+        router.push('/troubleshooting');
       } else {
          toast({
             title: 'Sign-in Failed',
