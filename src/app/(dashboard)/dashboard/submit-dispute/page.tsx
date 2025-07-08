@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -22,12 +23,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { FileText, Loader2, UploadCloud, BarChart, FileSignature, Milestone } from 'lucide-react';
+import { FileText, Loader2, UploadCloud, BarChart, FileSignature, Milestone, CalendarClock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { assessDisputeMerit, AssessDisputeMeritOutput } from '@/ai/flows/assess-dispute-merit';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
+import Link from 'next/link';
 
 const formSchema = z.object({
   caseName: z.string().min(2, {
@@ -90,6 +92,12 @@ export default function SubmitDisputePage() {
             });
 
             setResult(output);
+            
+            // Store result in local storage for other pages to use
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('caseAssessment', JSON.stringify(output));
+            }
+
             toast({
                 title: 'Analysis Complete!',
                 description: 'Your case assessment is ready below.',
@@ -292,6 +300,14 @@ export default function SubmitDisputePage() {
                             </CardContent>
                         </Card>
                     </CardContent>
+                    <CardFooter>
+                        <Button asChild variant="outline">
+                            <Link href="/dashboard/timeline">
+                                <CalendarClock className="mr-2 h-4 w-4" />
+                                View Your Legal Timeline
+                            </Link>
+                        </Button>
+                    </CardFooter>
                 </Card>
             )}
         </div>

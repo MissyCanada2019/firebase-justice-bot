@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   FileText,
   CreditCard,
+  CalendarClock,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -26,6 +27,16 @@ import { Icons } from '../icons';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: Home },
+  {
+    href: '/dashboard/submit-dispute',
+    label: 'Submit Dispute',
+    icon: FileText,
+  },
+  {
+    href: '/dashboard/timeline',
+    label: 'Legal Timeline',
+    icon: CalendarClock,
+  },
   {
     href: '/dashboard/charter-analysis',
     label: 'Charter Analysis',
@@ -38,11 +49,6 @@ const menuItems = [
     href: '/dashboard/litigation-law',
     label: 'Litigation Law',
     icon: BookOpen,
-  },
-  {
-    href: '/dashboard/submit-dispute',
-    label: 'Submit Dispute',
-    icon: FileText,
   },
   { href: '/dashboard/billing', label: 'Billing', icon: CreditCard },
 ];

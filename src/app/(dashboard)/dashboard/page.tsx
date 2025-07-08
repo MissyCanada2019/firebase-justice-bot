@@ -13,11 +13,24 @@ import {
   ShieldCheck,
   FileText,
   ArrowRight,
+  CalendarClock,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 const features = [
+  {
+    title: 'Submit a Dispute',
+    description: 'Upload your case documents and evidence for analysis.',
+    icon: FileText,
+    href: '/dashboard/submit-dispute',
+  },
+  {
+    title: 'Legal Timeline',
+    description: 'Get a step-by-step timeline for your legal process.',
+    icon: CalendarClock,
+    href: '/dashboard/timeline',
+  },
   {
     title: 'Charter Analysis',
     description: 'Analyze documents against the Charter of Rights and Freedoms.',
@@ -47,12 +60,6 @@ const features = [
     description: 'Explore litigation procedures and generate arguments.',
     icon: BookOpen,
     href: '/dashboard/litigation-law',
-  },
-  {
-    title: 'Submit a Dispute',
-    description: 'Upload your case documents and evidence for analysis.',
-    icon: FileText,
-    href: '/dashboard/submit-dispute',
   },
 ];
 
