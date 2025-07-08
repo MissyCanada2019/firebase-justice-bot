@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { FileText, Loader2, UploadCloud, BarChart, FileSignature, Milestone, CalendarClock } from 'lucide-react';
+import { FileText, Loader2, UploadCloud, BarChart, FileSignature, Milestone, CalendarClock, FilePlus2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { assessDisputeMerit, AssessDisputeMeritOutput } from '@/ai/flows/assess-dispute-merit';
@@ -300,11 +300,17 @@ export default function SubmitDisputePage() {
                             </CardContent>
                         </Card>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="flex-wrap gap-2">
                         <Button asChild variant="outline">
                             <Link href="/dashboard/timeline">
                                 <CalendarClock className="mr-2 h-4 w-4" />
                                 View Your Legal Timeline
+                            </Link>
+                        </Button>
+                        <Button asChild>
+                            <Link href="/dashboard/generate-form">
+                                <FilePlus2 className="mr-2 h-4 w-4" />
+                                Generate Legal Form
                             </Link>
                         </Button>
                     </CardFooter>

@@ -7,3 +7,4 @@ import '@/ai/flows/summarize-criminal-law.ts';
 import '@/ai/flows/summarize-ltb-law.ts';
 import '@/ai/flows/assess-dispute-merit.ts';
 import '@/ai/flows/generate-legal-timeline.ts';
+import '@/ai/flows/generate-legal-form.ts';

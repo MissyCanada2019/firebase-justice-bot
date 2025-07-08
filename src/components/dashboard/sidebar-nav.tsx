@@ -19,6 +19,7 @@ import {
   FileText,
   CreditCard,
   CalendarClock,
+  FilePlus2,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -36,6 +37,11 @@ const menuItems = [
     href: '/dashboard/timeline',
     label: 'Legal Timeline',
     icon: CalendarClock,
+  },
+  {
+    href: '/dashboard/generate-form',
+    label: 'Generate Form',
+    icon: FilePlus2,
   },
   {
     href: '/dashboard/charter-analysis',

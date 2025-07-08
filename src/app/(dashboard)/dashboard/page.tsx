@@ -14,6 +14,7 @@ import {
   FileText,
   ArrowRight,
   CalendarClock,
+  FilePlus2,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -30,6 +31,12 @@ const features = [
     description: 'Get a step-by-step timeline for your legal process.',
     icon: CalendarClock,
     href: '/dashboard/timeline',
+  },
+  {
+    title: 'Generate Legal Form',
+    description: 'Auto-fill legal forms based on your case details.',
+    icon: FilePlus2,
+    href: '/dashboard/generate-form',
   },
   {
     title: 'Charter Analysis',
