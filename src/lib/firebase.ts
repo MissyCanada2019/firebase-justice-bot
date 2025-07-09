@@ -1,5 +1,4 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
-import { getAnalytics, isSupported } from 'firebase/analytics';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -17,14 +16,7 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 
-// Conditionally initialize Analytics only on the client side
-if (typeof window !== 'undefined') {
-    isSupported().then(supported => {
-        if (supported) {
-            getAnalytics(app);
-        }
-    });
-}
-
+// Analytics initialization has been temporarily removed to ensure stable deployment.
+// It can be re-enabled later if needed, but requires careful client-side handling.
 
 export { app, auth };
