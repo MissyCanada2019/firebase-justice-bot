@@ -46,7 +46,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         router.push('/dashboard');
       }
     } catch (error: any) {
+      if (error.code === 'auth/cancelled-popup-request') {
+        // User cancelled the popup, so we do nothing. This is not an error.
+        console.log('Sign-in popup closed by user.');
+        return;
+      }
+      
       console.error("Error signing in with Google", error);
+
       if (error.code === 'auth/auth-domain-config-required') {
         router.push('/troubleshooting');
       } else {
