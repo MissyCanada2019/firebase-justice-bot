@@ -38,7 +38,7 @@ const verifyRecaptchaFlow = ai.defineFlow(
   },
   async ({ token, expectedAction }) => {
     try {
-        const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+        const projectId = 'justicebotai'; // Use the correct project ID directly
         const siteKey = "6LdDBn4rAAAAADuEa2UqVQRkdrHRD-25aqWhWaYj";
 
         if (!projectId) {
