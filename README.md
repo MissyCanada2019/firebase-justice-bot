@@ -2,16 +2,21 @@
 
 This is your project for JusticeBot.AI, built with Next.js and ready for deployment on Firebase.
 
-## Local Development Setup
+## Local Development & Deployment
 
-To run this project on your local machine, follow these steps.
+To run and deploy this project from your local machine, follow these steps.
 
 ### Prerequisites
 
-*   [Node.js](https://nodejs.org/) (version 20 or later recommended)
-*   [Firebase CLI](https://firebase.google.com/docs/cli#install-cli-npm)
+*   You have an account with [Firebase](https://firebase.google.com/).
+*   [Node.js](https://nodejs.org/) (version 20 or later recommended).
+*   [Firebase CLI](https://firebase.google.com/docs/cli#install-cli-npm) installed on your machine.
 
-### 1. Install Dependencies
+### Step 1: Get the Project Files
+
+Create a new directory on your local machine and copy all the project files from Firebase Studio into it.
+
+### Step 2: Install Dependencies
 
 Once you have the project files on your local machine, navigate to the project directory in your terminal and install the necessary dependencies.
 
@@ -19,9 +24,9 @@ Once you have the project files on your local machine, navigate to the project d
 npm install
 ```
 
-### 2. Set Up Environment Variables
+### Step 3: Set Up Environment Variables
 
-Your project requires Firebase configuration to run. Create a new file named `.env.local` in the root of your project directory and add the following lines.
+Your project requires Firebase configuration to run locally. Create a new file named `.env.local` in the root of your project directory and add the following lines.
 
 These values can be found in your `apphosting.yaml` file.
 
@@ -34,7 +39,7 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 ```
 
-### 3. Run the Development Server
+### Step 4: Run the Local Development Server
 
 Start the Next.js development server to see your application running locally.
 
@@ -44,29 +49,32 @@ npm run dev
 
 Your app should now be running at `http://localhost:9002`.
 
-## Deploying from Your Local Machine
+### Step 5: Initialize Firebase in Your Project
 
-You can deploy your application directly from your local machine using the Firebase CLI.
+This is a crucial step to connect your local project folder to your Firebase project.
 
-### 1. Login to Firebase
+1.  **Log in to Firebase:**
+    ```bash
+    firebase login
+    ```
 
-If you haven't already, log in to your Google account through the Firebase CLI.
+2.  **Initialize Firebase:**
+    Run the following command from your project's root directory:
+    ```bash
+    firebase init
+    ```
 
-```bash
-firebase login
-```
+3.  **Follow the prompts:**
+    *   When asked "Which Firebase features do you want to set up?", use the arrow keys to navigate to **App Hosting** and press the spacebar to select it, then press Enter.
+    *   When asked to select a project, choose **Use an existing project** and select `justicebotai` from the list.
+    *   When asked for your backend ID, you can find this in the Firebase Console under App Hosting. It will likely be named something like `justicebotai`.
+    *   It will ask about deploying with `npm run build`. You can accept the default.
 
-### 2. Select Your Firebase Project
+This will create a `.firebaserc` file in your project, officially linking it to Firebase.
 
-Set the CLI to use your Firebase project. Your project ID is `justicebotai`.
+### Step 6: Deploy to App Hosting
 
-```bash
-firebase use justicebotai
-```
-
-### 3. Deploy to App Hosting
-
-Deploy your app to Firebase App Hosting with the following command.
+Now that your project is initialized, you can deploy it directly from your local machine.
 
 ```bash
 firebase apphosting:deploy
