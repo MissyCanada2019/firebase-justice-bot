@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       console.error("Error signing in with Google", error);
 
-      if (error.code === 'auth/auth-domain-config-required') {
+      if (error.code === 'auth/unauthorized-domain') {
         router.push('/troubleshooting');
       } else {
          toast({
