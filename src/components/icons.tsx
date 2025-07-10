@@ -5,15 +5,22 @@ export const Icons = {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="currentColor"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       {...props}
     >
-      <path d="M12 1a2 2 0 0 0-2 2v2H8a2 2 0 1 0 0 4h1.59a6.5 6.5 0 0 0 12.82 0H24a2 2 0 1 0 0-4h-2V3a2 2 0 0 0-2-2h-8zm-2 9a4.5 4.5 0 0 1 8.95 0H10zM4.75 16.5a.75.75 0 0 0-1.5 0v3a.75.75 0 0 0 1.5 0v-3zM20.75 16.5a.75.75 0 0 0-1.5 0v3a.75.75 0 0 0 1.5 0v-3z" />
-      <path d="M12 11c-2.48 0-4.5 2.02-4.5 4.5V23h9v-7.5c0-2.48-2.02-4.5-4.5-4.5zm-2.5 5.5a.5.5 0 0 1 1 0v3a.5.5 0 0 1-1 0v-3zm2 0a.5.5 0 0 1 1 0v3a.5.5 0 0 1-1 0v-3zm2 0a.5.5 0 0 1 1 0v3a.5.5 0 0 1-1 0v-3z" />
-      <path d="M7 13.25a.75.75 0 0 0-1.5 0v1.5a4 4 0 0 0 8 0v-1.5a.75.75 0 0 0-1.5 0v1.5a2.5 2.5 0 0 1-5 0v-1.5z" />
-      <path d="M17 13.25a.75.75 0 0 0-1.5 0v1.5a4 4 0 0 0 8 0v-1.5a.75.75 0 0 0-1.5 0v1.5a2.5 2.5 0 0 1-5 0v-1.5z" />
-      <circle cx="4" cy="9" r="2" />
-      <circle cx="20" cy="9" r="2" />
+      <path d="M12 21.4V16.5" />
+      <path d="M4.75 16.5h14.5" />
+      <path d="M4 12.5h1" />
+      <path d="M19 12.5h1" />
+      <path d="M6 12.5c0-3.87 3.13-7 7-7" />
+      <path d="M18 12.5c0-3.87-3.13-7-7-7" />
+      <path d="M11.3 21.4a.4.4 0 0 1-.6 0l-1-1.2a.4.4 0 0 0-.6 0l-1 1.2a.4.4 0 0 1-.6 0l-1-1.2a.4.4 0 0 0-.6 0l-1 1.2a.4.4 0 0 1-.6 0l-1-1.2a.4.4 0 0 0-.6 0L1 21.4" />
+      <path d="m5 13 4-4" />
+      <path d="m19 13-4-4" />
     </svg>
   ),
   mapleLeaf: (props: SVGProps<SVGSVGElement>) => (
