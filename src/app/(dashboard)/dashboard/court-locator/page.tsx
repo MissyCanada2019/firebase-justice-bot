@@ -29,6 +29,8 @@ import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useAuth } from '@/hooks/use-auth';
+import { getLatestCaseAssessment } from '@/lib/firestoreService';
 
 const formSchema = z.object({
   postalCode: z.string().regex(/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/, {
@@ -40,7 +42,9 @@ export default function CourtLocatorPage() {
   const [assessment, setAssessment] = useState<AssessDisputeMeritOutput | null>(null);
   const [result, setResult] = useState<FindCourtAndAidOutput | null>(null);
   const [loading, setLoading] = useState(false);
+  const [loadingInitialData, setLoadingInitialData] = useState(true);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,22 +52,28 @@ export default function CourtLocatorPage() {
   });
 
   useEffect(() => {
-    try {
-      if (typeof window !== 'undefined') {
-        const storedAssessment = localStorage.getItem('caseAssessment');
-        if (storedAssessment) {
-          setAssessment(JSON.parse(storedAssessment));
-        }
-      }
-    } catch (e) {
-      console.error('Error reading from local storage', e);
-      toast({
-        title: 'Could not load case data',
-        description: 'Please submit a dispute again to use this tool.',
-        variant: 'destructive',
-      });
+    if (user) {
+      getLatestCaseAssessment(user.uid)
+        .then(data => {
+          if (data) {
+            setAssessment(data);
+          }
+        })
+        .catch(e => {
+          console.error('Error reading from Firestore', e);
+          toast({
+            title: 'Could not load case data',
+            description: 'Please submit a dispute again to use this tool.',
+            variant: 'destructive',
+          });
+        })
+        .finally(() => {
+          setLoadingInitialData(false);
+        });
+    } else {
+        setLoadingInitialData(false);
     }
-  }, [toast]);
+  }, [user, toast]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!assessment) {
@@ -92,6 +102,21 @@ export default function CourtLocatorPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (loadingInitialData) {
+    return (
+        <Card>
+            <CardHeader>
+                <Skeleton className="h-6 w-1/4" />
+                <Skeleton className="h-4 w-1/2" />
+            </CardHeader>
+             <CardContent>
+                <Loader2 className="mx-auto h-12 w-12 animate-spin text-primary"/>
+                <p className="text-center text-muted-foreground">Loading your case data...</p>
+            </CardContent>
+        </Card>
+    )
   }
 
   if (!assessment) {

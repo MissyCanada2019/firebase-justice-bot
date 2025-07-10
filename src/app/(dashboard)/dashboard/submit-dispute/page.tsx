@@ -31,6 +31,8 @@ import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useAuth } from '@/hooks/use-auth';
+import { saveCaseAssessment } from '@/lib/firestoreService';
 
 const formSchema = z.object({
   caseName: z.string().min(2, {
@@ -49,6 +51,8 @@ export default function SubmitDisputePage() {
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<AssessDisputeMeritOutput | null>(null);
     const { toast } = useToast();
+    const { user } = useAuth();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -69,6 +73,15 @@ export default function SubmitDisputePage() {
     }
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        if (!user) {
+            toast({
+                title: "Authentication Error",
+                description: "You must be logged in to submit a dispute.",
+                variant: "destructive",
+            });
+            return;
+        }
+
         setLoading(true);
         setResult(null);
 
@@ -76,13 +89,12 @@ export default function SubmitDisputePage() {
             let evidenceText: string | undefined = undefined;
             if (values.evidence && values.evidence.length > 0) {
                 const file = values.evidence[0];
-                // Basic check for text-based files. In a real app, you'd want more robust handling.
                 if (file.type.startsWith('text/') || file.name.endsWith('.md')) {
                    evidenceText = await readFileAsText(file);
                 } else {
                     toast({
                         title: 'Unsupported File Type',
-                        description: 'For this demo, please upload a plain text file (.txt, .md). We will add support for more file types like PDF and DOCX soon.',
+                        description: 'Please upload a plain text file (.txt, .md).',
                         variant: 'destructive',
                     });
                     setLoading(false);
@@ -96,24 +108,19 @@ export default function SubmitDisputePage() {
                 evidenceText: evidenceText,
             });
 
+            await saveCaseAssessment(user.uid, output);
             setResult(output);
             
-            // Store result in local storage for other pages to use
-            if (typeof window !== 'undefined') {
-                localStorage.setItem('caseAssessment', JSON.stringify(output));
-            }
-
             toast({
                 title: 'Analysis Complete!',
-                description: 'Your case assessment is ready below.',
+                description: 'Your case assessment is ready below and has been saved to your account.',
             });
-            // We don't reset the form so the user can see what they entered
-            // form.reset();
-        } catch (error) {
+
+        } catch (error: any) {
             console.error(error);
             toast({
                 title: 'Analysis Failed',
-                description: 'An error occurred during the analysis. Please try again.',
+                description: error.message || 'An error occurred during the analysis. Please try again.',
                 variant: 'destructive',
             });
         } finally {
@@ -128,7 +135,7 @@ export default function SubmitDisputePage() {
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight font-headline">Submit a Legal Dispute</h1>
                     <p className="text-muted-foreground">
-                        Provide details of your legal dispute and upload relevant evidence for AI-powered analysis.
+                        Provide details of your legal dispute. Your case will be saved securely to your account.
                     </p>
                 </div>
             </div>

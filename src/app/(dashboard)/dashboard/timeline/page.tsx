@@ -20,6 +20,8 @@ import { CalendarClock, Loader2, AlertCircle, Clock, FileText } from 'lucide-rea
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
+import { useAuth } from '@/hooks/use-auth';
+import { getLatestCaseAssessment } from '@/lib/firestoreService';
 
 export default function TimelinePage() {
   const [assessment, setAssessment] = useState<AssessDisputeMeritOutput | null>(null);
@@ -27,46 +29,40 @@ export default function TimelinePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   useEffect(() => {
-    try {
-      if (typeof window !== 'undefined') {
-        const storedAssessment = localStorage.getItem('caseAssessment');
-        if (storedAssessment) {
-          const parsedAssessment = JSON.parse(storedAssessment) as AssessDisputeMeritOutput;
-          setAssessment(parsedAssessment);
-
-          const fetchTimeline = async () => {
-            try {
-              const output = await generateLegalTimeline({
-                caseClassification: parsedAssessment.caseClassification,
-                disputeDetails: parsedAssessment.analysis, // Using analysis for context
-              });
-              setTimeline(output);
-            } catch (err) {
-              console.error(err);
-              setError('Failed to generate the legal timeline. The AI may be experiencing high load. Please try again later.');
-              toast({
-                title: 'Timeline Generation Failed',
-                description: 'An error occurred while generating the timeline.',
-                variant: 'destructive',
-              });
-            } finally {
-              setLoading(false);
-            }
-          };
-
-          fetchTimeline();
-        } else {
-          setLoading(false);
-        }
-      }
-    } catch (e) {
-        console.error("Error reading from local storage", e);
-        setError("Could not load your case data. Please submit your dispute again.");
+    const loadData = async () => {
+      if (!user) {
         setLoading(false);
-    }
-  }, [toast]);
+        return;
+      }
+
+      try {
+        const storedAssessment = await getLatestCaseAssessment(user.uid);
+        if (storedAssessment) {
+          setAssessment(storedAssessment);
+          const output = await generateLegalTimeline({
+            caseClassification: storedAssessment.caseClassification,
+            disputeDetails: storedAssessment.analysis,
+          });
+          setTimeline(output);
+        }
+      } catch (err: any) {
+        console.error(err);
+        setError(err.message || 'An unexpected error occurred.');
+        toast({
+          title: 'Error Loading Data',
+          description: err.message || 'Could not load your case data or generate the timeline.',
+          variant: 'destructive',
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, [user, toast]);
 
   if (loading) {
     return (

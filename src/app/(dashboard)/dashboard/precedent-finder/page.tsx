@@ -25,6 +25,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { useAuth } from '@/hooks/use-auth';
+import { getLatestCaseAssessment } from '@/lib/firestoreService';
 
 export default function PrecedentFinderPage() {
   const [assessment, setAssessment] = useState<AssessDisputeMeritOutput | null>(null);
@@ -32,50 +34,40 @@ export default function PrecedentFinderPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   useEffect(() => {
     const loadDataAndFetch = async () => {
-      let storedAssessment = null;
-      try {
-        if (typeof window !== 'undefined') {
-          const storedAssessmentJSON = localStorage.getItem('caseAssessment');
-          if (storedAssessmentJSON) {
-            storedAssessment = JSON.parse(storedAssessmentJSON) as AssessDisputeMeritOutput;
-            setAssessment(storedAssessment);
-          }
-        }
-      } catch (e) {
-        console.error('Error reading from local storage', e);
-        setError('Could not load your case data. Please submit your dispute again.');
+      if (!user) {
         setLoading(false);
         return;
       }
-
-      if (storedAssessment) {
-        try {
+      
+      try {
+        const storedAssessment = await getLatestCaseAssessment(user.uid);
+        if (storedAssessment) {
+          setAssessment(storedAssessment);
           const output = await findPrecedents({
             caseClassification: storedAssessment.caseClassification,
             disputeDetails: storedAssessment.analysis,
           });
           setResult(output);
-        } catch (err) {
-          console.error(err);
-          setError('Failed to find precedents. The AI may be experiencing high load. Please try again later.');
-          toast({
-            title: 'Precedent Search Failed',
-            description: 'An error occurred while finding similar cases.',
-            variant: 'destructive',
-          });
-        } finally {
-          setLoading(false);
         }
-      } else {
+      } catch (err: any) {
+        console.error(err);
+        setError('Failed to find precedents. The AI may be experiencing high load. Please try again later.');
+        toast({
+          title: 'Precedent Search Failed',
+          description: err.message || 'An error occurred while finding similar cases.',
+          variant: 'destructive',
+        });
+      } finally {
         setLoading(false);
       }
     };
 
     loadDataAndFetch();
-  }, [toast]);
+  }, [user, toast]);
 
   if (loading) {
     return (

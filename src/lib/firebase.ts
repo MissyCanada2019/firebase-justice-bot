@@ -1,5 +1,6 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCg2ZAL_nPz1TOIzQY8DOLID_zd7vpMHLg",
@@ -15,8 +16,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Analytics initialization has been temporarily removed to ensure stable deployment.
 // It can be re-enabled later if needed, but requires careful client-side handling.
 
-export { app, auth };
+export { app, auth, db };
