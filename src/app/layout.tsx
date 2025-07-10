@@ -3,6 +3,7 @@ import { Toaster } from '@/components/ui/toaster';
 import FloatingLeaves from '@/components/floating-leaves';
 import './globals.css';
 import { AuthProvider } from '@/hooks/use-auth';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://justice-bot.com'),
@@ -22,6 +23,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+        <Script src="https://www.google.com/recaptcha/enterprise.js?render=6LeTv30rAAAAANcs8IZHfsf4N2JK3tKA5Ej4c7tm" strategy="lazyOnload" />
       </head>
       <body className="font-body antialiased min-h-screen">
         <AuthProvider>

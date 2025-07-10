@@ -8,16 +8,55 @@ import SiteHeader from '@/components/site-header';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useToast } from '@/hooks/use-toast';
+
+// Make grecaptcha available on the window object
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
 
 export default function Home() {
   const { user, loading, signInWithGoogle } = useAuth();
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!loading && user) {
       router.push('/dashboard');
     }
   }, [user, loading, router]);
+
+  const handleLoginClick = async () => {
+    if (window.grecaptcha && window.grecaptcha.enterprise) {
+      try {
+        await window.grecaptcha.enterprise.ready();
+        const token = await window.grecaptcha.enterprise.execute('6LeTv30rAAAAANcs8IZHfsf4N2JK3tKA5Ej4c7tm', {action: 'LOGIN'});
+        // In a real application, you would send this token to your backend for verification.
+        // For now, we'll proceed with sign-in if the token is generated.
+        if (token) {
+          signInWithGoogle();
+        } else {
+           toast({
+            title: 'reCAPTCHA Failed',
+            description: 'Could not verify you are human. Please try again.',
+            variant: 'destructive',
+          });
+        }
+      } catch (error) {
+         console.error("reCAPTCHA execution error:", error);
+         toast({
+            title: 'reCAPTCHA Error',
+            description: 'There was a problem with the security check. Please try again later.',
+            variant: 'destructive',
+          });
+      }
+    } else {
+      // Fallback if reCAPTCHA doesn't load for some reason
+      signInWithGoogle();
+    }
+  }
 
   const features = [
     {
@@ -51,7 +90,7 @@ export default function Home() {
                 Your partner in navigating the complexities of Canadian law. AI-powered insights for everyday people.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Button onClick={signInWithGoogle} size="lg" disabled={loading || user !== null}>
+                <Button onClick={handleLoginClick} size="lg" disabled={loading || user !== null}>
                   Get Started with Google <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button asChild variant="link" size="lg">
