@@ -12,3 +12,4 @@ import '@/ai/flows/generate-legal-form.ts';
 import '@/ai/flows/explain-legal-document.ts';
 import '@/ai/flows/find-court-flow.ts';
 import '@/ai/flows/find-precedents-flow.ts';
+import '@/ai/flows/verify-recaptcha.ts';

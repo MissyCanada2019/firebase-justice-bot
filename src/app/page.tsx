@@ -33,14 +33,13 @@ export default function Home() {
       try {
         await window.grecaptcha.enterprise.ready();
         const token = await window.grecaptcha.enterprise.execute('6LeTv30rAAAAANcs8IZHfsf4N2JK3tKA5Ej4c7tm', {action: 'LOGIN'});
-        // In a real application, you would send this token to your backend for verification.
-        // For now, we'll proceed with sign-in if the token is generated.
+
         if (token) {
-          signInWithGoogle();
+          await signInWithGoogle(token);
         } else {
            toast({
             title: 'reCAPTCHA Failed',
-            description: 'Could not verify you are human. Please try again.',
+            description: 'Could not get a security token. Please try again.',
             variant: 'destructive',
           });
         }
@@ -53,8 +52,11 @@ export default function Home() {
           });
       }
     } else {
-      // Fallback if reCAPTCHA doesn't load for some reason
-      signInWithGoogle();
+       toast({
+        title: 'reCAPTCHA Not Loaded',
+        description: 'The security script did not load. Please refresh the page and try again.',
+        variant: 'destructive'
+       });
     }
   }
 

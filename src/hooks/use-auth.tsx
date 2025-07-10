@@ -5,12 +5,13 @@ import { onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup, signOut,
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { useToast } from './use-toast';
+import { verifyRecaptchaToken } from '@/ai/flows/verify-recaptcha';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   isFreeTier: boolean;
-  signInWithGoogle: () => Promise<void>;
+  signInWithGoogle: (recaptchaToken: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -34,9 +35,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => unsubscribe();
   }, []);
 
-  const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
+  const signInWithGoogle = async (recaptchaToken: string) => {
     try {
+      const verification = await verifyRecaptchaToken({ 
+        token: recaptchaToken,
+        expectedAction: 'LOGIN'
+      });
+
+      if (!verification.isValid) {
+        toast({
+            title: 'Security Check Failed',
+            description: `Could not verify you are human. Score: ${verification.score}. Reason: ${verification.reason}`,
+            variant: 'destructive',
+          });
+        return;
+      }
+
+      const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const additionalUserInfo = getAdditionalUserInfo(result);
       
