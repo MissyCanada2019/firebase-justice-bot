@@ -1,6 +1,6 @@
 'use client';
 
-imimport SiteFooter from '@/components/site-footer';port Link from 'next/link';
+imimport Head from 'next/head';import SiteFooter from '@/components/site-footer';port Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Gavel, Scale, ShieldCheck } from 'lucide-react';
