@@ -7,7 +7,7 @@ runConfig:
   maxInstances: 1
 env:
   - variable: 'NEXT_PUBLIC_FIREBASE_API_KEY'
-    value: 'AIzaSyCg2ZAL_nPz1TOIzQY8DOLID_zd7vpMHLg'
+    value: 'AIzaSyD-qlOFRqRIl7Qpl90MevvN2nRVSBXYInc'
   - variable: 'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'
     value: 'justicebotai.firebaseapp.com'
   - variable: 'NEXT_PUBLIC_FIREBASE_PROJECT_ID'

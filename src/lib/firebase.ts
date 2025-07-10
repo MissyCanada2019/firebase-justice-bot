@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCg2ZAL_nPz1TOIzQY8DOLID_zd7vpMHLg",
+  apiKey: "AIzaSyD-qlOFRqRIl7Qpl90MevvN2nRVSBXYInc",
   authDomain: "justicebotai.firebaseapp.com",
   projectId: "justicebotai",
   storageBucket: "justicebotai.firebasestorage.app",
