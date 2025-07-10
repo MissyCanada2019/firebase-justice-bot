@@ -142,13 +142,6 @@ export default function Home() {
 
       <footer className="bg-background/80 mt-auto py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-foreground/60">
-           <div className="flex justify-center flex-wrap gap-x-6 gap-y-2 mb-4">
-              <Link href="/terms-of-use" className="hover:text-primary transition-colors duration-200">Terms of Use</Link>
-              <Link href="/privacy-policy" className="hover:text-primary transition-colors duration-200">Privacy Policy</Link>
-              <Link href="/government-inquiries" className="hover:text-primary transition-colors duration-200">Government Inquiries</Link>
-              <Link href="/media-inquiries" className="hover:text-primary transition-colors duration-200">Media Inquiries</Link>
-              <Link href="/troubleshooting" className="hover:text-primary transition-colors duration-200">Troubleshooting</Link>
-            </div>
           <p>&copy; {new Date().getFullYear()} JusticeBot.AI. All Rights Reserved.</p>
           <p className="mt-2">Made with <span className="text-accent">❤</span> in Canada</p>
         </div>
