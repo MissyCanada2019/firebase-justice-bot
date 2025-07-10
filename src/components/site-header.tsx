@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -22,13 +23,22 @@ export default function SiteHeader() {
         <div className="hidden lg:flex lg:gap-x-12">
             <MainNav />
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="flex items-center gap-4 lg:flex-1 lg:justify-end">
           {loading ? (
             <Skeleton className="h-10 w-24" />
-          ) : (
+          ) : user ? (
             <Button asChild>
-              <Link href="/dashboard">{user ? 'Go to Dashboard' : 'Login'}</Link>
+              <Link href="/dashboard">Go to Dashboard</Link>
             </Button>
+          ) : (
+            <>
+                <Button asChild variant="ghost">
+                    <Link href="/login">Login</Link>
+                </Button>
+                 <Button asChild>
+                    <Link href="/signup">Sign Up</Link>
+                </Button>
+            </>
           )}
         </div>
       </nav>

@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -8,57 +9,16 @@ import SiteHeader from '@/components/site-header';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
-
-// Make grecaptcha available on the window object
-declare global {
-  interface Window {
-    grecaptcha: any;
-  }
-}
 
 export default function Home() {
-  const { user, loading, signInWithGoogle } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
-  const { toast } = useToast();
 
   useEffect(() => {
     if (!loading && user) {
       router.push('/dashboard');
     }
   }, [user, loading, router]);
-
-  const handleLoginClick = async () => {
-    if (window.grecaptcha && window.grecaptcha.enterprise) {
-      try {
-        await window.grecaptcha.enterprise.ready();
-        const token = await window.grecaptcha.enterprise.execute('6LdDBn4rAAAAADuEa2UqVQRkdrHRD-25aqWhWaYj', {action: 'LOGIN'});
-
-        if (token) {
-          await signInWithGoogle(token);
-        } else {
-           toast({
-            title: 'reCAPTCHA Failed',
-            description: 'Could not get a security token. Please try again.',
-            variant: 'destructive',
-          });
-        }
-      } catch (error) {
-         console.error("reCAPTCHA execution error:", error);
-         toast({
-            title: 'reCAPTCHA Error',
-            description: 'There was a problem with the security check. Please try again later.',
-            variant: 'destructive',
-          });
-      }
-    } else {
-       toast({
-        title: 'reCAPTCHA Not Loaded',
-        description: 'The security script did not load. Please refresh the page and try again.',
-        variant: 'destructive'
-       });
-    }
-  }
 
   const features = [
     {
@@ -92,8 +52,10 @@ export default function Home() {
                 Your partner in navigating the complexities of Canadian law. AI-powered insights for everyday people.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Button onClick={handleLoginClick} size="lg" disabled={loading || user !== null}>
-                  Get Started with Google <ArrowRight className="ml-2 h-5 w-5" />
+                <Button asChild size="lg">
+                   <Link href="/signup">
+                    Get Started <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
                 <Button asChild variant="link" size="lg">
                   <Link href="/about">
@@ -143,7 +105,11 @@ export default function Home() {
       <footer className="bg-background/80 mt-auto py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-foreground/60">
           <p>&copy; {new Date().getFullYear()} JusticeBot.AI. All Rights Reserved.</p>
-          <p className="mt-2">Made with <span className="text-accent">❤</span> in Canada</p>
+           <div className="flex justify-center gap-x-4 mt-2">
+            <Link href="/terms-of-use" className="hover:underline">Terms of Use</Link>
+            <Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+            <Link href="/troubleshooting" className="hover:underline">Troubleshooting</Link>
+          </div>
         </div>
       </footer>
     </div>

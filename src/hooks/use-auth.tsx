@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
-import { onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup, signOut, getAdditionalUserInfo } from 'firebase/auth';
+import { onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup, signOut, getAdditionalUserInfo, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { useToast } from './use-toast';
@@ -12,6 +13,8 @@ interface AuthContextType {
   loading: boolean;
   isFreeTier: boolean;
   signInWithGoogle: (recaptchaToken: string) => Promise<void>;
+  signUpWithEmail: (email: string, password: string) => Promise<void>;
+  signInWithEmail: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -23,17 +26,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const { toast } = useToast();
 
-  // This setting simulates the "first 1000 users" free tier.
-  // In a production app, this would be determined by checking the total user count on a secure backend.
   const isFreeTier = process.env.NEXT_PUBLIC_FREE_TIER_ENABLED === 'true';
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
+      
+      if (!loading && user) {
+        const path = window.location.pathname;
+        if (path === '/login' || path === '/signup' || path === '/') {
+            router.push('/dashboard');
+        }
+      }
+
     });
     return () => unsubscribe();
-  }, []);
+  }, [loading, router]);
 
   const signInWithGoogle = async (recaptchaToken: string) => {
     try {
@@ -55,6 +64,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const result = await signInWithPopup(auth, provider);
       const additionalUserInfo = getAdditionalUserInfo(result);
       
+      toast({
+        title: 'Login Successful!',
+        description: 'Welcome to your dashboard.',
+      });
+
       if (additionalUserInfo?.isNewUser) {
         router.push('/dashboard/welcome');
       } else {
@@ -62,7 +76,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (error: any) {
       if (error.code === 'auth/cancelled-popup-request') {
-        // User cancelled the popup, so we do nothing. This is not an error.
         console.log('Sign-in popup closed by user.');
         return;
       }
@@ -81,6 +94,43 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const signUpWithEmail = async (email: string, password: string) => {
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const displayName = email.split('@')[0];
+        await updateProfile(userCredential.user, { displayName });
+        
+        toast({
+            title: 'Account Created!',
+            description: 'Welcome! Redirecting you to the dashboard.',
+        });
+        router.push('/dashboard/welcome');
+    } catch (error: any) {
+        console.error("Error signing up with email", error);
+        if (error.code === 'auth/email-already-in-use') {
+             throw new Error('This email is already in use. Please log in or use a different email.');
+        }
+        throw new Error(error.message || 'An unexpected error occurred during sign up.');
+    }
+  }
+
+  const signInWithEmail = async (email: string, password: string) => {
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        toast({
+            title: 'Login Successful!',
+            description: 'Welcome back to your dashboard.',
+        });
+        router.push('/dashboard');
+    } catch (error: any) {
+         console.error("Error signing in with email", error);
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+             throw new Error('Invalid email or password. Please try again.');
+        }
+        throw new Error(error.message || 'An unexpected error occurred during login.');
+    }
+  }
+
   const logout = async () => {
     try {
       await signOut(auth);
@@ -96,8 +146,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, isFreeTier, signInWithGoogle, logout }}>
-      {!loading && children}
+    <AuthContext.Provider value={{ user, loading, isFreeTier, signInWithGoogle, signUpWithEmail, signInWithEmail, logout }}>
+      {children}
     </AuthContext.Provider>
   );
 };
