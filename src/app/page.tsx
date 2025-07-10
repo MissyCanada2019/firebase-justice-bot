@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -32,7 +33,7 @@ export default function Home() {
     if (window.grecaptcha && window.grecaptcha.enterprise) {
       try {
         await window.grecaptcha.enterprise.ready();
-        const token = await window.grecaptcha.enterprise.execute('6LeTv30rAAAAANcs8IZHfsf4N2JK3tKA5Ej4c7tm', {action: 'LOGIN'});
+        const token = await window.grecaptcha.enterprise.execute('6LdDBn4rAAAAADuEa2UqVQRkdrHRD-25aqWhWaYj', {action: 'LOGIN'});
 
         if (token) {
           await signInWithGoogle(token);

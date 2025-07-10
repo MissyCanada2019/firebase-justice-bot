@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Verifies a Google reCAPTCHA Enterprise token.
@@ -38,7 +39,7 @@ const verifyRecaptchaFlow = ai.defineFlow(
   async ({ token, expectedAction }) => {
     try {
         const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-        const siteKey = "6LeTv30rAAAAANcs8IZHfsf4N2JK3tKA5Ej4c7tm";
+        const siteKey = "6LdDBn4rAAAAADuEa2UqVQRkdrHRD-25aqWhWaYj";
 
         if (!projectId) {
             throw new Error('Firebase Project ID is not configured.');
