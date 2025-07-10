@@ -28,6 +28,7 @@ export default function GenerateFormPage() {
   const [assessment, setAssessment] = useState<AssessDisputeMeritOutput | null>(null);
   const [formContent, setFormContent] = useState<GenerateLegalFormOutput | null>(null);
   const [loading, setLoading] = useState(false);
+  const [loadingInitialData, setLoadingInitialData] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const { toast } = useToast();
@@ -40,7 +41,7 @@ export default function GenerateFormPage() {
     }
 
     if (user) {
-        setLoading(true);
+        setLoadingInitialData(true);
         getLatestCaseAssessment(user.uid)
             .then(data => {
                 if (data) {
@@ -51,7 +52,9 @@ export default function GenerateFormPage() {
                 console.error("Error loading case data from Firestore", err);
                 setError("Could not load your case data. Please submit your dispute again.");
             })
-            .finally(() => setLoading(false));
+            .finally(() => setLoadingInitialData(false));
+    } else {
+        setLoadingInitialData(false);
     }
     
     updateSubscriptionStatus();
@@ -154,7 +157,7 @@ export default function GenerateFormPage() {
     doc.save(`${safeFilename}_content.pdf`);
   };
 
-  if (loading && !formContent) {
+  if (loadingInitialData) {
       return (
         <Card>
             <CardHeader>

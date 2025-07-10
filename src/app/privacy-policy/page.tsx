@@ -25,13 +25,13 @@ export default function PrivacyPolicyPage() {
                 <p>We may collect the following types of information:</p>
                 <ul className="list-disc pl-6 space-y-1">
                     <li>
-                        <strong>Personal Information:</strong> Information you provide when you register via Google, such as your name, email address, and Google account identifier. We do not store your Google password.
+                        <strong>Personal Information:</strong> Information you provide when you register, such as your name and email address. We do not store your password directly, only a secure, encrypted version of it.
                     </li>
                      <li>
-                        <strong>Case Information:</strong> Details and text from documents you provide for analysis. By submitting this information, you consent to it being stored and associated with your account to enable core application features like generating timelines, finding precedents, and maintaining a case history for your convenience.
+                        <strong>Case Information:</strong> Details and text from documents you provide for analysis. By submitting this information, you consent to it being stored securely in our database and associated with your account to enable core application features like generating timelines, finding precedents, and maintaining a case history for your convenience.
                     </li>
                      <li>
-                        <strong>Usage Data:</strong> We may collect information about how you interact with the Service, such as your IP address and browser type, to monitor for security threats and improve the Service.
+                        <strong>Usage Data:</strong> We may collect information about how you interact with the Service, such as your IP address and browser type, to monitor for security threats and improve the Service. We also use Google reCAPTCHA to protect our login and registration pages from abuse.
                     </li>
                 </ul>
               </div>
@@ -50,13 +50,13 @@ export default function PrivacyPolicyPage() {
               <div className="space-y-2">
                 <h2 className="text-xl font-bold font-headline text-foreground">4. Data Security</h2>
                 <p>
-                  We implement a variety of security measures to maintain the safety of your personal information. Your account is secured by Google Authentication. All data transmitted between your browser, our servers, and our AI service providers is encrypted using Transport Layer Security (TLS). However, no method of transmission over the Internet is 100% secure.
+                  We implement a variety of security measures to maintain the safety of your personal information. Your account is secured by Firebase Authentication. All data transmitted between your browser, our servers, and our AI service providers is encrypted using Transport Layer Security (TLS). Data is stored securely in Google's Firestore databases. However, no method of transmission over the Internet is 100% secure.
                 </p>
               </div>
               <div className="space-y-2">
                 <h2 className="text-xl font-bold font-headline text-foreground">5. Data Retention</h2>
                 <p>
-                  We will retain your personal account information as long as your account is active. Information provided for one-time analyses is not stored. You can request the deletion of your account and associated personal data at any time by contacting us.
+                  We will retain your account information and your submitted case data as long as your account is active. This allows you to access your case history and use the app's features seamlessly. You can request the deletion of your account and all associated personal and case data at any time by contacting us.
                 </p>
               </div>
                <div className="space-y-2">
