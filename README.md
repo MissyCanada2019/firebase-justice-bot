@@ -47,7 +47,7 @@ Start the Next.js development server to see your application running locally.
 npm run dev
 ```
 
-Your app should now be running at `http://localhost:9002`.
+Your app should now be running at `http://localhost:9002`. You will need to add `localhost` to your list of "Authorized domains" in the Firebase Authentication settings to sign in locally.
 
 ### Step 5: Initialize Firebase in Your Project
 
@@ -87,7 +87,9 @@ The CLI will build your Next.js application and deploy it. Once finished, it wil
 To connect `justice-bot.com` to your live application:
 
 1.  After deploying, go to the **App Hosting** section of your Firebase Console.
-2.  Find your newly deployed app and click "Add custom domain".
+2.  Find your newly deployed app and click **"Add custom domain"**.
 3.  Follow the on-screen instructions to add your domain.
-4.  Firebase will provide DNS records (like an `A` record) to add to your domain registrar (where you bought the domain).
-5.  Once you've added the records, Firebase will verify your domain and automatically set up a free SSL certificate.
+4.  Firebase will provide DNS records (an **`A` record** and possibly a **`TXT` record** for verification) to add to your domain registrar (the company where you bought the domain).
+5.  **Important:** Log in to your domain registrar's website and add these records exactly as Firebase shows them.
+6.  Once you've added the records, you must wait. It can take up to 48 hours for DNS changes to fully propagate across the internet. After a few hours, you can return to the Firebase console to see if the domain has been verified.
+7.  Once verified, Firebase will automatically set up a free SSL certificate, and your site will be live at your custom domain.
