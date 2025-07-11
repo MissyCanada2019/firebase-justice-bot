@@ -105,9 +105,11 @@ export default function Home() {
       <footer className="bg-background/80 mt-auto py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-foreground/60">
           <p>&copy; {new Date().getFullYear()} JusticeBot.AI. All Rights Reserved.</p>
-           <div className="flex justify-center gap-x-4 mt-2">
+           <div className="flex justify-center flex-wrap gap-x-4 mt-2">
             <Link href="/terms-of-use" className="hover:underline">Terms of Use</Link>
             <Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+            <Link href="/media-inquiries" className="hover:underline">Media Inquiries</Link>
+            <Link href="/government-inquiries" className="hover:underline">Government Inquiries</Link>
             <Link href="/troubleshooting" className="hover:underline">Troubleshooting</Link>
           </div>
         </div>
