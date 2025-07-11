@@ -1,6 +1,8 @@
+
 import SiteHeader from '@/components/site-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ClientDate } from '@/components/client-date';
+import Link from 'next/link';
 
 export default function TermsOfUsePage() {
   return (
@@ -41,7 +43,11 @@ export default function TermsOfUsePage() {
                   You are responsible for the accuracy of the information you provide to the Service. You agree not to use the Service for any unlawful purpose. You are solely responsible for all decisions and actions taken based on the information provided by the Service.
                 </p>
                 <p>
-                  By submitting information or documents ("User Content") to the Service, you grant JusticeBot.AI a license to use, process, store, and display your User Content solely for the purpose of providing and improving the Service for you. You affirm that you have the legal right to provide any User Content you submit.
+                  By submitting information or documents ("User Content") to the Service, you grant JusticeBot.AI a license to use, process, store, and display your User Content solely for the purpose of providing and improving the Service for you. How we handle this data is governed by our{' '}
+                  <Link href="/privacy-policy" className="text-primary hover:underline">
+                    Privacy Policy
+                  </Link>
+                  . You affirm that you have the legal right to provide any User Content you submit.
                 </p>
               </div>
               <div className="space-y-2">
