@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -23,6 +24,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import jsPDF from 'jspdf';
 import { useAuth } from '@/hooks/use-auth';
 import { getLatestCaseAssessment } from '@/lib/firestoreService';
+import { getActiveSubscription, hasSinglePurchase, useSinglePurchase } from '@/lib/subscription';
 
 export default function GenerateFormPage() {
   const [assessment, setAssessment] = useState<AssessDisputeMeritOutput | null>(null);
@@ -30,15 +32,16 @@ export default function GenerateFormPage() {
   const [loading, setLoading] = useState(false);
   const [loadingInitialData, setLoadingInitialData] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  const [canDownload, setCanDownload] = useState(false);
   const { toast } = useToast();
   const { user, isFreeTier } = useAuth();
 
   useEffect(() => {
-    const updateSubscriptionStatus = () => {
-       const subscription = localStorage.getItem('justiceBotSubscription');
-       setHasActiveSubscription(!!subscription);
-    }
+    const updateAccessStatus = () => {
+       const activeSub = getActiveSubscription();
+       const singlePurchase = hasSinglePurchase();
+       setCanDownload(isFreeTier || !!activeSub || singlePurchase);
+    };
 
     if (user) {
         setLoadingInitialData(true);
@@ -57,17 +60,17 @@ export default function GenerateFormPage() {
         setLoadingInitialData(false);
     }
     
-    updateSubscriptionStatus();
+    updateAccessStatus();
     // Listen for storage changes to update payment status across tabs
     const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'justiceBotSubscription') {
-        updateSubscriptionStatus();
+      if (event.key === 'justiceBotPurchases') {
+        updateAccessStatus();
       }
     };
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
 
-  }, [user]);
+  }, [user, isFreeTier]);
 
   const handleGenerateClick = async () => {
     if (!assessment) {
@@ -102,7 +105,7 @@ export default function GenerateFormPage() {
   }
 
   const handleDownloadPdf = () => {
-    if (!formContent) return;
+    if (!formContent || !canDownload) return;
 
     const doc = new jsPDF({
       orientation: 'p',
@@ -155,6 +158,16 @@ export default function GenerateFormPage() {
     });
 
     doc.save(`${safeFilename}_content.pdf`);
+    
+    // If it was a single purchase, consume it.
+    if (!getActiveSubscription() && !isFreeTier) {
+      useSinglePurchase();
+      setCanDownload(false); // Update UI immediately
+       toast({
+        title: 'Document Credit Used',
+        description: 'Your single document purchase has been used.',
+      });
+    }
   };
 
   if (loadingInitialData) {
@@ -186,8 +199,6 @@ export default function GenerateFormPage() {
       </Alert>
     );
   }
-
-  const canDownload = isFreeTier || hasActiveSubscription;
 
   return (
     <div className="space-y-8">
@@ -298,11 +309,15 @@ export default function GenerateFormPage() {
                         <p className="text-sm text-muted-foreground">
                             Your free lifetime access includes unlimited PDF downloads.
                         </p>
-                    ) : hasActiveSubscription ? (
+                    ) : getActiveSubscription() ? (
                          <p className="text-sm text-muted-foreground">
                             Your active plan includes unlimited PDF downloads.
                         </p>
-                    ) : (
+                    ) : hasSinglePurchase() ? (
+                         <p className="text-sm text-muted-foreground">
+                            You have a single document credit available for download.
+                        </p>
+                    ): (
                         <p className="text-sm text-muted-foreground">
                             A subscription or single document purchase is required to download.
                         </p>

@@ -20,6 +20,7 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { createCheckoutSession } from '@/app/actions/stripe';
 import { loadStripe } from '@stripe/stripe-js';
+import { getActiveSubscription, setActiveSubscription as setLocalStorageSub, addSinglePurchase } from '@/lib/subscription';
 
 // Ensure you create these products and prices in your Stripe Dashboard.
 // These are placeholder IDs.
@@ -68,7 +69,7 @@ const stripePromise = loadStripe(
 );
 
 export default function PricingPage() {
-  const [activeSubscription, setActiveSubscription] = useState<string | null>(null);
+  const [activeSub, setActiveSub] = useState<string | null>(null);
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const { toast } = useToast();
   const { user, isFreeTier } = useAuth();
@@ -78,26 +79,28 @@ export default function PricingPage() {
   useEffect(() => {
     // In a real app, you would fetch subscription status from your backend.
     // For this example, we'll use local storage.
-    const subscription = localStorage.getItem('justiceBotSubscription');
-    setActiveSubscription(subscription);
+    setActiveSub(getActiveSubscription());
 
-    // Check for query params from Stripe redirect
-    if (searchParams.get('success')) {
+    const success = searchParams.get('success');
+    const canceled = searchParams.get('canceled');
+    const planId = searchParams.get('plan_id');
+
+    if (success && planId) {
       toast({
         title: 'Payment Successful!',
         description: 'Thank you for your purchase. Your plan is now active.',
       });
       // Here you would typically update the user's subscription status in your database
-      // For this example, we'll use local storage.
-      const planId = searchParams.get('plan_id');
-      if (planId) {
-        localStorage.setItem('justiceBotSubscription', planId);
-        setActiveSubscription(planId);
+      if (planId === 'single') {
+        addSinglePurchase();
+      } else {
+        setLocalStorageSub(planId);
+        setActiveSub(planId);
       }
       router.replace('/dashboard/billing');
     }
 
-    if (searchParams.get('canceled')) {
+    if (canceled) {
       toast({
         title: 'Payment Canceled',
         description: 'Your payment was not processed. Please try again if you wish to subscribe.',
@@ -207,10 +210,10 @@ export default function PricingPage() {
               <Button 
                 className="w-full" 
                 onClick={() => handleChoosePlan(tier.priceId, tier.planId)}
-                disabled={loadingPlan === tier.planId || activeSubscription === tier.planId || (tier.planId === 'low_income' && !isFreeTier) /* Disable low income unless verified */}
+                disabled={loadingPlan === tier.planId || activeSub === tier.planId || (tier.planId === 'low_income' && !isFreeTier) /* Disable low income unless verified */}
                 variant={tier.isPopular ? 'default' : 'outline'}
               >
-                {loadingPlan === tier.planId ? <Loader2 className="animate-spin" /> : activeSubscription === tier.planId ? 'Current Plan' : (tier.planId === 'low_income' ? 'Coming Soon' : 'Choose Plan')}
+                {loadingPlan === tier.planId ? <Loader2 className="animate-spin" /> : activeSub === tier.planId ? 'Current Plan' : (tier.planId === 'low_income' ? 'Coming Soon' : 'Choose Plan')}
               </Button>
             </CardFooter>
           </Card>
