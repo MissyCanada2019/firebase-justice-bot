@@ -11,14 +11,18 @@ import {
   CardFooter,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, CreditCard } from 'lucide-react';
+import { Check, CreditCard, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
+import { createCheckoutSession } from '@/app/actions/stripe';
+import { loadStripe } from '@stripe/stripe-js';
 
+// Ensure you create these products and prices in your Stripe Dashboard.
+// These are placeholder IDs.
 const pricingTiers = [
   {
     name: 'Single Document',
@@ -27,15 +31,17 @@ const pricingTiers = [
     description: 'One legal form download (e.g., T2, HRTO-1).',
     features: ['One-time purchase', 'Form remains unlocked permanently', 'Ideal for single-use needs'],
     planId: 'single',
+    priceId: 'price_xxxxxxxxxxxxxx_single', // Replace with your Stripe Price ID
   },
   {
     name: 'Monthly Plan',
     price: '$59.99',
-    duration: '/ 49 days',
+    duration: '/ month',
     description: 'Unlimited access to all tools & downloads.',
     features: ['Unlimited form generation', 'Unlimited PDF downloads', 'Access all legal summary tools', 'Priority AI access'],
     isPopular: true,
     planId: 'monthly',
+    priceId: 'price_xxxxxxxxxxxxxx_monthly', // Replace with your Stripe Price ID
   },
   {
     name: 'Annual Plan',
@@ -44,6 +50,7 @@ const pricingTiers = [
     description: 'The best value for long-term needs.',
     features: ['All features from Monthly', '365 days of access', 'Significant savings over monthly'],
     planId: 'annual',
+    priceId: 'price_xxxxxxxxxxxxxx_annual', // Replace with your Stripe Price ID
   },
    {
     name: 'Low-Income Verified',
@@ -52,30 +59,87 @@ const pricingTiers = [
     description: 'Full access for verified users.',
     features: ['All features from Annual', 'Requires verification (coming soon)', 'Our commitment to access to justice'],
     planId: 'low_income',
+    priceId: 'price_xxxxxxxxxxxxxx_lowincome', // Replace with your Stripe Price ID
   },
 ];
 
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
+
 export default function PricingPage() {
   const [activeSubscription, setActiveSubscription] = useState<string | null>(null);
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const { toast } = useToast();
+  const { user, isFreeTier } = useAuth();
   const router = useRouter();
-  const { isFreeTier } = useAuth();
 
   useEffect(() => {
+    // In a real app, you would fetch subscription status from your backend.
     const subscription = localStorage.getItem('justiceBotSubscription');
     setActiveSubscription(subscription);
-  }, []);
 
-  const handleChoosePlan = (planId: string) => {
-    // In a real app, this would redirect to a payment provider.
-    // Here, we simulate a successful payment and subscription update.
-    localStorage.setItem('justiceBotSubscription', planId);
-    setActiveSubscription(planId);
-    toast({
-      title: 'Plan Activated!',
-      description: `You have successfully subscribed. All features are now unlocked.`,
-    });
-    router.push('/dashboard/generate-form');
+    // Check for query params from Stripe redirect
+    const query = new URLSearchParams(window.location.search);
+    if (query.get('success')) {
+      toast({
+        title: 'Payment Successful!',
+        description: 'Thank you for your purchase. Your plan is now active.',
+      });
+      // Here you would typically update the user's subscription status in your database
+      // For this example, we'll use local storage.
+      const planId = query.get('plan_id');
+      if (planId) {
+        localStorage.setItem('justiceBotSubscription', planId);
+        setActiveSubscription(planId);
+      }
+      router.replace('/dashboard/billing');
+    }
+
+    if (query.get('canceled')) {
+      toast({
+        title: 'Payment Canceled',
+        description: 'Your payment was not processed. Please try again if you wish to subscribe.',
+        variant: 'destructive',
+      });
+      router.replace('/dashboard/billing');
+    }
+  }, [router, toast]);
+
+
+  const handleChoosePlan = async (priceId: string, planId: string) => {
+    if (!user) {
+        toast({ title: 'Please log in', description: 'You must be logged in to make a purchase.', variant: 'destructive'});
+        return;
+    }
+
+    setLoadingPlan(planId);
+
+    try {
+        const { sessionId, error } = await createCheckoutSession(priceId, user.uid, planId);
+
+        if (error || !sessionId) {
+            throw new Error(error || 'Could not create a checkout session.');
+        }
+
+        const stripe = await stripePromise;
+        if (!stripe) throw new Error('Stripe.js has not loaded yet.');
+
+        const { error: stripeError } = await stripe.redirectToCheckout({ sessionId });
+        
+        if (stripeError) {
+            throw stripeError;
+        }
+
+    } catch (error: any) {
+         toast({
+            title: 'An Error Occurred',
+            description: error.message || 'Failed to initiate the payment process. Please try again.',
+            variant: 'destructive',
+        });
+    } finally {
+        setLoadingPlan(null);
+    }
   };
 
   if (isFreeTier) {
@@ -140,11 +204,11 @@ export default function PricingPage() {
             <CardFooter>
               <Button 
                 className="w-full" 
-                onClick={() => handleChoosePlan(tier.planId)}
-                disabled={activeSubscription === tier.planId || tier.planId === 'low_income'}
+                onClick={() => handleChoosePlan(tier.priceId, tier.planId)}
+                disabled={loadingPlan === tier.planId || activeSubscription === tier.planId || tier.planId === 'low_income'}
                 variant={tier.isPopular ? 'default' : 'outline'}
               >
-                {activeSubscription === tier.planId ? 'Current Plan' : 'Choose Plan'}
+                {loadingPlan === tier.planId ? <Loader2 className="animate-spin" /> : activeSubscription === tier.planId ? 'Current Plan' : 'Choose Plan'}
               </Button>
             </CardFooter>
           </Card>
