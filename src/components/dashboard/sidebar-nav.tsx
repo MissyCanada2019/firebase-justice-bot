@@ -23,6 +23,8 @@ import {
   FileSearch,
   MapPin,
   Library,
+  MessageCircle,
+  FolderOpen,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -32,9 +34,19 @@ import { Icons } from '../icons';
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: Home },
   {
+    href: '/dashboard/ask-justicebot',
+    label: 'Ask JusticeBot',
+    icon: MessageCircle,
+  },
+  {
     href: '/dashboard/submit-dispute',
     label: 'Submit Dispute',
     icon: FileText,
+  },
+  {
+    href: '/dashboard/evidence-locker',
+    label: 'Evidence Locker',
+    icon: FolderOpen,
   },
   {
     href: '/dashboard/timeline',

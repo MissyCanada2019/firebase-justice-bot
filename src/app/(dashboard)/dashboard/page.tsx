@@ -18,16 +18,33 @@ import {
   FileSearch,
   MapPin,
   Library,
+  MessageCircle,
+  FolderOpen,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 const features = [
   {
+    title: 'Ask JusticeBot',
+    description: 'Chat with an AI assistant about your case or legal questions.',
+    icon: MessageCircle,
+    href: '/dashboard/ask-justicebot',
+    isPrimary: true,
+  },
+  {
     title: 'Submit a Dispute',
-    description: 'Upload your case documents and evidence for analysis.',
+    description: 'Get an AI assessment of your case and suggested next steps.',
     icon: FileText,
     href: '/dashboard/submit-dispute',
+    isPrimary: true,
+  },
+  {
+    title: 'Evidence Locker',
+    description: 'Upload and manage all your case-related evidence files.',
+    icon: FolderOpen,
+    href: '/dashboard/evidence-locker',
+    isPrimary: true,
   },
   {
     title: 'Legal Timeline',
@@ -105,7 +122,7 @@ export default function DashboardPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {features.map((feature) => (
-          <Card key={feature.title} className="flex flex-col">
+          <Card key={feature.title} className={`flex flex-col ${feature.isPrimary ? 'border-primary' : ''}`}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-lg font-medium font-headline">
                 {feature.title}
@@ -118,7 +135,7 @@ export default function DashboardPage() {
               </p>
             </CardContent>
             <div className="p-6 pt-0">
-              <Button asChild className="w-full">
+              <Button asChild className="w-full" variant={feature.isPrimary ? 'default' : 'outline'}>
                 <Link href={feature.href}>
                   Go to Tool <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
