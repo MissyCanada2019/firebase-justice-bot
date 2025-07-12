@@ -11,7 +11,7 @@ import {
   CardFooter,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, CreditCard, Loader2 } from 'lucide-react';
+import { Check, CreditCard, Loader2, Lock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -32,7 +32,7 @@ const pricingTiers = [
     description: 'One legal form download (e.g., T2, HRTO-1).',
     features: ['One-time purchase', 'Form remains unlocked permanently', 'Ideal for single-use needs'],
     planId: 'single',
-    priceId: 'price_1PgTrDL0pLShFbLtnJLeB37a', // Replace with your Stripe Price ID
+    priceId: 'price_1PgTrDL0pLShFbLtnJLeB37a', 
   },
   {
     name: 'Monthly Plan',
@@ -42,7 +42,7 @@ const pricingTiers = [
     features: ['Unlimited form generation', 'Unlimited PDF downloads', 'Access all legal summary tools', 'Priority AI access'],
     isPopular: true,
     planId: 'monthly',
-    priceId: 'price_1PgTqkL0pLShFbLtHl4eZzqt', // Replace with your Stripe Price ID
+    priceId: 'price_1PgTqkL0pLShFbLtHl4eZzqt', 
   },
   {
     name: 'Annual Plan',
@@ -51,7 +51,7 @@ const pricingTiers = [
     description: 'The best value for long-term needs.',
     features: ['All features from Monthly', '365 days of access', 'Significant savings over monthly'],
     planId: 'annual',
-    priceId: 'price_1PgTqkL0pLShFbLtUaTJr9HZ', // Replace with your Stripe Price ID
+    priceId: 'price_1PgTqkL0pLShFbLtUaTJr9HZ',
   },
    {
     name: 'Low-Income Verified',
@@ -60,7 +60,7 @@ const pricingTiers = [
     description: 'Full access for verified users.',
     features: ['All features from Annual', 'Requires verification (coming soon)', 'Our commitment to access to justice'],
     planId: 'low_income',
-    priceId: 'price_1PgTqkL0pLShFbLtK25mY7t4', // Replace with your Stripe Price ID
+    priceId: 'price_1PgTqkL0pLShFbLtK25mY7t4',
   },
 ];
 
@@ -206,7 +206,7 @@ export default function PricingPage() {
                 ))}
               </ul>
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex-col items-stretch gap-2">
               <Button 
                 className="w-full" 
                 onClick={() => handleChoosePlan(tier.priceId, tier.planId)}

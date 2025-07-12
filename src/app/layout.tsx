@@ -24,7 +24,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
-        <Script src="https://www.google.com/recaptcha/enterprise.js?render=6LdDBn4rAAAAADuEa2UqVQRkdrHRD-25aqWhWaYj" strategy="lazyOnload" />
+        <Script 
+          src={`https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`} 
+          strategy="lazyOnload" 
+        />
       </head>
       <body className="font-body antialiased min-h-screen">
         <AuthProvider>

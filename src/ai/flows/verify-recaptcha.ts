@@ -38,11 +38,14 @@ const verifyRecaptchaFlow = ai.defineFlow(
   },
   async ({ token, expectedAction }) => {
     try {
-        const projectId = 'justicebotai'; // Use the correct project ID directly
-        const siteKey = "6LdDBn4rAAAAADuEa2UqVQRkdrHRD-25aqWhWaYj";
+        const projectId = process.env.GOOGLE_PROJECT_ID;
+        const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
         if (!projectId) {
-            throw new Error('Firebase Project ID is not configured.');
+            throw new Error('GOOGLE_PROJECT_ID is not configured in environment variables.');
+        }
+        if (!siteKey) {
+            throw new Error('NEXT_PUBLIC_RECAPTCHA_SITE_KEY is not configured in environment variables.');
         }
 
         const auth = new GoogleAuth({

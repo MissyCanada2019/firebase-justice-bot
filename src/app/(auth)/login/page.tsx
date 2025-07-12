@@ -73,7 +73,9 @@ export default function LoginPage() {
       try {
         window.grecaptcha.enterprise.ready(async () => {
           try {
-            const token = await window.grecaptcha.enterprise.execute('6LdDBn4rAAAAADuEa2UqVQRkdrHRD-25aqWhWaYj', {action: 'LOGIN'});
+            const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+            if (!siteKey) throw new Error("reCAPTCHA site key not found.");
+            const token = await window.grecaptcha.enterprise.execute(siteKey, {action: 'LOGIN'});
             if (token) {
               await signInWithGoogle(token);
             }

@@ -3,13 +3,12 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD-qlOFRqRIl7Qpl90MevvN2nRVSBXYInc",
-  authDomain: "justicebotai.firebaseapp.com",
-  projectId: "justicebotai",
-  storageBucket: "justicebotai.firebasestorage.app",
-  messagingSenderId: "259991262013",
-  appId: "1:259991262013:web:32a1e42fa3484e9a676b54",
-  measurementId: "G-GN30KPMDCH"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 
