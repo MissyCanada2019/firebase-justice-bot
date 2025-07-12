@@ -1,5 +1,6 @@
 
-'use client';import React from 'react';
+'use client';import React from 'react';import Commit from '@/components/commit';
+
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
