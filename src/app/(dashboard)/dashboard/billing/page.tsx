@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Check, CreditCard, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
 import { Badge } from '@/components/ui/badge';
@@ -31,7 +31,7 @@ const pricingTiers = [
     description: 'One legal form download (e.g., T2, HRTO-1).',
     features: ['One-time purchase', 'Form remains unlocked permanently', 'Ideal for single-use needs'],
     planId: 'single',
-    priceId: 'price_xxxxxxxxxxxxxx_single', // Replace with your Stripe Price ID
+    priceId: 'price_1PgTrDL0pLShFbLtnJLeB37a', // Replace with your Stripe Price ID
   },
   {
     name: 'Monthly Plan',
@@ -41,7 +41,7 @@ const pricingTiers = [
     features: ['Unlimited form generation', 'Unlimited PDF downloads', 'Access all legal summary tools', 'Priority AI access'],
     isPopular: true,
     planId: 'monthly',
-    priceId: 'price_xxxxxxxxxxxxxx_monthly', // Replace with your Stripe Price ID
+    priceId: 'price_1PgTqkL0pLShFbLtHl4eZzqt', // Replace with your Stripe Price ID
   },
   {
     name: 'Annual Plan',
@@ -50,7 +50,7 @@ const pricingTiers = [
     description: 'The best value for long-term needs.',
     features: ['All features from Monthly', '365 days of access', 'Significant savings over monthly'],
     planId: 'annual',
-    priceId: 'price_xxxxxxxxxxxxxx_annual', // Replace with your Stripe Price ID
+    priceId: 'price_1PgTqkL0pLShFbLtUaTJr9HZ', // Replace with your Stripe Price ID
   },
    {
     name: 'Low-Income Verified',
@@ -59,7 +59,7 @@ const pricingTiers = [
     description: 'Full access for verified users.',
     features: ['All features from Annual', 'Requires verification (coming soon)', 'Our commitment to access to justice'],
     planId: 'low_income',
-    priceId: 'price_xxxxxxxxxxxxxx_lowincome', // Replace with your Stripe Price ID
+    priceId: 'price_1PgTqkL0pLShFbLtK25mY7t4', // Replace with your Stripe Price ID
   },
 ];
 
@@ -73,22 +73,23 @@ export default function PricingPage() {
   const { toast } = useToast();
   const { user, isFreeTier } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     // In a real app, you would fetch subscription status from your backend.
+    // For this example, we'll use local storage.
     const subscription = localStorage.getItem('justiceBotSubscription');
     setActiveSubscription(subscription);
 
     // Check for query params from Stripe redirect
-    const query = new URLSearchParams(window.location.search);
-    if (query.get('success')) {
+    if (searchParams.get('success')) {
       toast({
         title: 'Payment Successful!',
         description: 'Thank you for your purchase. Your plan is now active.',
       });
       // Here you would typically update the user's subscription status in your database
       // For this example, we'll use local storage.
-      const planId = query.get('plan_id');
+      const planId = searchParams.get('plan_id');
       if (planId) {
         localStorage.setItem('justiceBotSubscription', planId);
         setActiveSubscription(planId);
@@ -96,7 +97,7 @@ export default function PricingPage() {
       router.replace('/dashboard/billing');
     }
 
-    if (query.get('canceled')) {
+    if (searchParams.get('canceled')) {
       toast({
         title: 'Payment Canceled',
         description: 'Your payment was not processed. Please try again if you wish to subscribe.',
@@ -104,12 +105,13 @@ export default function PricingPage() {
       });
       router.replace('/dashboard/billing');
     }
-  }, [router, toast]);
+  }, [searchParams, router, toast]);
 
 
   const handleChoosePlan = async (priceId: string, planId: string) => {
     if (!user) {
         toast({ title: 'Please log in', description: 'You must be logged in to make a purchase.', variant: 'destructive'});
+        router.push('/login');
         return;
     }
 
@@ -205,10 +207,10 @@ export default function PricingPage() {
               <Button 
                 className="w-full" 
                 onClick={() => handleChoosePlan(tier.priceId, tier.planId)}
-                disabled={loadingPlan === tier.planId || activeSubscription === tier.planId || tier.planId === 'low_income'}
+                disabled={loadingPlan === tier.planId || activeSubscription === tier.planId || (tier.planId === 'low_income' && !isFreeTier) /* Disable low income unless verified */}
                 variant={tier.isPopular ? 'default' : 'outline'}
               >
-                {loadingPlan === tier.planId ? <Loader2 className="animate-spin" /> : activeSubscription === tier.planId ? 'Current Plan' : 'Choose Plan'}
+                {loadingPlan === tier.planId ? <Loader2 className="animate-spin" /> : activeSubscription === tier.planId ? 'Current Plan' : (tier.planId === 'low_income' ? 'Coming Soon' : 'Choose Plan')}
               </Button>
             </CardFooter>
           </Card>

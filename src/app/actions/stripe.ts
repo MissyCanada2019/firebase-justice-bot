@@ -2,8 +2,13 @@
 'use server';
 
 import Stripe from 'stripe';
+import { headers } from 'next/headers';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error('STRIPE_SECRET_KEY is not set in the environment variables');
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-06-20',
   typescript: true,
 });
@@ -14,7 +19,11 @@ export async function createCheckoutSession(
   planId: string
 ) {
   try {
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+    // Get the host from the headers, which is the most reliable way to
+    // get the base URL on the server.
+    const host = headers().get('host');
+    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+    const appUrl = `${protocol}://${host}`;
 
     // A one-time purchase is a different mode than a subscription
     const mode = planId === 'single' ? 'payment' : 'subscription';
