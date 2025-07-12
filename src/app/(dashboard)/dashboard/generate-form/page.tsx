@@ -240,7 +240,7 @@ export default function GenerateFormPage() {
             </Card>
         )}
 
-        {loading && formContent && (
+        {loading && (
             <Card>
                 <CardHeader>
                     <Skeleton className="h-6 w-1/3" />
