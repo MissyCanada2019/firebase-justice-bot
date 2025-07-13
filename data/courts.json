@@ -1,0 +1,20 @@
+{
+  "courts": [
+    {
+      "id": "court_001",
+      "name": "Sample Civil Court",
+      "location": "123 Main Street, Anytown, USA",
+      "jurisdiction": "Any State, Civil",
+      "filing_method": ["In Person", "Mail"],
+      "hours": "9:00 AM - 4:30 PM"
+    },
+    {
+      "id": "court_002",
+      "name": "Sample Family Court",
+      "location": "456 Oak Avenue, Otherville, USA",
+      "jurisdiction": "Any State, Family",
+      "filing_method": ["In Person", "Online Portal"],
+      "hours": "8:30 AM - 5:00 PM"
+    }
+  ]
+}

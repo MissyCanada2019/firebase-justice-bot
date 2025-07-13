@@ -1,10 +1,10 @@
-
-'use client';import React from 'react';import Commit from '@/components/commit';
+'use client';
+import React, { createElement } from 'react';
 
 
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '/home/user/studio/src/components/ui/button'; // Assuming this path is correct now
+import { Card, CardContent, CardHeader, CardTitle } from '/home/user/studio/src/components/ui/card';
 import { ArrowRight, Gavel, Scale, ShieldCheck } from 'lucide-react';
 import SiteHeader from '@/components/site-header';
 import { useAuth } from '@/hooks/use-auth';
@@ -23,26 +23,26 @@ export default function Home() {
 
   const features = [
     {
-      icon: <Gavel className="h-8 w-8 text-primary" />,
+      icon: createElement(Gavel, { className: "h-8 w-8 text-primary" }),
       title: 'Charter-Informed Analysis',
       description: 'Analyze legal documents with integrated Canadian Charter of Rights and Freedoms references.',
     },
     {
-      icon: <Scale className="h-8 w-8 text-primary" />,
+      icon: createElement(Scale, { className: "h-8 w-8 text-primary" }),
       title: 'Broad Legal Coverage',
       description: 'AI-powered summaries for Family, Criminal, and Landlord Tenant Board (LTB) laws.',
     },
     {
-      icon: <ShieldCheck className="h-8 w-8 text-primary" />,
+      icon: createElement(ShieldCheck, { className: "h-8 w-8 text-primary" }),
       title: 'Empowering Self-Advocates',
       description: 'Generate arguments and understand your rights and obligations with confidence.',
     },
   ];
 
   return (
-    <div className="relative isolate min-h-screen flex flex-col">
-      <SiteHeader />
-      <main className="flex-grow">
+    React.createElement("div", { className: "relative isolate min-h-screen flex flex-col" },
+      React.createElement(SiteHeader, null),
+      <main className="flex-grow overflow-auto">
         <div className="relative px-6 lg:px-8">
           <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
             <div className="text-center">
@@ -54,9 +54,7 @@ export default function Home() {
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Button asChild size="lg">
-                   <Link href="/signup">
-                    Get Started <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+                  <Link href="/signup">Get Started <ArrowRight className="ml-2 h-5 w-5" /></Link>
                 </Button>
                 <Button asChild variant="link" size="lg">
                   <Link href="/about">
@@ -85,14 +83,14 @@ export default function Home() {
             <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
               <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                 {features.map((feature) => (
-                  <Card key={feature.title} className="hover:shadow-lg transition-shadow duration-300">
+                  React.createElement(Card, { key: feature.title, className: "hover:shadow-lg transition-shadow duration-300" },
                     <CardHeader>
                       <div className="flex items-center gap-4">
                         {feature.icon}
                         <CardTitle className="font-headline text-xl">{feature.title}</CardTitle>
                       </div>
                     </CardHeader>
-                    <CardContent>
+                    React.createElement(CardContent, null,
                       <p className="text-foreground/80">{feature.description}</p>
                     </CardContent>
                   </Card>
