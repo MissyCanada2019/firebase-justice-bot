@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Pricing - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <h1 class="display-4 text-dark mb-3">
+                    <i class="feather-dollar-sign text-danger me-3"></i>
+                    Fair Legal Justice for All Canadians
+                </h1>
+                <p class="lead text-muted">
+                    Protected by the Canadian Charter of Rights and Freedoms Section 7:
+                    <em>"Everyone has the right to life, liberty and security of the person"</em>
+                </p>
+                <div class="alert alert-warning mt-3">
+                    <i class="feather-info me-2"></i>
+                    <strong>Coming Soon:</strong> These pricing plans will be available after our pilot testing phase is complete. Currently in free testing with limited 1000 user pilot program.
+                </div>
+            </div>
+
+            <!-- Low Income Assistance -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card border-warning">
+                        <div class="card-header bg-warning text-dark text-center">
+                            <h3><i class="feather-heart me-2"></i>Low Income Assistance Program</h3>
+                            <p class="mb-0">Equal access to justice for all Canadians</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h4 class="text-warning">$15.99 CAD/year - Unlimited Access</h4>
+                                    <p class="mb-3">Special pricing for low-income Canadians who qualify through:</p>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="feather-check text-success me-2"></i><strong>Ontario:</strong> OSAP or Ontario Works recipients</li>
+                                        <li class="mb-2"><i class="feather-check text-success me-2"></i><strong>All Provinces:</strong> Provincial income assistance equivalents</li>
+                                        <li class="mb-2"><i class="feather-check text-success me-2"></i><strong>Benefits:</strong> Full unlimited access to all features</li>
+                                        <li class="mb-2"><i class="feather-check text-success me-2"></i><strong>Support:</strong> Priority assistance for vulnerable populations</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <a href="{{ url_for('low_income_application') }}" class="btn btn-warning btn-lg">
+                                        Apply for Low Income Access
+                                    </a>
+                                    <p class="small text-muted mt-2">Proof of income assistance required</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regular Pricing Plans -->
+            <div class="row">
+                <!-- Per Document Plan -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-info">
+                        <div class="card-header bg-info text-white text-center">
+                            <h3>Per Document</h3>
+                            <h2 class="mb-0">$5.99 CAD</h2>
+                            <small>Pay as you go</small>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Single document generation</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>AI-powered evidence analysis</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Legal pathway recommendations</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Court form pre-filling</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>PDF creation and download</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Basic email support</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-info btn-lg" disabled>
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Subscription -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-primary">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h3>Monthly Subscription</h3>
+                            <h2 class="mb-0">$19.99 CAD</h2>
+                            <small>Best for regular users</small>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Unlimited document generation</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Advanced AI evidence analysis</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Comprehensive legal pathways</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>All court forms pre-filled</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>PDF creation and printing</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Priority email support</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Legal resource database access</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary btn-lg" disabled>
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Yearly Unlimited -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-success">
+                        <div class="card-header bg-success text-white text-center">
+                            <h3>Yearly Unlimited</h3>
+                            <h2 class="mb-0">$99.99 CAD</h2>
+                            <small>Best value - 58% savings</small>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Unlimited document generation</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Premium AI evidence analysis</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Advanced legal pathways</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>All court forms pre-filled</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>PDF creation and printing</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Priority support & phone calls</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Complete legal resource access</li>
+                                <li class="mb-2"><i class="feather-star text-warning me-2"></i>Early access to new features</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-success btn-lg" disabled>
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title text-center mb-4">What You Get With Every Plan</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="feather-shield text-primary me-2"></i>Canadian Charter compliance verification</li>
+                                        <li class="mb-2"><i class="feather-file-text text-primary me-2"></i>Professional court-ready documents</li>
+                                        <li class="mb-2"><i class="feather-brain text-primary me-2"></i>AI-powered legal analysis</li>
+                                        <li class="mb-2"><i class="feather-map text-primary me-2"></i>Province-specific legal guidance</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2"><i class="feather-download text-primary me-2"></i>Instant PDF downloads</li>
+                                        <li class="mb-2"><i class="feather-printer text-primary me-2"></i>Print-ready formatting</li>
+                                        <li class="mb-2"><i class="feather-lock text-primary me-2"></i>PIPEDA compliant data security</li>
+                                        <li class="mb-2"><i class="feather-mail text-primary me-2"></i>Direct support to teresa@justice-bot.com</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Disclaimer -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="alert alert-warning">
+                        <h5><i class="feather-alert-triangle me-2"></i>Important Legal Notice</h5>
+                        <p class="mb-0">
+                            SmartDispute.ai provides legal information, not legal advice. We are not lawyers and do not provide legal representation. 
+                            All documents generated are informational tools to assist with self-representation. Users should consult with qualified 
+                            legal professionals for specific legal advice regarding their circumstances.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

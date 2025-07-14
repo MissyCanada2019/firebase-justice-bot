@@ -1,0 +1,151 @@
+LEGISinfo is your primary source of information regarding legislation before Parliament. Stay up to date with recently introduced bills in the Senate or House of Commons. Access a wide range of information, such as:
+- The full text of the most recent version of a bill and any previous versions of the bill.
+- The bill's life cycle, from the day it is introduced for first reading until it receives royal assent.
+- Links to the relevant content in official parliamentary publications associated with the passage of a bill.
+Browse all bills from previous sessions going back to the 37th Parliament in 2001. (Note: Essential data, such as bill numbers, titles and the text of most bills considered by Parliament between 1994 and 2000 – the 35th and 36th Parliaments – are also available.)
+LEGISinfo is a collaborative effort of the Senate, the House of Commons, and the Library of Parliament.
+Using LEGISinfo
+Main pages and features
+Overview
+Overview provides a first glance at recently introduced bills, showing the last three sitting days on which a bill was introduced in either chamber. It also shows what bills are on today's agenda, if any.
+To preview a particular bill, hover your cursor over the bill number. This will display a pop-up box with the bill number, its parliament and session, short and long title, last stage completed and a progress bar for quick reference.
+Select Bills in the current session to search the full list of bills introduced in the current parliamentary session.
+Bills
+Bills allows you to search for bills going back to 1994, using a series of refiners. By default, the page provides the full list of bills introduced in the current session.
+Legislation at a glance
+Legislation at a glance provides a brief summary of the status of all bills under consideration in either chamber during a parliamentary session. Information is available for the current session, back to the 1st session of the 37th Parliament in 2001.
+Bill text and information
+Click on the bill number to view more details about, and to view the text of, a particular bill. Earlier versions of the bill, if any, will be available in the additional tabs of the publication.
+The individual bill pages indicate the bill type, sponsor and current status. They are further subdivided into three sections: Progress, Details and About.
+Icons
+The following icons are shown throughout this website. They represent the various stages that a bill takes to be passed into law. Red is used to represent a stage in the Senate, green is used to represent a stage in the House of Commons and blue is used to represent royal assent. A plain grey icon indicates that a bill has not reached the stage, while a grey icon with a “no symbol” indicates the stage at which the bill was defeated or not proceeded with.
+Major stages
+- First reading in the Senate
+- Second reading in the Senate
+- Consideration in committee in the Senate
+- Report stage in the Senate
+- Third reading in the Senate
+- First reading in the House of Commons
+- Second reading in the House of Commons
+- Consideration in committee in the House of Commons
+- Report stage in the House of Commons
+- Third reading in the House of Commons
+- Royal assent
+Other stages
+- Senate pre-study
+- Referral to committee before second reading in the House of Commons
+- Report stage and second reading in the House of Commons
+- Bill reinstated from previous session
+Stage states
+The following states can apply to both the Senate and the House of Commons stages. The examples below show what can appear for the House of Commons.
+- The bill completed this stage
+- The bill is currently at this stage, and activity is in progress
+- The bill reached this stage, but no further activity has occurred
+- The bill did not complete this stage
+- The bill has not reached this stage
+Searching
+LEGISinfo contains powerful search tools. Several options are provided for searching bills:
+- Keyword or text-based searches can be performed using the search box located at the top right of each page.
+- Searches can be performed using the selection of drop-down refiners provided at the top of the Bills page.
+- Searches can also use a combination of keywords and refiners.
+Keyword searches
+To get started, enter a bill number, title or sponsor, or a keyword, in the search box. Keyword searches are neither case- nor accent-sensitive.
+Note: Keyword searches, by default, will return results from the current parliamentary session. To search for historical bills, start from the Bills page, select a past session or “All” from the Session drop-down menu, and then enter your keyword.
+You can improve your search results by using operators and symbols as outlined below.
+| Operator | Symbol | Description |
+|---|---|---|
+| Phrases | " " |
+To search for an exact phrase, enclose all the words in double quotes. For example, use "income tax" or "budget implementation act” to retrieve bills containing those specific phrases and not just the individual terms. |
+| Wildcard | * |
+Use * (asterisk) to represent any number of characters (including zero) after the insertion point. For example, govern* will search for bills containing the words governance, governing, government or governor. |
+| Included terms | AND & + |
+Use AND or & (ampersand) or + (plus sign) between words to search for bills that contain both terms. For example, fisheries AND shipping or fisheries & shipping or fisheries + shipping will retrieve bills that contain both fishing and shipping. Note: AND is the default operator and is not required. Searches using "fisheries + shipping" and "fisheries shipping" will yield the same results. |
+| Alternate terms | OR | |
+Use OR or | (vertical line) between words to search for bills that contain either terms. For example, trade OR commerce or trade | commerce will retrieve results that contain either trade, commerce, or both terms. |
+| Excluded terms | NOT ! - |
+Use NOT, ! (exclamation point) or - (minus sign) in front of a word or phrase to indicate that the term must not appear in the bill. For example, broadcasting NOT telecommunications, broadcasting !telecommunications, broadcasting -telecommunications will search for bills that contain the word broadcasting but not telecommunications. |
+| Parentheses | ( ) |
+Use parentheses to determine the order of searches using a combination of operators or symbols. The terms and operators inside the parentheses are done first. For example (health OR climate) AND emergency would return bills with the following combinations of keywords: either health and emergency, climate and emergency, and/or containing health, climate and emergency. Placed in another location, health OR (climate AND emergency) would return bills with the following combinations of keywords: either health (only), climate and emergency, and/or containing health, climate and emergency. |
+| Proximity Search | ~ |
+Use proximity searches to find terms that are near each other in a document. Insert a tilde (~) symbol at the end of a phrase followed by the number of words to specify the proximity limit of each term. For example, "tax fees"~6 would find the terms "tax" and "fees" within 6 words of each other. |
+Using refiners
+From the Bills page, you can select refiners from the drop-down menus to narrow the focus of your search.
+| Refiner | Description |
+|---|---|
+| Session | To search from the 1st session of the 35th Parliament to the current session, or to include all sessions since the 1st session of the 35th Parliament. |
+| Originating chamber | The chamber in which the bill was first introduced (i.e., the Senate or House of Commons). |
+| Bill type | The form of the bill, such as a House government bill, Senate public bill, private member's bill, etc. |
+| Political affiliation | The political party of the sponsor of the bill. |
+| Date range | To search for bills that were active in a specific date range within the selected session. |
+| Cabinet | The prime minister in power at the time that the bill was introduced. |
+| Current status | The status of the bill during the current session, or the status at dissolution of a previous session (i.e., royal assent received, bill defeated, etc.). |
+| Sponsor name | The parliamentarian (minister, senator, or member) that introduced the bill. |
+| Committee | The parliamentary committee that studied the bill. |
+Additional refiners for keyword searches
+Further refine your keyword search by using the two switches that appear above your search results.
+By default, the search tool will search for the keywords in the latest version of the text of the bill.
+Turn on the Bill title only switch to limit your results to those that only include your keyword in the title of the bill.
+Turn on the All bill versions switch to expand your keyword search to earlier versions of the bill (i.e. at first reading).
+Sorting and displaying your results
+Search results can be sorted by relevancy, bill number, session, or latest activity.
+Select the "Tile View" button to display the results in a tile format or the "List View" button to display them in a list format.
+Open data
+Exportable Open datasets in XML (Extensible Markup Language) and JSON (JavaScript Object Notation) file formats are available from the following pages:
+- Overview: see Recently introduced bills and Bills on today's agenda (when available)
+- Bills: build a customized search and export your search results
+- Legislation at a glance: select a session to export
+- Specific bills: select any bill to export the data and to track updates to current bills
+Use the JSON and XML buttons on the pages described above to export the data.
+A customizable RSS feed is also available on the Bills page. Create a search and click the RSS icon to access the feed.
+For more information and additional datasets, see Open data on the House of Commons website.
+Understanding legislation and bills
+Legislative process
+A bill is a proposal to create a new law, or to change or repeal an existing one. For a bill to become a law, it must go through specific stages in both the Senate and the House of Commons. The bill can originate in either chamber and the process in each chamber is similar.
+For additional information on the legislative process, please see the following resources:
+- Procedural Note 5: 'Legislative Process' (Senate of Canada)
+- 'Appendix I: Terminology' in Rules of the Senate of Canada (Senate of Canada)
+- 'Legislative Process' in Our Procedure (House of Commons)
+- Glossary of Parliamentary Procedure (House of Commons)
+- The Legislative Process: From Government Policy to Proclamation (Library of Parliament)
+Once a bill passes into law, it is assigned a chapter number in the Annual Statues. For the list of annual statues and their corresponding bill numbers since 2001, see the Justice Laws Website.
+Find coming into force information (the date the statute, or part of it, becomes enforceable) by consulting the Table of Public Statutes and Responsible Ministers or by searching the Orders in Council site.
+Types of bills
+There are two main types of bills: public and private. Public bills are those that relate to matters of public policy. Private bills, in contrast, confer particular powers, benefits or exemptions upon a specific person or group of persons.
+Public bills
+Public bills are classified as either government bills or non-government bills.
+| Type of public bill | Description |
+|---|---|
+| Government bills |
+In practice, most government bills are introduced in the House of Commons. However, they can also be introduced in the Senate. In the House of Commons, government bills are introduced by a Minister of the Crown. They are drafted by the Department of Justice on the instructions of Cabinet. In the Senate, government bills are usually introduced by the Representative of the Government in the Senate, although another senator typically assumes sponsorship of the bill as it moves through the legislative process. |
+| Pro forma bills |
+Pro forma bills are introduced at the beginning of each session for the sole purpose of asserting the right of the Senate and the House of Commons to conduct their proceedings. In the Senate, a bill is introduced by the Representative of the Government in the Senate as S-1, An Act Relating to Railways. In the House of Commons, another such bill is introduced by the Prime Minister as C-1, An Act respecting the Administration of Oaths of Office. The bills are numbered but the texts are not printed. They are given first reading, but not second reading. |
+| Appropriation bills |
+Appropriation bills are introduced in the House of Commons by a Minister of the Crown, usually the President of the Treasury Board, in response to the adoption of the main or supplementary estimates or interim supply. They are normally entitled, An Act for Granting to Her Majesty Certain Sums of Money for the Federal Public Administration. An appropriation bill cannot originate in the Senate. |
+| Senate public bills | Senate public bills are introduced in the Senate by individual senators, to address matters of broad concern and of national or regional interest. |
+| Private members' bills | Private members' bills are bills introduced in the House of Commons by individual members who are not Cabinet ministers, typically dealing with matters of public policy under federal jurisdiction. |
+Private bills
+Private bills are designed to provide a benefit or exemption to an individual or group from the application of the law, such as a bill to incorporate a private company. A private bill can only be introduced by a senator or a member who is not a member of the Cabinet. Private bills are almost always introduced in the Senate.
+Bill numbering
+When a bill is introduced, it is assigned a number based on its chronological order of introduction in its chamber of origin. Bills introduced in the Senate start with the letter S, and those introduced in the House of Commons start with the letter C.
+Government bills are numbered consecutively from 1 to 200, while Senate public bills and private members' bills are numbered consecutively from 201 to 1000.
+Because the House of Commons' standing orders state that private members' bills must continue from session to session within a Parliament, their number remains unchanged throughout a Parliament. If a private member's bill received royal assent in a previous session, that number will not be displayed in the list of bills for the current session.
+Private bills, which are almost always introduced in the Senate, are numbered beginning at 1001.
+Before the start of the 39th Parliament in April 2006, bills originating in the Senate were numbered consecutively beginning at S-1, regardless of bill type.
+Contact us
+General information
+Please email your comments or questions to info@parl.gc.ca.
+Please submit any comments or questions by mail or telephone to:
+Library of Parliament
+Information Service
+Parliament of Canada
+Ottawa, Ontario
+K1A 0A9
+Telephone:
+1-866-599-4999 or
+(613) 992-4793
+TTY:
+(613) 995-2266
+Technical support
+In the event you encounter technical difficulties, please contact infonet@parl.gc.ca.
+Accessibility
+LEGISinfo is committed to providing positive experiences for all users. For more information, please see Accessibility on the House of Commons website.

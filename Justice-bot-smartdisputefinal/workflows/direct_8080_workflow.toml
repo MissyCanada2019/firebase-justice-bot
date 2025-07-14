@@ -1,0 +1,4 @@
+name = "Start application"
+command = "./start_direct_8080.sh"
+onBoot = true
+restartOn = { libraries = true, replit = false, input = false, exited = true, signal = true }

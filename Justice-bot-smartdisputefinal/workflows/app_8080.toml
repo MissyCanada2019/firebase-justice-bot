@@ -1,0 +1,4 @@
+name = "Start application"
+command = "gunicorn --bind 0.0.0.0:8080 --workers 1 --reload main:app"
+onBoot = true
+restartOn = { libraries = true, replit = false, input = false, exited = true, signal = true }

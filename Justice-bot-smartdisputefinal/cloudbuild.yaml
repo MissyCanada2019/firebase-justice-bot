@@ -1,0 +1,40 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/smartdispute-ai:$COMMIT_SHA', '.']
+  
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/smartdispute-ai:$COMMIT_SHA']
+  
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'smartdispute-ai'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/smartdispute-ai:$COMMIT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--port'
+      - '8080'
+      - '--allow-unauthenticated'
+      - '--memory'
+      - '1Gi'
+      - '--cpu'
+      - '1'
+      - '--set-env-vars'
+      - 'DATABASE_URL=${_DATABASE_URL}'
+
+images:
+  - 'gcr.io/$PROJECT_ID/smartdispute-ai:$COMMIT_SHA'
+
+substitutions:
+  _DATABASE_URL: '${DATABASE_URL}'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

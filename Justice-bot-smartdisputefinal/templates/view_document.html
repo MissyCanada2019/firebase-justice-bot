@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+
+{% block title %}View Document {{ document.document_id }} - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <!-- Document Header -->
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-primary text-white">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h3 class="mb-0">
+                                <i class="fas fa-file-contract me-2"></i>
+                                {{ document.document_type.replace('_', ' ').title() }}
+                            </h3>
+                            <p class="mb-0 mt-1">Document ID: <strong>{{ document.document_id }}</strong></p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <div class="btn-group" role="group">
+                                <a href="{{ url_for('download_document', document_id=document.document_id) }}" 
+                                   class="btn btn-light btn-sm">
+                                    <i class="fas fa-download me-1"></i>Download
+                                </a>
+                                <button type="button" class="btn btn-outline-light btn-sm" 
+                                        onclick="verifyDocumentSources('{{ document.document_id }}')">
+                                    <i class="fas fa-check-circle me-1"></i>Verify Sources
+                                </button>
+                                <a href="{{ url_for('generate_document') }}" class="btn btn-outline-light btn-sm">
+                                    <i class="fas fa-plus me-1"></i>Generate New
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Status and Metadata -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title text-primary">
+                                <i class="fas fa-info-circle me-2"></i>Document Status
+                            </h6>
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="badge bg-success me-2">{{ document.status.title() }}</span>
+                                <small class="text-muted">Generated {{ document.created_at.strftime('%B %d, %Y') }}</small>
+                            </div>
+                            {% if metadata.filing_deadline %}
+                            <div class="alert alert-warning alert-sm">
+                                <i class="fas fa-clock me-1"></i>
+                                <strong>Filing Deadline:</strong> {{ metadata.filing_deadline }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title text-primary">
+                                <i class="fas fa-dollar-sign me-2"></i>Filing Information
+                            </h6>
+                            {% if metadata.filing_fee %}
+                            <p class="mb-2">
+                                <strong>Filing Fee:</strong> ${{ "%.2f"|format(metadata.filing_fee) }} CAD
+                            </p>
+                            {% endif %}
+                            {% if metadata.court_jurisdiction %}
+                            <p class="mb-2">
+                                <strong>Court:</strong> {{ metadata.court_jurisdiction.replace('_', ' ').title() }}
+                            </p>
+                            {% endif %}
+                            {% if metadata.required_signatures %}
+                            <p class="mb-0">
+                                <strong>Signatures Required:</strong> {{ metadata.required_signatures|length }}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title text-primary">
+                                <i class="fas fa-shield-alt me-2"></i>Source Verification
+                            </h6>
+                            {% if verification_report %}
+                            <div class="d-flex align-items-center mb-2">
+                                {% if verification_report.verification_rate >= 90 %}
+                                <span class="badge bg-success me-2">Verified</span>
+                                {% elif verification_report.verification_rate >= 70 %}
+                                <span class="badge bg-warning me-2">Mostly Verified</span>
+                                {% else %}
+                                <span class="badge bg-danger me-2">Needs Review</span>
+                                {% endif %}
+                                <small class="text-muted">{{ "%.0f"|format(verification_report.verification_rate) }}% verified</small>
+                            </div>
+                            <small class="text-muted">
+                                {{ verification_report.verified_count }}/{{ verification_report.total_citations }} citations verified
+                            </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filing Instructions -->
+            {% if filing_instructions %}
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="fas fa-list-ol me-2"></i>Filing Instructions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ol class="mb-0">
+                        {% for instruction in filing_instructions %}
+                        <li class="mb-2">{{ instruction }}</li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Document Content -->
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-file-alt me-2"></i>Document Content
+                    </h5>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-outline-secondary" onclick="copyToClipboard()">
+                            <i class="fas fa-copy me-1"></i>Copy
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="printDocument()">
+                            <i class="fas fa-print me-1"></i>Print
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="documentContent" class="document-content">
+                        <pre class="legal-document">{{ document.document_content }}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Disclaimers -->
+            <div class="alert alert-warning border-left-warning mt-4">
+                <h6><i class="fas fa-exclamation-triangle me-2"></i>Important Legal Disclaimers</h6>
+                <ul class="mb-0 small">
+                    <li><strong>Review Required:</strong> This document should be reviewed by a qualified lawyer before filing</li>
+                    <li><strong>Source Verification:</strong> All legal citations should be independently verified</li>
+                    <li><strong>Court Rules:</strong> Ensure compliance with current court rules and procedures</li>
+                    <li><strong>No Legal Advice:</strong> This platform provides legal information, not legal advice</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.border-left-warning {
+    border-left: 4px solid #ffc107 !important;
+}
+
+.legal-document {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #000;
+    background: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    white-space: pre-wrap;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.document-content {
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+.alert-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.card-header {
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+
+@media print {
+    .btn-group, .alert, .card-header, nav, footer {
+        display: none !important;
+    }
+    
+    .legal-document {
+        max-height: none;
+        overflow: visible;
+        border: none;
+        box-shadow: none;
+    }
+    
+    .container {
+        max-width: none;
+        padding: 0;
+    }
+}
+</style>
+
+<script>
+function copyToClipboard() {
+    const documentText = document.querySelector('.legal-document').textContent;
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(documentText).then(function() {
+            showAlert('Document copied to clipboard!', 'success');
+        }).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            fallbackCopyToClipboard(documentText);
+        });
+    } else {
+        fallbackCopyToClipboard(documentText);
+    }
+}
+
+function fallbackCopyToClipboard(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        document.execCommand('copy');
+        showAlert('Document copied to clipboard!', 'success');
+    } catch (err) {
+        showAlert('Failed to copy document. Please select and copy manually.', 'error');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+function printDocument() {
+    window.print();
+}
+
+function verifyDocumentSources(documentId) {
+    const verifyBtn = event.target.closest('button');
+    const originalText = verifyBtn.innerHTML;
+    
+    verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Verifying...';
+    verifyBtn.disabled = true;
+    
+    fetch(`/verify_document_sources/${documentId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                showAlert('Verification failed: ' + data.error, 'error');
+            } else {
+                const rate = Math.round(data.verification_rate || 0);
+                showAlert(`Source verification complete: ${rate}% verified (${data.verified_count}/${data.total_citations} citations)`, 'success');
+                
+                // Update verification display
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        })
+        .catch(error => {
+            console.error('Verification error:', error);
+            showAlert('Verification failed. Please try again.', 'error');
+        })
+        .finally(() => {
+            verifyBtn.innerHTML = originalText;
+            verifyBtn.disabled = false;
+        });
+}
+
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type === 'error' ? 'danger' : 'success'} alert-dismissible fade show position-fixed`;
+    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.body.appendChild(alertDiv);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (alertDiv.parentNode) {
+            alertDiv.remove();
+        }
+    }, 5000);
+}
+
+// Auto-scroll to document content on load
+document.addEventListener('DOMContentLoaded', function() {
+    // Scroll document content area to top
+    const documentContent = document.querySelector('.document-content');
+    if (documentContent) {
+        documentContent.scrollTop = 0;
+    }
+});
+</script>
+{% endblock %}

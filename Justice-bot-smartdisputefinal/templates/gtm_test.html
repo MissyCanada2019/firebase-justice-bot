@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTM Test - SmartDispute.ai</title>
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M74HX4RT');
+    
+    console.log('GTM-M74HX4RT container initialized');
+    </script>
+    <!-- End Google Tag Manager -->
+    
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a1a; color: white; }
+        .test-button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 10px; cursor: pointer; }
+        .console { background: #000; color: #00ff00; padding: 10px; border-radius: 5px; font-family: monospace; margin: 20px 0; min-height: 200px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #28a745; }
+        .error { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M74HX4RT"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    <h1>Google Tag Manager Test - GTM-M74HX4RT</h1>
+    
+    <div id="status" class="status">Checking GTM status...</div>
+    
+    <div>
+        <button class="test-button" onclick="sendTestEvent('button_click')">Test Button Click</button>
+        <button class="test-button" onclick="sendTestEvent('page_engagement')">Test Page Engagement</button>
+        <button class="test-button" onclick="checkGTMStatus()">Check GTM Status</button>
+        <button class="test-button" onclick="sendCustomEvent()">Send Custom Event</button>
+    </div>
+    
+    <div class="console" id="console">
+        <div>GTM Test Console - Checking for GTM-M74HX4RT...</div>
+    </div>
+    
+    <h3>Debug Information:</h3>
+    <ul>
+        <li>Container ID: GTM-M74HX4RT</li>
+        <li>DataLayer Status: <span id="dataLayerStatus">Checking...</span></li>
+        <li>GTM Script Loading: <span id="gtmScriptStatus">Checking...</span></li>
+    </ul>
+    
+    <script>
+        // Initialize dataLayer
+        window.dataLayer = window.dataLayer || [];
+        
+        function log(message) {
+            const console = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString();
+            console.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            console.scrollTop = console.scrollHeight;
+            console.log(message);
+        }
+        
+        function sendTestEvent(eventName) {
+            window.dataLayer.push({
+                'event': eventName,
+                'test_parameter': 'smartdispute_gtm_test',
+                'timestamp': new Date().toISOString(),
+                'container': 'GTM-M74HX4RT'
+            });
+            log(`Sent event: ${eventName}`);
+        }
+        
+        function sendCustomEvent() {
+            window.dataLayer.push({
+                'event': 'custom_smartdispute_event',
+                'event_category': 'Test',
+                'event_action': 'Custom Event',
+                'event_label': 'GTM Test Page',
+                'value': 1
+            });
+            log('Sent custom SmartDispute event');
+        }
+        
+        function checkGTMStatus() {
+            // Check if dataLayer exists
+            if (window.dataLayer) {
+                document.getElementById('dataLayerStatus').innerHTML = `<span style="color: green;">Active (${window.dataLayer.length} events)</span>`;
+                log(`DataLayer active with ${window.dataLayer.length} events`);
+            } else {
+                document.getElementById('dataLayerStatus').innerHTML = '<span style="color: red;">Not found</span>';
+                log('DataLayer not found');
+            }
+            
+            // Check if GTM script is loaded
+            const gtmScripts = document.querySelectorAll('script[src*="googletagmanager.com"]');
+            if (gtmScripts.length > 0) {
+                document.getElementById('gtmScriptStatus').innerHTML = '<span style="color: green;">Loaded</span>';
+                log(`GTM script loaded (${gtmScripts.length} scripts found)`);
+            } else {
+                document.getElementById('gtmScriptStatus').innerHTML = '<span style="color: red;">Not loaded</span>';
+                log('GTM script not found');
+            }
+            
+            // Check if Google Tag Manager object exists
+            if (window.google_tag_manager) {
+                log('Google Tag Manager object found');
+                document.getElementById('status').className = 'status success';
+                document.getElementById('status').textContent = 'GTM is working correctly!';
+            } else {
+                log('Google Tag Manager object not found');
+                document.getElementById('status').className = 'status error';
+                document.getElementById('status').textContent = 'GTM may not be fully loaded yet';
+            }
+            
+            log('DataLayer contents: ' + JSON.stringify(window.dataLayer, null, 2));
+        }
+        
+        // Auto-check status on page load
+        setTimeout(() => {
+            checkGTMStatus();
+            
+            // Send initial test event
+            window.dataLayer.push({
+                'event': 'gtm_test_page_load',
+                'page_title': document.title,
+                'test_status': 'initialized'
+            });
+            log('Initial test event sent');
+            
+            // Auto-send events every 5 seconds for testing
+            setInterval(() => {
+                window.dataLayer.push({
+                    'event': 'heartbeat',
+                    'timestamp': new Date().toISOString()
+                });
+                log('Heartbeat event sent');
+            }, 5000);
+            
+        }, 2000);
+    </script>
+</body>
+</html>

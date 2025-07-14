@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Payment Successful - SmartDispute.ai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --canada-red: #FF0000;
+            --charter-blue: #003366;
+            --success-green: #28a745;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--success-green) 0%, var(--charter-blue) 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .success-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .charter-quote {
+            background: rgba(0, 51, 102, 0.1);
+            border-left: 4px solid var(--charter-blue);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+        
+        .success-icon {
+            color: var(--success-green);
+            font-size: 4rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .maple-leaf {
+            color: var(--canada-red);
+        }
+        
+        .payment-details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid var(--success-green);
+        }
+        
+        .btn-canadian {
+            background: linear-gradient(45deg, var(--canada-red), #CC0000);
+            border: none;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .btn-canadian:hover {
+            background: linear-gradient(45deg, #CC0000, var(--canada-red));
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="success-container p-5">
+                <!-- Success Header -->
+                <div class="text-center mb-5">
+                    <i class="fas fa-check-circle success-icon mb-3"></i>
+                    <i class="fas fa-maple-leaf maple-leaf me-3 fs-2"></i>
+                    <h1 class="display-4 fw-bold text-success">Payment Successful!</h1>
+                    <i class="fas fa-maple-leaf maple-leaf ms-3 fs-2"></i>
+                    <p class="lead mt-3">Your legal services are now active and ready to use.</p>
+                </div>
+                
+                <!-- Charter Quote -->
+                <div class="charter-quote text-center mb-5">
+                    <p class="mb-2"><strong>"Everyone whose rights have been violated has the right to apply to a court of competent jurisdiction to obtain such remedy as the court considers appropriate and just in the circumstances."</strong></p>
+                    <small class="text-muted">— Section 24(1), Canadian Charter of Rights and Freedoms</small>
+                </div>
+                
+                <!-- Payment Details -->
+                <div class="row justify-content-center mb-5">
+                    <div class="col-md-8">
+                        <div class="payment-details p-4">
+                            <h4 class="text-center mb-4">
+                                <i class="fas fa-receipt me-2"></i>Payment Receipt
+                            </h4>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <strong>Payment ID:</strong><br>
+                                    <code>{{ payment.id }}</code>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong>Amount Paid:</strong><br>
+                                    <span class="text-success fs-5 fw-bold">${{ payment.amount }} CAD</span>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <strong>Payment Method:</strong><br>
+                                    {{ payment.payment_method|title }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong>Date & Time:</strong><br>
+                                    {{ payment.completed_at.strftime('%B %d, %Y at %I:%M %p') if payment.completed_at else payment.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <strong>Service:</strong><br>
+                                    {{ payment.service_type|title|replace('_', ' ') }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong>Status:</strong><br>
+                                    <span class="badge bg-success">{{ payment.status|title }}</span>
+                                </div>
+                            </div>
+                            
+                            {% if payment.transaction_reference %}
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <strong>Transaction Reference:</strong><br>
+                                    <code>{{ payment.transaction_reference }}</code>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Next Steps -->
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <h3 class="text-center mb-4">
+                            <i class="fas fa-tasks me-2"></i>What's Next?
+                        </h3>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 bg-light">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-file-upload fa-3x text-primary mb-3"></i>
+                                        <h5>Upload Documents</h5>
+                                        <p class="card-text">Upload your legal documents for AI-powered analysis</p>
+                                        <a href="/upload" class="btn btn-outline-primary">Upload Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 bg-light">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-gavel fa-3x text-primary mb-3"></i>
+                                        <h5>Create Your Case</h5>
+                                        <p class="card-text">Start building your legal case with our guided process</p>
+                                        <a href="/create_case" class="btn btn-outline-primary">Create Case</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 bg-light">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-comments fa-3x text-primary mb-3"></i>
+                                        <h5>AI Legal Chat</h5>
+                                        <p class="card-text">Get instant legal guidance from our Charter-trained AI</p>
+                                        <a href="/chat" class="btn btn-outline-primary">Start Chat</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Legal Commitment -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card bg-primary text-white border-0">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <h5 class="mb-3">
+                                            <i class="fas fa-maple-leaf me-2"></i>
+                                            Your Charter Rights Are Protected
+                                        </h5>
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle me-2"></i>
+                                                AI analysis based on Canadian Charter principles
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle me-2"></i>
+                                                PIPEDA-compliant data protection
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle me-2"></i>
+                                                24/7 access to your legal documents
+                                            </li>
+                                            <li class="mb-0">
+                                                <i class="fas fa-check-circle me-2"></i>
+                                                Expert support from teresa@justice-bot.com
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <i class="fas fa-flag fa-4x"></i>
+                                        <p class="mt-2 mb-0 fw-bold">Justice for All Canadians</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="text-center">
+                    <a href="/dashboard" class="btn btn-canadian btn-lg me-3">
+                        <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                    </a>
+                    <a href="/payment/history" class="btn btn-outline-secondary btn-lg me-3">
+                        <i class="fas fa-history me-2"></i>Payment History
+                    </a>
+                    <a href="/contact" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Contact Support
+                    </a>
+                </div>
+                
+                <!-- Footer Quote -->
+                <div class="text-center mt-5">
+                    <div class="charter-quote">
+                        <p class="fw-bold mb-2">"Canada is founded upon principles that recognize the supremacy of God and the rule of law."</p>
+                        <small class="text-muted">— Preamble, Canadian Charter of Rights and Freedoms</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Auto-redirect to dashboard after 30 seconds -->
+    <script>
+        setTimeout(function() {
+            if (confirm('Would you like to go to your dashboard now?')) {
+                window.location.href = '/dashboard';
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

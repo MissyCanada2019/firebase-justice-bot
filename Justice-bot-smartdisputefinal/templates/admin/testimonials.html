@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Testimonials - Admin | SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="mb-3">Manage Testimonials</h1>
+            <p class="text-muted">Review, approve, feature, or delete user testimonials.</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+            <ul class="nav nav-tabs card-header-tabs" id="testimonialsTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">
+                        Pending 
+                        <span class="badge bg-danger ms-1">{{ testimonials | selectattr('is_approved', 'equalto', false) | list | length }}</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="approved-tab" data-bs-toggle="tab" data-bs-target="#approved" type="button" role="tab" aria-controls="approved" aria-selected="false">
+                        Approved
+                        <span class="badge bg-success ms-1">{{ testimonials | selectattr('is_approved', 'equalto', true) | list | length }}</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="featured-tab" data-bs-toggle="tab" data-bs-target="#featured" type="button" role="tab" aria-controls="featured" aria-selected="false">
+                        Featured
+                        <span class="badge bg-primary ms-1">{{ testimonials | selectattr('is_featured', 'equalto', true) | list | length }}</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="testimonialsTabsContent">
+                <!-- Pending Tab -->
+                <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                    {% set pending_testimonials = testimonials | selectattr('is_approved', 'equalto', false) | list %}
+                    {% if pending_testimonials %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Content</th>
+                                        <th>Date</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for testimonial in pending_testimonials %}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                                        <span class="text-white">{{ testimonial.name[0] | upper }}</span>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="mb-0">{{ testimonial.name }}</h6>
+                                                        <small class="text-muted">{{ testimonial.role or 'No role' }}</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                    {{ testimonial.content }}
+                                                </div>
+                                            </td>
+                                            <td>{{ testimonial.created_at.strftime('%Y-%m-%d') if testimonial.created_at else 'Unknown' }}</td>
+                                            <td class="text-end">
+                                                <form method="POST" action="{{ url_for('approve_testimonial', testimonial_id=testimonial.id) }}" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                                                </form>
+                                                <form method="POST" action="{{ url_for('delete_testimonial', testimonial_id=testimonial.id) }}" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this testimonial?')">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <p class="text-muted">No pending testimonials.</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Approved Tab -->
+                <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="approved-tab">
+                    {% set approved_testimonials = testimonials | selectattr('is_approved', 'equalto', true) | rejectattr('is_featured', 'equalto', true) | list %}
+                    {% if approved_testimonials %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Content</th>
+                                        <th>Date</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for testimonial in approved_testimonials %}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                                        <span class="text-white">{{ testimonial.name[0] | upper }}</span>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="mb-0">{{ testimonial.name }}</h6>
+                                                        <small class="text-muted">{{ testimonial.role or 'No role' }}</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                    {{ testimonial.content }}
+                                                </div>
+                                            </td>
+                                            <td>{{ testimonial.created_at.strftime('%Y-%m-%d') if testimonial.created_at else 'Unknown' }}</td>
+                                            <td class="text-end">
+                                                <form method="POST" action="{{ url_for('feature_testimonial', testimonial_id=testimonial.id) }}" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-primary">Feature</button>
+                                                </form>
+                                                <form method="POST" action="{{ url_for('delete_testimonial', testimonial_id=testimonial.id) }}" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this testimonial?')">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <p class="text-muted">No approved testimonials.</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Featured Tab -->
+                <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab">
+                    {% set featured_testimonials = testimonials | selectattr('is_featured', 'equalto', true) | list %}
+                    {% if featured_testimonials %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Content</th>
+                                        <th>Date</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for testimonial in featured_testimonials %}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                                        <span class="text-white">{{ testimonial.name[0] | upper }}</span>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="mb-0">{{ testimonial.name }}</h6>
+                                                        <small class="text-muted">{{ testimonial.role or 'No role' }}</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                    {{ testimonial.content }}
+                                                </div>
+                                            </td>
+                                            <td>{{ testimonial.created_at.strftime('%Y-%m-%d') if testimonial.created_at else 'Unknown' }}</td>
+                                            <td class="text-end">
+                                                <form method="POST" action="{{ url_for('feature_testimonial', testimonial_id=testimonial.id) }}" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-secondary">Unfeature</button>
+                                                </form>
+                                                <form method="POST" action="{{ url_for('delete_testimonial', testimonial_id=testimonial.id) }}" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this testimonial?')">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <p class="text-muted">No featured testimonials.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        <h5>Testimonial Guidelines</h5>
+        <p class="mb-0">
+            <strong>Approved testimonials</strong> will appear on the public testimonials page. 
+            <strong>Featured testimonials</strong> will appear on both the homepage and testimonials page.
+        </p>
+    </div>
+</div>
+{% endblock %}

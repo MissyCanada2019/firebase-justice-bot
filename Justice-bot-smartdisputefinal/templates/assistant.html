@@ -1,0 +1,78 @@
+<<!DOCTYPE html>
+<html>
+<head>
+    <title>Justice-Bot Assistant</title>
+    <style>
+        body { font-family: sans-serif; background: #f5f5f5; padding: 20px; }
+        #chatbox { background: white; padding: 15px; border-radius: 8px; max-width: 700px; margin: auto; }
+        .message { margin-bottom: 10px; }
+        .user { font-weight: bold; color: #d32f2f; }
+        .bot { color: #333; }
+        #timeline { margin-top: 20px; padding-top: 10px; border-top: 1px solid #ccc; }
+        .step { margin-bottom: 15px; background: #eef1f5; padding: 10px; border-radius: 6px; }
+        .step h4 { margin: 0 0 5px; }
+        .step button { margin-top: 5px; background: #d32f2f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        .step button:hover { background: #b71c1c; }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <div id="chat-log">
+            <div class="message bot">👋 Hi! Describe your legal issue and I’ll help you figure out the right steps and forms.</div>
+        </div>
+        <input type="text" id="user-input" placeholder="Type your legal issue..." style="width: 80%;">
+        <button onclick="sendMessage()">Send</button>
+
+        <div id="timeline"></div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const log = document.getElementById('chat-log');
+            log.innerHTML += `<div class="message user">You: ${message}</div>`;
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                log.innerHTML += `<div class="message bot">${data.reply}</div>`;
+                input.value = '';
+                renderTimeline(data.timeline || []);
+            });
+        }
+
+        function renderTimeline(steps) {
+            const container = document.getElementById('timeline');
+            if (!steps.length) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = '<h3>🧭 Next Steps:</h3>';
+            steps.forEach(step => {
+                let html = `
+                    <div class="step">
+                        <h4>Step ${step.step}: ${step.title}</h4>
+                        <p>${step.description}</p>
+                `;
+                if (step.form_action) {
+                    html += `
+                        <a href="${step.form_action.autofill_url}" target="_blank">
+                            <button>📄 Open ${step.form_action.form_code} Form</button>
+                        </a>
+                    `;
+                }
+                html += '</div>';
+                container.innerHTML += html;
+            });
+        }
+    </script>
+</body>
+</html>

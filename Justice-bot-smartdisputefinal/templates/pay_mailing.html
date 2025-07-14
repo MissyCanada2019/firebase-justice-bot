@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}Pay for Mailing - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Pay for Document Mailing</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-info-circle fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Secure Payment</h5>
+                                <p>Your document will be mailed once payment is complete. All payments are processed securely.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="mb-3">Order Summary</h4>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-file-pdf text-danger me-2"></i>
+                                    <h5 class="mb-0">{{ form.form_title }}</h5>
+                                </div>
+                                <div class="text-muted small">
+                                    <p class="mb-1">
+                                        <span class="me-3"><i class="fas fa-calendar-alt me-1"></i> Created: {{ form.created_at.strftime('%b %d, %Y') }}</span>
+                                        <span><i class="fas fa-file-alt me-1"></i> Type: {{ form.form_type }}</span>
+                                    </p>
+                                    <p class="mb-0">
+                                        <span class="me-3"><i class="fas fa-envelope me-1"></i> Mail Type: {{ mailing_request.mail_type|title }}</span>
+                                        <span><i class="fas fa-file-invoice me-1"></i> Reference: {{ mailing_request.reference_number }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5 class="mb-0">Recipient</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-1">{{ mailing_request.recipient_name }}</p>
+                                <p class="mb-1">{{ mailing_request.recipient_address_line1 }}</p>
+                                {% if mailing_request.recipient_address_line2 %}
+                                <p class="mb-1">{{ mailing_request.recipient_address_line2 }}</p>
+                                {% endif %}
+                                <p class="mb-0">{{ mailing_request.recipient_city }}, {{ mailing_request.recipient_province }} {{ mailing_request.recipient_postal_code }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Payment Details</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Base Mailing Cost ({{ mailing_request.mail_type|title }})</span>
+                                    <span>${{ "%.2f"|format(cost_details.base_cost) }}</span>
+                                </div>
+                                
+                                {% if mailing_request.include_copies %}
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Additional Copies ({{ mailing_request.copy_count }} x {{ mailing_request.page_count }} pages)</span>
+                                    <span>${{ "%.2f"|format(cost_details.copy_cost) }}</span>
+                                </div>
+                                {% endif %}
+                                
+                                <hr>
+                                
+                                <div class="d-flex justify-content-between fw-bold">
+                                    <span>Total</span>
+                                    <span>${{ "%.2f"|format(total_cost) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('pay_mailing', mailing_id=mailing_request.id) }}" id="payment-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        <input type="hidden" name="payment_method" id="payment_method" value="paypal">
+                        <input type="hidden" name="paypal_order_id" id="paypal_order_id" value="">
+                        
+                        <div class="mb-4">
+                            <h4 class="mb-3">Payment Method</h4>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment_method_option" 
+                                               id="payment_paypal" value="paypal" checked>
+                                        <label class="form-check-label" for="payment_paypal">
+                                            <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" 
+                                                 alt="PayPal" height="26" class="ms-2">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if paypal_order %}
+                        <div id="paypal-button-container" class="mb-4"></div>
+                        {% else %}
+                        <div class="alert alert-warning">
+                            <p class="mb-0">PayPal integration is currently unavailable. Please try again later or contact support.</p>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a href="{{ url_for('mail_document', form_id=form.id) }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-1"></i> Back to Mailing Options
+                            </a>
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if paypal_order %}
+<script src="https://www.paypal.com/sdk/js?client-id={{ os.environ.get('PAYPAL_CLIENT_ID') }}&currency=CAD"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('payment-form');
+        const paypalButtonContainer = document.getElementById('paypal-button-container');
+        const paypalOrderIdField = document.getElementById('paypal_order_id');
+        
+        // Render PayPal buttons
+        if (paypalButtonContainer) {
+            paypal.Buttons({
+                // Set up the transaction
+                createOrder: function() {
+                    // Use the server-side generated order ID
+                    return '{{ paypal_order.id }}';
+                },
+                
+                // Handle the onApprove callback
+                onApprove: function(data, actions) {
+                    // Capture the payment on the server
+                    paypalOrderIdField.value = data.orderID;
+                    
+                    // Show loading indicator
+                    const loadingOverlay = document.createElement('div');
+                    loadingOverlay.className = 'text-center p-3';
+                    loadingOverlay.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Processing payment...</span></div><p class="mt-2">Processing your payment, please wait...</p>';
+                    
+                    paypalButtonContainer.innerHTML = '';
+                    paypalButtonContainer.appendChild(loadingOverlay);
+                    
+                    // Submit the form to process the payment on the server
+                    form.submit();
+                    
+                    return false;
+                },
+                
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'alert alert-danger mt-3';
+                    errorMessage.innerHTML = '<strong>Payment Error:</strong> An error occurred while processing your payment. Please try again or contact support.';
+                    paypalButtonContainer.appendChild(errorMessage);
+                }
+            }).render('#paypal-button-container');
+        }
+    });
+</script>
+{% endif %}
+{% endblock %}

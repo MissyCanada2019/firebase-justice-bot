@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SmartDispute.ai - AI-Powered Legal Solutions for All Canadians</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Empowering all Canadians with AI-powered legal dispute resolution. Built on the foundation of the Charter of Rights and Freedoms.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Import professional legal fonts similar to Law Society of Canada */
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        :root {
+            --canada-red: #FF0000;
+            --canada-white: #FFFFFF;
+            --charter-blue: #003366;
+            --justice-gold: #FFD700;
+            --legal-navy: #1a365d;
+            --parchment: #f7f3e9;
+            --warm-grey: #8a8a8a;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: #2d3748;
+            background: 
+                linear-gradient(135deg, #FF0000 0%, #8B0000 30%, #003366 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="canadian-texture" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.04)"/><path d="M15 8 L20 3 L25 8 L25 13 L30 18 L25 23 L25 28 L20 33 L15 28 L15 23 L10 18 L15 13 Z" fill="rgba(255,215,0,0.06)" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/></pattern></defs><rect width="200" height="200" fill="url(%23canadian-texture)"/></svg>');
+            min-height: 100vh;
+        }
+        
+        /* Canadian flag overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 80px;
+            background: 
+                linear-gradient(to right, 
+                    #FF0000 0%, #FF0000 25%, 
+                    rgba(255,255,255,0.9) 25%, rgba(255,255,255,0.9) 75%, 
+                    #FF0000 75%, #FF0000 100%);
+            opacity: 0.1;
+            border-radius: 0 0 0 8px;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .hero-section {
+            background: 
+                linear-gradient(145deg, rgba(255,255,255,0.98), rgba(247,243,233,0.95)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="paper-texture" x="0" y="0" width="25" height="25" patternUnits="userSpaceOnUse"><rect width="25" height="25" fill="none"/><line x1="0" y1="6" x2="25" y2="6" stroke="rgba(0,0,0,0.015)" stroke-width="0.5"/><line x1="0" y1="12" x2="25" y2="12" stroke="rgba(0,0,0,0.015)" stroke-width="0.5"/><line x1="0" y1="18" x2="25" y2="18" stroke="rgba(0,0,0,0.015)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23paper-texture)"/></svg>');
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 15px 35px rgba(255, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255,255,255,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FF0000, #FFD700, #FF0000);
+            opacity: 0.7;
+        }
+        
+        .hero-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 4rem;
+            color: #1a365d;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-section .lead {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #4a5568;
+            margin-bottom: 2rem;
+        }
+        
+        .maple-leaf {
+            color: var(--canada-red);
+            font-size: 2rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+        }
+        
+        .btn-canadian {
+            background: linear-gradient(45deg, #FF0000, #DC143C, #B22222);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 16px 40px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 
+                0 12px 30px rgba(255, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-canadian::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .btn-canadian:hover::before {
+            left: 100%;
+        }
+        
+        .btn-canadian:hover {
+            background: linear-gradient(45deg, #DC143C, #B22222, #8B0000);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 
+                0 20px 40px rgba(255, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .charter-quote {
+            background: 
+                linear-gradient(135deg, rgba(255,255,255,0.98), rgba(247,243,233,0.95)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="legal-paper" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="none"/><line x1="0" y1="5" x2="20" y2="5" stroke="rgba(0,0,0,0.02)" stroke-width="0.5"/><line x1="0" y1="10" x2="20" y2="10" stroke="rgba(0,0,0,0.02)" stroke-width="0.5"/><line x1="0" y1="15" x2="20" y2="15" stroke="rgba(0,0,0,0.02)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23legal-paper)"/></svg>');
+            border-left: 6px solid #FF0000;
+            border-right: 3px solid #FFD700;
+            padding: 35px 40px;
+            margin: 40px 0;
+            border-radius: 15px;
+            color: #2d3748;
+            font-family: 'Crimson Text', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255,255,255,0.6);
+            position: relative;
+        }
+        
+        .charter-quote::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 25px;
+            font-size: 100px;
+            color: rgba(255, 0, 0, 0.15);
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+        }
+        
+        .about-creator {
+            background: 
+                linear-gradient(145deg, rgba(255,255,255,0.98), rgba(247,243,233,0.95)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="unity-pattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="15" cy="15" r="12" fill="none" stroke="rgba(255,0,0,0.03)" stroke-width="1"/><circle cx="15" cy="15" r="6" fill="rgba(255,215,0,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23unity-pattern)"/></svg>');
+            padding: 60px 40px;
+            border-radius: 20px;
+            margin: 60px 0;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.12),
+                0 8px 20px rgba(255, 0, 0, 0.08);
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .about-creator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FF0000, #FFD700, #FF0000);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .about-creator h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #1a365d;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .about-creator h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #FF0000, #FFD700);
+            border-radius: 2px;
+        }
+        
+        .creator-content {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a5568;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .creator-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .creator-highlight {
+            background: linear-gradient(120deg, rgba(255,0,0,0.1), rgba(255,215,0,0.1));
+            padding: 25px 30px;
+            border-radius: 12px;
+            border-left: 4px solid #FF0000;
+            margin: 30px 0;
+            font-weight: 600;
+            font-style: italic;
+        }
+        
+        .service-card {
+            background: 
+                linear-gradient(145deg, #ffffff, #f8f9fa),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><defs><pattern id="service-dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,0,0,0.03)"/></pattern></defs><rect width="60" height="60" fill="url(%23service-dots)"/></svg>');
+            border-radius: 20px;
+            padding: 40px 35px;
+            margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid rgba(255, 0, 0, 0.1);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.08),
+                0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FF0000, #FFD700, #FF0000);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--canada-red);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.12),
+                0 10px 25px rgba(255, 0, 0, 0.15);
+        }
+        
+        .service-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 20px;
+        }
+        
+        .service-icon {
+            color: #FF0000;
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+        }
+        
+        .legal-commitment {
+            background: 
+                linear-gradient(135deg, #1a365d, #2d3748),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="commitment-bg" x="0" y="0" width="25" height="25" patternUnits="userSpaceOnUse"><rect width="25" height="25" fill="none"/><circle cx="12.5" cy="12.5" r="1" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23commitment-bg)"/></svg>');
+            color: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .legal-commitment::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FF0000, #FFD700, #FF0000);
+        }
+        
+        .legal-commitment h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        .canadian-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #FF0000, #DC143C);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 8px;
+            box-shadow: 0 6px 15px rgba(255, 0, 0, 0.25);
+        }
+        
+        /* Professional footer styling */
+        .footer {
+            background: 
+                linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="footer-texture" x="0" y="0" width="25" height="25" patternUnits="userSpaceOnUse"><rect width="25" height="25" fill="none"/><circle cx="12.5" cy="12.5" r="1" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23footer-texture)"/></svg>');
+            color: white;
+            padding: 70px 0 50px;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FF0000, #FFD700, #FF0000);
+        }
+        
+        .footer h5 {
+            font-family: 'Playfair Display', serif;
+            color: #FF0000;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        
+        .footer a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        
+        .footer a:hover {
+            color: #FFD700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+        }
+        
+        /* Banner styling */
+        .banner {
+            background: #b22234;
+            color: #fff;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 4px solid #002868; /* navy accent */
+            margin-bottom: 20px;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        
+        /* Enhanced form styling */
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        
+        button {
+            background: #b22234;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #a11d30;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(178, 34, 52, 0.3);
+        }
+        
+        /* Enhanced input styling */
+        input:focus {
+            outline: none;
+            border-color: #b22234;
+            box-shadow: 0 0 0 2px rgba(178, 34, 52, 0.2);
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.8rem;
+            }
+            
+            .btn-canadian {
+                padding: 14px 30px;
+                font-size: 1rem;
+            }
+            
+            .about-creator {
+                padding: 40px 25px;
+            }
+            
+            .about-creator h2 {
+                font-size: 2.2rem;
+            }
+            
+            .service-card {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-5">
+        <div class="container">
+            <!-- Hero Section -->
+            <div class="hero-section p-5 mb-5">
+                <div class="text-center mb-4">
+                    <i class="fas fa-maple-leaf maple-leaf me-3"></i>
+                    <h1 class="display-4 fw-bold text-primary mb-3">SmartDispute.ai</h1>
+                    <i class="fas fa-maple-leaf maple-leaf ms-3"></i>
+                </div>
+                
+                <div class="text-center mb-4">
+                    <h2 class="h3 text-secondary">AI-Powered Legal Solutions for All Canadians</h2>
+                    <p class="lead">Built on the foundation of the Canadian Charter of Rights and Freedoms</p>
+                </div>
+
+                <!-- Charter Quote -->
+                <div class="charter-quote text-center">
+                    <p class="mb-2"><strong>"Everyone has the right to life, liberty and security of the person and the right not to be deprived thereof except in accordance with the principles of fundamental justice."</strong></p>
+                    <small class="text-muted">— Section 7, Canadian Charter of Rights and Freedoms</small>
+                </div>
+
+                <div class="text-center">
+                    <button id="googleSignInBtn" class="btn btn-canadian btn-lg me-3">
+                        <i class="fab fa-google me-2"></i>Sign in with Google
+                    </button>
+                    <a href="/register" class="btn btn-outline-primary btn-lg me-3">Create Account</a>
+                    <a href="/login" class="btn btn-outline-secondary btn-lg">Traditional Login</a>
+                </div>
+                
+                <!-- Firebase Auth Status -->
+                <div id="authStatus" class="text-center mt-3" style="display: none;">
+                    <div class="alert alert-info">
+                        <i class="fas fa-spinner fa-spin me-2"></i>
+                        Signing in with Google...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="card service-card h-100 canadian-flag-accent">
+                        <div class="card-body text-center">
+                            <i class="fas fa-balance-scale fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Legal Rights Analysis</h5>
+                            <p class="card-text">AI-powered analysis based on Charter principles and Canadian law</p>
+                            <div class="charter-quote small">
+                                <em>"Everyone has the right to equality before and under the law"</em><br>
+                                <small>— Section 15, Charter</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card service-card h-100 canadian-flag-accent">
+                        <div class="card-body text-center">
+                            <i class="fas fa-file-contract fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Document Generation</h5>
+                            <p class="card-text">Court-ready legal documents tailored to Canadian jurisdiction</p>
+                            <div class="charter-quote small">
+                                <em>"Everyone whose rights have been violated has the right to apply to a court"</em><br>
+                                <small>— Section 24, Charter</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card service-card h-100 canadian-flag-accent">
+                        <div class="card-body text-center">
+                            <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Access for All</h5>
+                            <p class="card-text">Ensuring legal services reach every Canadian, regardless of background</p>
+                            <div class="charter-quote small">
+                                <em>"This Charter applies to... every person in Canada"</em><br>
+                                <small>— Section 32, Charter</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Commitment Section -->
+            <div class="legal-commitment mb-5">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h3 class="mb-3"><i class="fas fa-maple-leaf me-2"></i>Our Commitment to Canadian Legal Excellence</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Charter-compliant legal analysis</li>
+                            <li class="mb-2"><i class="fas fa-check-circle me-2"></i> AI trained on Canadian case law and statutes</li>
+                            <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Bilingual support (English/French)</li>
+                            <li class="mb-2"><i class="fas fa-check-circle me-2"></i> Provincial and federal jurisdiction coverage</li>
+                            <li class="mb-2"><i class="fas fa-check-circle me-2"></i> PIPEDA-compliant data protection</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="fas fa-flag fa-4x text-danger"></i>
+                        <p class="mt-2 mb-0"><strong>Proudly Canadian</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Options Preview -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fab fa-paypal fa-3x text-primary mb-3"></i>
+                            <h5>PayPal Integration</h5>
+                            <p>Secure international payment processing</p>
+                            <small class="text-muted">Instant service activation</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-university fa-3x text-primary mb-3"></i>
+                            <h5>E-Transfer</h5>
+                            <p>Canadian Interac e-Transfer support</p>
+                            <small class="text-muted">Direct bank-to-bank transfers</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-5">
+                <div class="charter-quote">
+                    <p class="fw-bold mb-2">"Canada is founded upon principles that recognize the supremacy of God and the rule of law."</p>
+                    <small class="text-muted">— Preamble, Canadian Charter of Rights and Freedoms</small>
+                </div>
+                <hr class="my-4">
+                <p class="text-muted">
+                    <i class="fas fa-maple-leaf me-2"></i>
+                    SmartDispute.ai - Empowering Justice for All Canadians
+                    <i class="fas fa-maple-leaf ms-2"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAjd5ekT45EOPr7D-KvSZt-EPwaOk0BQUE",
+            authDomain: "legallysmart.firebaseapp.com",
+            projectId: "legallysmart",
+            storageBucket: "legallysmart.firebasestorage.app",
+            messagingSenderId: "1077200418820",
+            appId: "1:1077200418820:web:8e34a377af54c315df1d51",
+            measurementId: "G-23HYTYXVLJ"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+        
+        // Add Canadian legal scope for enhanced profile information
+        provider.addScope('profile');
+        provider.addScope('email');
+        
+        // Elements
+        const signInBtn = document.getElementById('googleSignInBtn');
+        const authStatus = document.getElementById('authStatus');
+        
+        // Google Sign In handler
+        signInBtn.addEventListener('click', async () => {
+            try {
+                authStatus.style.display = 'block';
+                signInBtn.disabled = true;
+                
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                const idToken = await user.getIdToken();
+                
+                // Send token to Flask backend
+                const response = await fetch('/auth/firebase-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        idToken: idToken
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    authStatus.innerHTML = `
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Welcome to SmartDispute.ai! Redirecting to your dashboard...
+                        </div>
+                    `;
+                    
+                    // Smooth transition to dashboard
+                    setTimeout(() => {
+                        window.location.href = data.redirect_url;
+                    }, 1500);
+                } else {
+                    throw new Error(data.error || 'Authentication failed');
+                }
+                
+            } catch (error) {
+                console.error('Authentication error:', error);
+                authStatus.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Authentication failed. Please try again.
+                    </div>
+                `;
+                signInBtn.disabled = false;
+                
+                setTimeout(() => {
+                    authStatus.style.display = 'none';
+                }, 5000);
+            }
+        });
+        
+        // Check authentication state on page load
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is signed in, check with backend
+                try {
+                    const response = await fetch('/auth/user-status');
+                    const data = await response.json();
+                    
+                    if (data.authenticated) {
+                        // User is authenticated, show welcome message
+                        document.querySelector('.hero-section').innerHTML = `
+                            <div class="text-center">
+                                <i class="fas fa-maple-leaf maple-leaf me-3 fs-2"></i>
+                                <h1 class="display-4 fw-bold text-primary mb-3">Welcome Back!</h1>
+                                <i class="fas fa-maple-leaf maple-leaf ms-3 fs-2"></i>
+                                <p class="lead">Continue your legal journey with SmartDispute.ai</p>
+                                <div class="charter-quote">
+                                    <p class="mb-2"><strong>"Everyone has the right to life, liberty and security of the person and the right not to be deprived thereof except in accordance with the principles of fundamental justice."</strong></p>
+                                    <small class="text-muted">— Section 7, Canadian Charter of Rights and Freedoms</small>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="/dashboard" class="btn btn-canadian btn-lg me-3">
+                                        <i class="fas fa-tachometer-alt me-2"></i>Go to Dashboard
+                                    </a>
+                                    <button id="signOutBtn" class="btn btn-outline-secondary btn-lg">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Sign Out
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        
+                        // Add sign out handler
+                        document.getElementById('signOutBtn').addEventListener('click', async () => {
+                            try {
+                                await signOut(auth);
+                                await fetch('/auth/firebase-logout', { method: 'POST' });
+                                window.location.reload();
+                            } catch (error) {
+                                console.error('Sign out error:', error);
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error('Status check error:', error);
+                }
+            }
+        });
+        
+        // Make auth available globally for debugging
+        window.firebaseAuth = auth;
+    </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+
+{% block title %}Personalized Legal Workflow Recommendations{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Canadian Charter Banner -->
+    <div class="charter-banner">
+        <div class="row align-items-center">
+            <div class="col-md-2 text-center">
+                <div class="maple-leaf-icon">🍁</div>
+            </div>
+            <div class="col-md-8 text-center">
+                <h2 class="charter-title">Personalized Legal Guidance</h2>
+                <p class="charter-quote">"Everyone has the right to life, liberty and security of the person and the right not to be deprived thereof except in accordance with the principles of fundamental justice." - Charter Section 7</p>
+            </div>
+            <div class="col-md-2 text-center">
+                <div class="canadian-flag">🇨🇦</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile Summary -->
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+            <h4><i class="fas fa-user-circle"></i> Your Legal Profile</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <strong>Province:</strong> {{ user_profile.province }}
+                </div>
+                <div class="col-md-3">
+                    <strong>City:</strong> {{ user_profile.city }}
+                </div>
+                <div class="col-md-3">
+                    <strong>Legal Issue:</strong> {{ user_profile.legal_issue_type|replace('_', ' ')|title }}
+                </div>
+                <div class="col-md-3">
+                    <strong>Language:</strong> {{ user_profile.preferred_language }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if recommendations %}
+    <!-- Primary Workflow Recommendation -->
+    <div class="card mb-4 border-danger">
+        <div class="card-header bg-danger text-white">
+            <h3><i class="fas fa-route"></i> Recommended Legal Workflow</h3>
+            <small>Confidence: {{ (recommendations.primary_workflow.confidence * 100)|round(1) }}%</small>
+        </div>
+        <div class="card-body">
+            <h4>{{ recommendations.primary_workflow.workflow.name }}</h4>
+            <p class="text-muted">{{ recommendations.primary_workflow.workflow.legal_area|replace('_', ' ')|title }} • {{ recommendations.primary_workflow.workflow.province }}</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h6><i class="fas fa-clock"></i> Timeline</h6>
+                    <p>{{ recommendations.primary_workflow.workflow.total_estimated_time }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h6><i class="fas fa-dollar-sign"></i> Cost Range</h6>
+                    <p>{{ recommendations.primary_workflow.workflow.total_cost_range }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h6><i class="fas fa-chart-line"></i> Success Rate</h6>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: {{ (recommendations.primary_workflow.workflow.success_rate * 100)|round(0) }}%"></div>
+                    </div>
+                    <small>{{ (recommendations.primary_workflow.workflow.success_rate * 100)|round(1) }}% success rate</small>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <a href="{{ url_for('workflow_detail', workflow_id=recommendations.primary_workflow.workflow.workflow_id) }}" class="btn btn-danger">
+                    <i class="fas fa-arrow-right"></i> Start This Workflow
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Immediate Priorities -->
+    {% if recommendations.immediate_priorities %}
+    <div class="card mb-4">
+        <div class="card-header bg-warning text-dark">
+            <h4><i class="fas fa-exclamation-triangle"></i> Immediate Action Required</h4>
+        </div>
+        <div class="card-body">
+            {% for priority in recommendations.immediate_priorities %}
+            <div class="alert alert-{{ 'danger' if priority.priority_level == 'critical' else 'warning' if priority.priority_level == 'high' else 'info' }}">
+                <h6><strong>{{ priority.priority_level|title }} Priority:</strong> {{ priority.action }}</h6>
+                <p>{{ priority.description }}</p>
+                <small><strong>Charter Reference:</strong> {{ priority.charter_reference }}</small>
+                {% if priority.required_documents %}
+                <div class="mt-2">
+                    <strong>Required Documents:</strong>
+                    <ul class="mb-0">
+                        {% for doc in priority.required_documents %}
+                        <li>{{ doc }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Charter Guidance -->
+    {% if recommendations.charter_guidance %}
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4><i class="fas fa-balance-scale"></i> Charter Rights Guidance</h4>
+        </div>
+        <div class="card-body">
+            {% for section_info in recommendations.charter_guidance.applicable_sections %}
+            <div class="mb-3">
+                <h6 class="text-primary">Charter {{ section_info.section|title }}</h6>
+                <blockquote class="blockquote">
+                    <p class="mb-0">"{{ section_info.text }}"</p>
+                </blockquote>
+                <p><strong>Application to your case:</strong> {{ section_info.application }}</p>
+            </div>
+            {% endfor %}
+
+            {% if recommendations.charter_guidance.key_principles %}
+            <h6 class="mt-4">Key Charter Principles:</h6>
+            <ul>
+                {% for principle in recommendations.charter_guidance.key_principles %}
+                <li>{{ principle }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Cost Analysis and Funding -->
+    {% if recommendations.cost_analysis %}
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h4><i class="fas fa-money-bill-wave"></i> Cost Analysis & Funding Options</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Estimated Costs</h6>
+                    <p class="h5 text-success">{{ recommendations.cost_analysis.estimated_costs }}</p>
+                </div>
+            </div>
+
+            {% if recommendations.cost_analysis.funding_options %}
+            <h6 class="mt-3">Available Funding Options:</h6>
+            {% for option in recommendations.cost_analysis.funding_options %}
+            <div class="card mb-2">
+                <div class="card-body py-2">
+                    <h6 class="card-title mb-1">{{ option.option }}</h6>
+                    <p class="card-text mb-1"><strong>Coverage:</strong> {{ option.coverage }}</p>
+                    <p class="card-text mb-1"><strong>Eligibility:</strong> {{ option.eligibility }}</p>
+                    <small class="text-muted">{{ option.application_process }}</small>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if recommendations.cost_analysis.cost_reduction_strategies %}
+            <h6 class="mt-3">Cost Reduction Strategies:</h6>
+            <ul>
+                {% for strategy in recommendations.cost_analysis.cost_reduction_strategies %}
+                <li>{{ strategy }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Alternative Workflows -->
+    {% if recommendations.alternative_workflows %}
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h4><i class="fas fa-list-alt"></i> Alternative Options</h4>
+        </div>
+        <div class="card-body">
+            {% for alt in recommendations.alternative_workflows %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6>{{ alt.workflow.name }}</h6>
+                    <p class="text-muted">{{ alt.workflow.legal_area|replace('_', ' ')|title }}</p>
+                    <p>{{ alt.why_alternative }}</p>
+                    <small class="text-muted">Relevance: {{ (alt.relevance_score * 100)|round(1) }}%</small>
+                    <div class="mt-2">
+                        <a href="{{ url_for('workflow_detail', workflow_id=alt.workflow.workflow_id) }}" class="btn btn-sm btn-outline-info">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Timeline -->
+    {% if recommendations.timeline %}
+    <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h4><i class="fas fa-calendar-alt"></i> Case Timeline</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Estimated Completion:</strong> {{ recommendations.timeline.estimated_completion[:10] }}</p>
+            
+            {% if recommendations.timeline.phases %}
+            <h6 class="mt-3">Key Phases:</h6>
+            {% for phase in recommendations.timeline.phases %}
+            <div class="timeline-item">
+                <h6>{{ phase.title }}</h6>
+                <p class="text-muted">{{ phase.start_date[:10] }} - {{ phase.end_date[:10] }}</p>
+                <span class="badge badge-{{ 'danger' if phase.urgency == 'critical' else 'warning' if phase.urgency == 'high' else 'info' }}">
+                    {{ phase.urgency|title }}
+                </span>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if recommendations.timeline.critical_deadlines %}
+            <h6 class="mt-4 text-danger">Critical Deadlines:</h6>
+            {% for deadline in recommendations.timeline.critical_deadlines %}
+            <div class="alert alert-danger">
+                <strong>{{ deadline.deadline[:10] }}:</strong> {{ deadline.task }}
+                <br><small>{{ deadline.consequences }}</small>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="alert alert-info">
+        <h4>Getting Your Personalized Recommendations</h4>
+        <p>We're analyzing your legal profile to provide tailored workflow recommendations. Please ensure your profile information is complete for the best guidance.</p>
+    </div>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div class="text-center mb-4">
+        <a href="{{ url_for('profile') }}" class="btn btn-outline-primary">
+            <i class="fas fa-user-edit"></i> Update Profile
+        </a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">
+            <i class="fas fa-tachometer-alt"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<style>
+.charter-banner {
+    background: linear-gradient(135deg, #d32f2f, #1976d2);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.charter-title {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+}
+
+.charter-quote {
+    font-style: italic;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+.maple-leaf-icon, .canadian-flag {
+    font-size: 2rem;
+}
+
+.timeline-item {
+    border-left: 3px solid #d32f2f;
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.progress {
+    height: 20px;
+}
+</style>
+{% endblock %}

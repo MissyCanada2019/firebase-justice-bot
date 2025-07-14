@@ -1,0 +1,4 @@
+Changes to ETS Trip Planning Tools
+Please be advised that as of June 18, 2025, ETS has launched a new trip planner.
+ETS Live and ETS Live Bus Finder are now discontinued.
+Questions or feedback? Visit Transit Rider Feedback or call 311 for assistance.

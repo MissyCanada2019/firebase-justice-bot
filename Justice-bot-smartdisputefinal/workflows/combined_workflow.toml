@@ -1,0 +1,8 @@
+[name]
+start = "Combined Port Solution"
+
+[deployment]
+run = "python combined_workflow.py"
+
+[languages.python3]
+channel = "stable-23_04"

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Share Your Experience - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 mb-4">Share Your Experience</h1>
+            <p class="lead text-muted">
+                Your feedback helps others understand how SmartDispute.ai can help them navigate their legal challenges.
+            </p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <form method="POST" action="{{ url_for('add_testimonial') }}">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            <div class="form-text">This will be displayed publicly.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Your Role</label>
+                            <input type="text" class="form-control" id="role" name="role">
+                            <div class="form-text">For example: "Tenant", "Small Business Owner", etc.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location" name="location">
+                            <div class="form-text">For example: "Toronto, ON"</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Your Rating</label>
+                            <select class="form-select" id="rating" name="rating">
+                                <option value="">Select Rating</option>
+                                <option value="5">5 Stars - Excellent</option>
+                                <option value="4">4 Stars - Very Good</option>
+                                <option value="3">3 Stars - Good</option>
+                                <option value="2">2 Stars - Fair</option>
+                                <option value="1">1 Star - Poor</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="case_type" class="form-label">Type of Case</label>
+                            <select class="form-select" id="case_type" name="case_type">
+                                <option value="">Select Case Type</option>
+                                <option value="Housing Dispute">Housing Dispute</option>
+                                <option value="Credit Dispute">Credit Dispute</option>
+                                <option value="Small Claims">Small Claims</option>
+                                <option value="Human Rights">Human Rights</option>
+                                <option value="CAS">CAS Matter</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="content" class="form-label">Your Testimonial <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                            <div class="form-text">Share your experience with SmartDispute.ai.</div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit Testimonial</button>
+                            <a href="{{ url_for('testimonials') }}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <p class="small text-muted">
+                    Note: All testimonials are reviewed before being published to ensure they meet our community standards.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

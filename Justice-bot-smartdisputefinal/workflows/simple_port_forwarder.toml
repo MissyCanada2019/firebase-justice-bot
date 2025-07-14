@@ -1,0 +1,6 @@
+[workflow]
+name = "Simple Port Forwarder"
+entryPoint = "python run_port8080.py"
+runOnOpen = true
+terminateOn = "shutdown"
+onBoot = true

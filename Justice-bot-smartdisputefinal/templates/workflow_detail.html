@@ -1,0 +1,431 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ workflow.name }} - Legal Workflow Detail{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Charter Banner -->
+    <div class="charter-banner">
+        <div class="row align-items-center">
+            <div class="col-md-2 text-center">
+                <div class="maple-leaf-icon">🍁</div>
+            </div>
+            <div class="col-md-8 text-center">
+                <h2 class="charter-title">{{ workflow.name }}</h2>
+                <p class="charter-quote">Step-by-step guidance for your {{ workflow.legal_area|replace('_', ' ')|title }} case in {{ workflow.province }}</p>
+            </div>
+            <div class="col-md-2 text-center">
+                <div class="canadian-flag">🇨🇦</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow Overview -->
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Workflow Steps -->
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h4><i class="fas fa-list-ol"></i> Legal Workflow Steps</h4>
+                </div>
+                <div class="card-body">
+                    {% for step in workflow.steps %}
+                    <div class="workflow-step mb-4 p-3 border rounded">
+                        <div class="step-header">
+                            <h5 class="step-title">
+                                <span class="step-number">{{ loop.index }}</span>
+                                {{ step.title }}
+                                <span class="badge badge-{{ 'danger' if step.urgency.value == 'critical' else 'warning' if step.urgency.value == 'high' else 'info' }}">
+                                    {{ step.urgency.value|title }}
+                                </span>
+                            </h5>
+                        </div>
+                        
+                        <div class="step-content">
+                            <p class="step-description">{{ step.description }}</p>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-clock"></i> Estimated Time</h6>
+                                    <p>{{ step.estimated_time }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6><i class="fas fa-dollar-sign"></i> Cost Estimate</h6>
+                                    <p>{{ step.cost_estimate }}</p>
+                                </div>
+                            </div>
+
+                            {% if step.charter_reference %}
+                            <div class="charter-reference mb-3">
+                                <h6 class="text-primary"><i class="fas fa-balance-scale"></i> Charter Reference</h6>
+                                <p class="text-muted">{{ step.charter_reference }}</p>
+                            </div>
+                            {% endif %}
+
+                            {% if step.required_documents %}
+                            <div class="required-docs mb-3">
+                                <h6><i class="fas fa-file-alt"></i> Required Documents</h6>
+                                <ul class="list-group list-group-flush">
+                                    {% for doc in step.required_documents %}
+                                    <li class="list-group-item py-1">
+                                        <i class="fas fa-check-circle text-success"></i> {{ doc }}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+
+                            {% if step.next_steps %}
+                            <div class="next-steps">
+                                <h6><i class="fas fa-arrow-right"></i> Next Steps</h6>
+                                <div class="next-steps-list">
+                                    {% for next_step in step.next_steps %}
+                                    <span class="badge badge-outline-primary mr-1">{{ next_step }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="step-actions mt-3">
+                                <button class="btn btn-sm btn-success" onclick="markStepCompleted({{ loop.index }})">
+                                    <i class="fas fa-check"></i> Mark Completed
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary" onclick="addStepNotes({{ loop.index }})">
+                                    <i class="fas fa-sticky-note"></i> Add Notes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Charter Compliance -->
+            {% if workflow.charter_compliance %}
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4><i class="fas fa-shield-alt"></i> Charter Rights Protection</h4>
+                </div>
+                <div class="card-body">
+                    {% for section, description in workflow.charter_compliance.items() %}
+                    <div class="charter-section mb-3">
+                        <h6 class="text-primary">Charter {{ section|title }}</h6>
+                        <p>{{ description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Workflow Summary -->
+            <div class="card mb-4 sticky-top">
+                <div class="card-header bg-info text-white">
+                    <h5><i class="fas fa-info-circle"></i> Workflow Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="summary-item mb-3">
+                        <strong>Legal Area:</strong><br>
+                        <span class="text-muted">{{ workflow.legal_area|replace('_', ' ')|title }}</span>
+                    </div>
+                    
+                    <div class="summary-item mb-3">
+                        <strong>Jurisdiction:</strong><br>
+                        <span class="text-muted">{{ workflow.province }}</span>
+                    </div>
+                    
+                    <div class="summary-item mb-3">
+                        <strong>Total Time:</strong><br>
+                        <span class="text-muted">{{ workflow.total_estimated_time }}</span>
+                    </div>
+                    
+                    <div class="summary-item mb-3">
+                        <strong>Cost Range:</strong><br>
+                        <span class="text-muted">{{ workflow.total_cost_range }}</span>
+                    </div>
+                    
+                    <div class="summary-item mb-3">
+                        <strong>Success Rate:</strong><br>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" style="width: {{ (workflow.success_rate * 100)|round(0) }}%"></div>
+                        </div>
+                        <small>{{ (workflow.success_rate * 100)|round(1) }}%</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customizations -->
+            {% if customizations %}
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5><i class="fas fa-user-cog"></i> Personalized for You</h5>
+                </div>
+                <div class="card-body">
+                    {% if customizations.language_accommodations %}
+                    <div class="customization-section mb-3">
+                        <h6>Language Support</h6>
+                        <ul class="list-unstyled">
+                            {% for accommodation in customizations.language_accommodations %}
+                            <li><i class="fas fa-language text-info"></i> {{ accommodation }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if customizations.geographic_factors %}
+                    <div class="customization-section mb-3">
+                        <h6>Geographic Considerations</h6>
+                        <ul class="list-unstyled">
+                            {% for factor in customizations.geographic_factors %}
+                            <li><i class="fas fa-map-marker-alt text-success"></i> {{ factor }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if customizations.accessibility_needs %}
+                    <div class="customization-section mb-3">
+                        <h6>Accessibility</h6>
+                        <ul class="list-unstyled">
+                            {% for need in customizations.accessibility_needs %}
+                            <li><i class="fas fa-universal-access text-primary"></i> {{ need }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Progress Tracker -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5><i class="fas fa-chart-line"></i> Your Progress</h5>
+                </div>
+                <div class="card-body">
+                    <div class="progress mb-3">
+                        <div class="progress-bar" style="width: 0%" id="workflow-progress"></div>
+                    </div>
+                    <p class="text-center mb-0">
+                        <span id="completed-steps">0</span> of {{ workflow.steps|length }} steps completed
+                    </p>
+                    
+                    <div class="mt-3">
+                        <button class="btn btn-sm btn-outline-success btn-block" onclick="saveProgress()">
+                            <i class="fas fa-save"></i> Save Progress
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('workflow_recommendations') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left"></i> Back to Recommendations
+                        </a>
+                        
+                        <button class="btn btn-danger" onclick="startWorkflow()">
+                            <i class="fas fa-play"></i> Start This Workflow
+                        </button>
+                        
+                        <button class="btn btn-outline-secondary" onclick="downloadWorkflow()">
+                            <i class="fas fa-download"></i> Download PDF Guide
+                        </button>
+                        
+                        <button class="btn btn-outline-info" onclick="shareWorkflow()">
+                            <i class="fas fa-share"></i> Share Workflow
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.charter-banner {
+    background: linear-gradient(135deg, #d32f2f, #1976d2);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.charter-title {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+}
+
+.charter-quote {
+    font-style: italic;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+.maple-leaf-icon, .canadian-flag {
+    font-size: 2rem;
+}
+
+.workflow-step {
+    border-left: 4px solid #d32f2f;
+    transition: all 0.3s ease;
+}
+
+.workflow-step:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.step-number {
+    background: #d32f2f;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.step-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.charter-reference {
+    background: #f8f9fa;
+    border-left: 3px solid #007bff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.required-docs .list-group-item {
+    border: none;
+    padding: 5px 0;
+}
+
+.next-steps-list .badge {
+    font-size: 0.8rem;
+    margin: 2px;
+}
+
+.summary-item {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.customization-section h6 {
+    color: #856404;
+    margin-bottom: 10px;
+}
+
+.customization-section ul li {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.sticky-top {
+    top: 20px;
+}
+
+.progress {
+    height: 25px;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+</style>
+
+<script>
+let completedSteps = new Set();
+
+function markStepCompleted(stepNumber) {
+    if (completedSteps.has(stepNumber)) {
+        completedSteps.delete(stepNumber);
+    } else {
+        completedSteps.add(stepNumber);
+    }
+    updateProgress();
+}
+
+function updateProgress() {
+    const totalSteps = {{ workflow.steps|length }};
+    const completed = completedSteps.size;
+    const percentage = (completed / totalSteps) * 100;
+    
+    document.getElementById('workflow-progress').style.width = percentage + '%';
+    document.getElementById('completed-steps').textContent = completed;
+}
+
+function addStepNotes(stepNumber) {
+    const notes = prompt('Add notes for this step:');
+    if (notes) {
+        // Store notes locally or send to server
+        localStorage.setItem(`workflow_step_${stepNumber}_notes`, notes);
+        alert('Notes saved successfully!');
+    }
+}
+
+function saveProgress() {
+    const progress = {
+        workflowId: '{{ workflow.workflow_id }}',
+        completedSteps: Array.from(completedSteps),
+        timestamp: new Date().toISOString()
+    };
+    
+    localStorage.setItem('workflow_progress', JSON.stringify(progress));
+    alert('Progress saved successfully!');
+}
+
+function startWorkflow() {
+    if (confirm('Are you ready to begin this legal workflow? This will create a new case in your dashboard.')) {
+        // Redirect to case creation with this workflow
+        window.location.href = '/cases/new?workflow={{ workflow.workflow_id }}';
+    }
+}
+
+function downloadWorkflow() {
+    alert('PDF download feature coming soon! For now, you can print this page.');
+    window.print();
+}
+
+function shareWorkflow() {
+    if (navigator.share) {
+        navigator.share({
+            title: '{{ workflow.name }}',
+            text: 'Check out this legal workflow from SmartDispute.ai',
+            url: window.location.href
+        });
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Workflow URL copied to clipboard!');
+        });
+    }
+}
+
+// Load saved progress on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const savedProgress = localStorage.getItem('workflow_progress');
+    if (savedProgress) {
+        const progress = JSON.parse(savedProgress);
+        if (progress.workflowId === '{{ workflow.workflow_id }}') {
+            completedSteps = new Set(progress.completedSteps);
+            updateProgress();
+        }
+    }
+});
+</script>
+{% endblock %}

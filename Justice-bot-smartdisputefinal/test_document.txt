@@ -1,0 +1,22 @@
+SAMPLE LEGAL DOCUMENT FOR TESTING
+
+Case Title: Family Law Dispute Test Case
+Date: June 29, 2025
+
+FACTS:
+- This is a test document for SmartDispute.ai
+- Testing the document upload and analysis functionality
+- Family law case involving custody arrangements
+- Located in Toronto, Ontario
+
+ISSUES:
+- Child custody and access arrangements
+- Support calculations
+- Property division matters
+
+EVIDENCE:
+- Financial statements
+- Communication records
+- School records for children
+
+This document is for testing purposes only and contains no real personal information.

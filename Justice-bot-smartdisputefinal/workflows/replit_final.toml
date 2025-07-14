@@ -1,0 +1,6 @@
+[deployment]
+run = ["bash", "start_python_server.sh"]
+
+[hosting]
+route = "/"
+port = 8080

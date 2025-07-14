@@ -1,0 +1,153 @@
+Criminal Code (R.S.C., 1985, c. C-46)
+Full Document:
+- HTMLFull Document: Criminal Code (Accessibility Buttons available) |
+- XMLFull Document: Criminal Code [5301 KB] |
+- PDFFull Document: Criminal Code [7951 KB]
+Act current to 2025-06-09 and last amended on 2025-04-08. Previous Versions
+PART XXIIProcuring Attendance (continued)
+Execution or Service of Process (continued)
+Marginal note:Service in accordance with provincial laws
+701.1Â Despite section 701, in any province, service of a document may be made in accordance with the laws of the province relating to offences created by the laws of that province.
+- 1997, c. 18, s. 100
+- 2008, c. 18, s. 33
+Marginal note:Subpoena effective throughout Canada
+702Â (1)Â A subpoena that is issued by a provincial court judge or out of a superior court of criminal jurisdiction, a court of appeal, an appeal court or a court of criminal jurisdiction has effect anywhere in Canada according to its terms.
+Marginal note:Subpoena effective throughout province
+(2)Â A subpoena that is issued by a justice has effect anywhere in the province in which it is issued.
+- R.S., 1985, c. C-46, s. 702
+- 1994, c. 44, s. 71
+Marginal note:Warrant effective throughout Canada
+703Â (1)Â Notwithstanding any other provision of this Act, a warrant of arrest or committal that is issued out of a superior court of criminal jurisdiction, a court of appeal, an appeal court within the meaning of section 812 or a court of criminal jurisdiction other than a provincial court judge acting under Part XIX may be executed anywhere in Canada.
+Marginal note:Warrant effective in a province
+(2)Â Despite any other provision of this Act but subject to subsections 487.0551(2), 490.03121(3) and 705(3), a warrant of arrest or committal that is issued by a justice or provincial court judge may be executed anywhere in the province in which it is issued.
+- R.S., 1985, c. C-46, s. 703
+- R.S., 1985, c. 27 (1st Supp.), s. 149
+- 2007, c. 22, s. 22
+- 2023, c. 28, s. 33
+Marginal note:Summons effective throughout Canada
+703.1Â A summons may be served anywhere in Canada and, if served, is effective notwithstanding the territorial jurisdiction of the authority that issued the summons.
+- R.S., 1985, c. 27 (1st Supp.), s. 149
+Marginal note:Service of process on an organization
+703.2Â Where any summons, notice or other process is required to be or may be served on an organization, and no other method of service is provided, service may be effected by delivery
+(a)Â in the case of a municipality, to the mayor, warden, reeve or other chief officer of the municipality, or to the secretary, treasurer or clerk of the municipality; and
+(b)Â in the case of any other organization, to the manager, secretary or other senior officer of the organization or one of its branches.
+- R.S., 1985, c. 27 (1st Supp.), s. 149
+- 2003, c. 21, s. 13
+Defaulting or Absconding Witness
+Marginal note:Warrant for absconding witness
+704Â (1)Â Where a person is bound by recognizance to give evidence in any proceedings, a justice who is satisfied on information being made before him in writing and under oath that the person is about to abscond or has absconded may issue his warrant in Form 18 directing a peace officer to arrest that person and to bring him before the court, judge, justice or provincial court judge before whom he is bound to appear.
+Marginal note:Endorsement of warrant
+(2)Â Section 528 applies, with such modifications as the circumstances require, to a warrant issued under this section.
+Marginal note:Copy of information
+(3)Â A person who is arrested under this section is entitled, on request, to receive a copy of the information on which the warrant for his arrest was issued.
+- R.S., 1985, c. C-46, s. 704
+- R.S., 1985, c. 27 (1st Supp.), s. 203
+Marginal note:Warrant if witness does not attend
+705Â (1)Â If a person who has been served with a subpoena to give evidence in a proceeding does not attend or remain in attendance, the court, judge, justice or provincial court judge before whom that person was required to attend may issue a warrant in Form 17 for the arrest of that person if it is established
+(a)Â that the subpoena has been served in accordance with this Part, and
+(b)Â that the person is likely to give material evidence.
+Marginal note:Warrant if witness bound by recognizance
+(2)Â If a person who has been bound by a recognizance to attend to give evidence in any proceeding does not attend or does not remain in attendance, the court, judge, justice or provincial court judge before whom that person was bound to attend may issue a warrant in Form 17 for the arrest of that person.
+Marginal note:Warrant effective throughout Canada
+(3)Â A warrant that is issued by a justice or provincial court judge pursuant to subsection (1) or (2) may be executed anywhere in Canada.
+- R.S., 1985, c. C-46, s. 705
+- R.S., 1985, c. 27 (1st Supp.), s. 203
+- 2019, c. 25, s. 286
+Marginal note:If witness arrested under warrant
+706Â If a person is brought before a court, judge, provincial court judge or justice under a warrant issued under subsection 698(2) or section 704 or 705, the court, judge, provincial court judge or justice may, so that the person will appear and give evidence when required, order that the person be detained in custody or be released on recognizance, with or without sureties.
+- R.S., 1985, c. C-46, s. 706
+- R.S., 1985, c. 27 (1st Supp.), s. 203
+- 2019, c. 25, s. 287
+Marginal note:Maximum period for detention of witness
+707Â (1)Â No person shall be detained in custody under the authority of any provision of this Act, for the purpose only of appearing and giving evidence when required as a witness, for any period exceeding thirty days unless prior to the expiration of those thirty days he has been brought before a judge of a superior court of criminal jurisdiction in the province in which he is being detained.
+Marginal note:Application by witness to judge
+(2)Â Where at any time prior to the expiration of the thirty days referred to in subsection (1), a witness being detained in custody as described in that subsection applies to be brought before a judge of a court described therein, the judge before whom the application is brought shall fix a time prior to the expiration of those thirty days for the hearing of the application and shall cause notice of the time so fixed to be given to the witness, the person having custody of the witness and such other persons as the judge may specify, and at the time so fixed for the hearing of the application the person having custody of the witness shall cause the witness to be brought before a judge of the court for that purpose.
+Marginal note:Review of detention
+(3)Â If the judge before whom a witness is brought under this section is not satisfied that the continued detention of the witness is justified, the judge shall order them to be discharged or to be released on recognizance, with or without sureties, so that the witness will appear and give evidence when required. However, if the judge is satisfied that the continued detention of the witness is justified, the judge may order their continued detention until they do what is required of them under section 550 or the trial is concluded, or until they appear and give evidence when required, except that the total period of detention of the witness from the time they were first detained in custody shall not in any case exceed 90 days.
+- R.S., 1985, c. C-46, s. 707
+- 2019, c. 25, s. 288
+Marginal note:Contempt
+708Â (1)Â A person who, being required by law to attend or remain in attendance for the purpose of giving evidence, fails, without lawful excuse, to attend or remain in attendance accordingly is guilty of contempt of court.
+Marginal note:Punishment
+(2)Â A court, judge, justice or provincial court judge may deal summarily with a person who is guilty of contempt of court under this section and that person is liable to a fine not exceeding one hundred dollars or to imprisonment for a term not exceeding ninety days or to both, and may be ordered to pay the costs that are incident to the service of any process under this Part and to his detention, if any.
+Marginal note:Form
+(3)Â A conviction under this section may be in Form 38 and a warrant of committal in respect of a conviction under this section may be in Form 25.
+- R.S., 1985, c. C-46, s. 708
+- R.S., 1985, c. 27 (1st Supp.), s. 203
+- 2019, c. 25, s. 289(F)
+Electronically Transmitted Copies
+Marginal note:Electronically transmitted copies
+708.1Â A copy of a summons, warrant or subpoena transmitted by a means of telecommunication that produces a writing has the same probative force as the original for the purposes of this Act.
+- 1997, c. 18, s. 101
+Evidence on Commission
+Marginal note:Order appointing commissioner
+709Â (1)Â A party to proceedings by way of indictment or summary conviction may apply for an order appointing a commissioner to take the evidence of a witness who
+(a)Â is, by reason of
+(i)Â physical disability arising out of illness, or
+(ii)Â any other good and sufficient cause,
+not likely to be able to attend at the time the trial is held; or
+(b)Â is out of Canada.
+Marginal note:Idem
+(2)Â A decision under subsection (1) is deemed to have been made at the trial held in relation to the proceedings mentioned in that subsection.
+- R.S., 1985, c. C-46, s. 709
+- R.S., 1985, c. 27 (1st Supp.), s. 150
+- 1994, c. 44, s. 72
+Marginal note:Application where witness is ill
+710Â (1)Â An application under paragraph 709(1)(a) shall be made
+(a)Â to a judge of a superior court of the province in which the proceedings are taken;
+(b)Â to a judge of a county or district court in the territorial division in which the proceedings are taken; or
+(c)Â to a provincial court judge, where
+(i)Â at the time the application is made, the accused is before a provincial court judge presiding over a preliminary inquiry under Part XVIII, or
+(ii)Â the accused or defendant is to be tried by a provincial court judge acting under Part XIX or XXVII.
+Marginal note:Evidence of medical practitioner
+(2)Â An application under subparagraph 709(1)(a)(i) may be granted on the evidence of a registered medical practitioner.
+- R.S., 1985, c. C-46, s. 710
+- R.S., 1985, c. 27 (1st Supp.), s. 151
+- 1994, c. 44, s. 73
+Marginal note:Admitting evidence of witness who is ill
+711Â Where the evidence of a witness mentioned in paragraph 709(1)(a) is taken by a commissioner appointed under section 710, it may be admitted in evidence in the proceedings if
+(a)Â it is proved by oral evidence or by affidavit that the witness is unable to attend by reason of death or physical disability arising out of illness or some other good and sufficient cause;
+(b)Â the transcript of the evidence is signed by the commissioner by or before whom it purports to have been taken; and
+(c)Â it is proved to the satisfaction of the court that reasonable notice of the time for taking the evidence was given to the other party, and that the accused or his counsel, or the prosecutor or his counsel, as the case may be, had or might have had full opportunity to cross-examine the witness.
+- R.S., 1985, c. C-46, s. 711
+- R.S., 1985, c. 27 (1st Supp.), s. 152
+- 1994, c. 44, s. 74
+- 1997, c. 18, s. 102
+Marginal note:Application for order when witness out of Canada
+712Â (1)Â An application that is made under paragraph 709(1)(b) shall be made
+(a)Â to a judge of a superior court of criminal jurisdiction or of a court of criminal jurisdiction before which the accused is to be tried; or
+(b)Â to a provincial court judge, where the accused or defendant is to be tried by a provincial court judge acting under Part XIX or XXVII.
+Marginal note:Admitting evidence of witness out of Canada
+(2)Â Where the evidence of a witness is taken by a commissioner appointed under this section, it may be admitted in evidence in the proceedings.
+(3)Â [Repealed, R.S., 1985, c. 27 (1st Supp.), s. 153]
+- R.S., 1985, c. C-46, s. 712
+- R.S., 1985, c. 27 (1st Supp.), s. 153
+- 1994, c. 44, s. 75
+- 1997, c. 18, s. 103
+Marginal note:Providing for presence of accused counsel
+713Â (1)Â A judge or provincial court judge who appoints a commissioner may make provision in the order to enable an accused to be present or represented by counsel when the evidence is taken, but failure of the accused to be present or to be represented by counsel in accordance with the order does not prevent the admission of the evidence in the proceedings if the evidence has otherwise been taken in accordance with the order and with this Part.
+Marginal note:Return of evidence
+(2)Â An order for the taking of evidence by commission shall indicate the officer of the court to whom the evidence that is taken under the order shall be returned.
+- R.S., 1985, c. C-46, s. 713
+- R.S., 1985, c. 27 (1st Supp.), s. 203
+- 1997, c. 18, s. 104
+Marginal note:Evidence not excluded
+713.1Â Evidence taken by a commissioner appointed under section 712 shall not be excluded by reason only that it would have been taken differently in Canada, provided that the process used to take the evidence is consistent with the law of the country where it was taken and that the process used to take the evidence was not contrary to the principles of fundamental justice.
+- 1994, c. 44, s. 76
+Marginal note:Rules and practice same as in civil cases
+714Â Except where otherwise provided by this Part or by rules of court, the practice and procedure in connection with the appointment of commissioners under this Part, the taking of evidence by commissioners, the certifying and return thereof and the use of the evidence in the proceedings shall, as far as possible, be the same as those that govern like matters in civil proceedings in the superior court of the province in which the proceedings are taken.
+- R.S., c. C-34, s. 642
+Video and Audio Evidence
+Marginal note:Audioconference and videoconference â witness in Canada
+714.1Â A court may order that a witness in Canada give evidence by audioconference or videoconference, if the court is of the opinion that it would be appropriate having regard to all the circumstances, including
+(a)Â the location and personal circumstances of the witness;
+(b)Â the costs that would be incurred if the witness were to appear in person;
+(c)Â the nature of the witnessâ anticipated evidence;
+(d)Â the suitability of the location from where the witness will give evidence;
+(e)Â the accusedâs right to a fair and public hearing;
+(f)Â the nature and seriousness of the offence; and
+(g)Â any potential prejudice to the parties caused by the fact that the witness would not be seen by them, if the court were to order the evidence to be given by audioconference.
+- 1999, c. 18, s. 95
+- 2019, c. 25, s. 290
+- 2022, c. 17, s. 44(E)
+- Date modified:

@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Profile - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Your Profile</h1>
+    
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h5 mb-0">Account Information</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Username:</strong> {{ current_user.username }}</p>
+                    <p><strong>Email:</strong> {{ current_user.email }}</p>
+                    <p><strong>Member Since:</strong> {{ current_user.created_at.strftime('%Y-%m-%d') }}</p>
+                    
+                    <div class="d-grid gap-2 mt-3">
+                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                            <i class="bi bi-pencil"></i> Edit Profile
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                            <i class="bi bi-lock"></i> Change Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h5 mb-0">Activity Summary</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Cases:</strong> {{ case_count }}</p>
+                    <p><strong>Documents Uploaded:</strong> {{ document_count }}</p>
+                    <p><strong>Forms Generated:</strong> {{ form_count }}</p>
+                    <p><strong>Mailings Requested:</strong> {{ mailing_count }}</p>
+                    
+                    <div class="d-grid mt-3">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary btn-sm">View All Cases</a>
+                    </div>
+                    {% if mailing_count > 0 %}
+                    <div class="d-grid mt-2">
+                        <a href="{{ url_for('my_mailings') }}" class="btn btn-outline-primary btn-sm">View Mailings</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h5 mb-0">Subscription Information</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h3 class="h5">
+                                Current Plan: 
+                                <span class="badge {% if current_user.subscription_type == 'free' %}bg-secondary{% elif current_user.subscription_type == 'pay_per_doc' %}bg-info{% elif current_user.subscription_type == 'monthly' or current_user.subscription_type == 'unlimited' %}bg-success{% elif current_user.subscription_type == 'annual' %}bg-primary{% elif current_user.subscription_type == 'low_income' %}bg-primary{% endif %}">
+                                    {% if current_user.subscription_type == 'free' %}
+                                        Free
+                                    {% elif current_user.subscription_type == 'pay_per_doc' %}
+                                        Pay Per Document
+                                    {% elif current_user.subscription_type == 'monthly' or current_user.subscription_type == 'unlimited' %}
+                                        Monthly Unlimited
+                                    {% elif current_user.subscription_type == 'annual' %}
+                                        Annual
+                                    {% elif current_user.subscription_type == 'low_income' %}
+                                        Low Income Plan
+                                    {% endif %}
+                                </span>
+                            </h3>
+                            
+                            {% if current_user.subscription_end %}
+                                <p>
+                                    <strong>Expires:</strong> {{ current_user.subscription_end.strftime('%Y-%m-%d') }}
+                                    {% if (current_user.subscription_end - now).days <= 7 %}
+                                        <span class="badge bg-warning">Expiring Soon</span>
+                                    {% endif %}
+                                </p>
+                            {% endif %}
+                            
+                            {% if current_user.subscription_type != 'free' %}
+                                <div class="mb-3">
+                                    <p>
+                                        <strong>Features:</strong>
+                                        {% if current_user.subscription_type == 'pay_per_doc' %}
+                                            Pay $5.99 per document, unlimited uploads
+                                        {% elif current_user.subscription_type == 'monthly' or current_user.subscription_type == 'unlimited' %}
+                                            Unlimited document generation, priority support
+                                        {% elif current_user.subscription_type == 'annual' %}
+                                            Unlimited document generation, priority support, early access to new features
+                                        {% elif current_user.subscription_type == 'low_income' %}
+                                            Unlimited document generation at reduced cost
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a href="{{ url_for('pricing') }}" class="btn btn-primary">
+                                {% if current_user.subscription_type == 'free' or current_user.subscription_type == 'pay_per_doc' %}
+                                    Upgrade Plan
+                                {% else %}
+                                    Manage Subscription
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                    
+                    {% if payments %}
+                    <hr>
+                    <h3 class="h5 mb-3">Recent Payments</h3>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for payment in payments %}
+                                <tr>
+                                    <td>{{ payment.created_at.strftime('%Y-%m-%d') }}</td>
+                                    <td>
+                                        {% if payment.payment_type == 'subscription' %}
+                                            Subscription payment
+                                        {% elif payment.payment_type == 'per_document' %}
+                                            Document payment
+                                        {% elif payment.payment_type == 'mailing' %}
+                                            Mailing service
+                                        {% endif %}
+                                    </td>
+                                    <td>${{ payment.amount }}</td>
+                                    <td>
+                                        <span class="badge {% if payment.status == 'completed' %}bg-success{% elif payment.status == 'pending' %}bg-warning{% else %}bg-danger{% endif %}">
+                                            {{ payment.status }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <hr>
+                    <p class="text-muted">No payment history available.</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h5 mb-0">Payment Methods</h2>
+                </div>
+                <div class="card-body">
+                    <p>We support the following payment methods:</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" height="26">
+                            Pay securely with PayPal
+                        </li>
+                    </ul>
+                    
+                    <p class="text-muted small mt-3">Need help with billing? Contact support@smartdispute.ai</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('update_profile') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ current_user.username }}" required>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('change_password') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="current_password" name="current_password" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

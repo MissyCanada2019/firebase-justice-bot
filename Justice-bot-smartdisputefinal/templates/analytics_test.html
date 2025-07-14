@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Analytics Test - SmartDispute.ai</title>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QN23B49EEY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      gtag('config', 'G-QN23B49EEY', {
+        'send_page_view': true,
+        'debug_mode': true
+      });
+      
+      // Test events for Real-Time verification
+      setTimeout(() => {
+        gtag('event', 'analytics_test_page', {
+          'event_category': 'Test',
+          'event_label': 'Real-Time Test',
+          'value': 1
+        });
+        console.log('Test event sent to GA4');
+      }, 2000);
+    </script>
+    
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a1a; color: white; }
+        .test-button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 10px; cursor: pointer; }
+        .console { background: #000; color: #00ff00; padding: 10px; border-radius: 5px; font-family: monospace; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>SmartDispute.ai Google Analytics Test Page</h1>
+    <p>Property ID: G-QN23B49EEY</p>
+    
+    <div>
+        <button class="test-button" onclick="testEvent('button_click', 'Test Button')">Test Button Click</button>
+        <button class="test-button" onclick="testEvent('user_engagement', 'Manual Test')">Test User Engagement</button>
+        <button class="test-button" onclick="testEvent('legal_action', 'Test Legal Event')">Test Legal Event</button>
+    </div>
+    
+    <div class="console" id="console">
+        <div>Analytics Test Console:</div>
+        <div>Page loaded - initial events sent</div>
+    </div>
+    
+    <h3>Instructions:</h3>
+    <ol>
+        <li>Visit your Google Analytics dashboard</li>
+        <li>Go to Reports > Real-time</li>
+        <li>Click the test buttons above</li>
+        <li>Check if events appear in Real-time reports</li>
+        <li>If events show in Real-time, your tracking is working correctly</li>
+    </ol>
+    
+    <script>
+        function testEvent(eventName, label) {
+            gtag('event', eventName, {
+                'event_category': 'Manual Test',
+                'event_label': label,
+                'value': Math.floor(Math.random() * 100)
+            });
+            
+            const console = document.getElementById('console');
+            console.innerHTML += `<div>Sent: ${eventName} - ${label} at ${new Date().toLocaleTimeString()}</div>`;
+            
+            console.log(`GA4 Event sent: ${eventName} - ${label}`);
+        }
+        
+        // Automatic page view tracking
+        setTimeout(() => {
+            gtag('event', 'page_view', {
+                'page_title': 'Analytics Test Page',
+                'page_location': window.location.href
+            });
+            
+            const console = document.getElementById('console');
+            console.innerHTML += `<div>Automatic page_view event sent</div>`;
+        }, 3000);
+    </script>
+</body>
+</html>

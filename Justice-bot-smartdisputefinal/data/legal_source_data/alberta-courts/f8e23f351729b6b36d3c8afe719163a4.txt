@@ -1,0 +1,4 @@
+Cette formule est à l’usage exclusif de l’avocat de la défense et dans les situations où la Cour a ordonné la préparation d’un rapport Gladue pour des fins de détermination de la peine. Les champs marqués d’un astérisque (*) sont obligatoires.
+Veuillez inclure les accusations, une par ligne.
+Veuillez inclure les numéros de dossiers, une par ligne.
+Note : Toute soumission réussie de la demande de rapport Gladue déclenchera une réponse par courriel automatique de CONFIRMATION, envoyée à l'adresse courriel de l'avocat de la défense telle que saisie dans cette formule. Si vous ne recevez pas de courriel de confirmation, il se peut que votre formule n'ait pas été reçue.

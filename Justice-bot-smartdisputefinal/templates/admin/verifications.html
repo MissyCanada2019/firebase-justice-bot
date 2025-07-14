@@ -1,0 +1,34 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2>Pending Verification Documents</h2>
+    
+    {% if documents %}
+    <div class="list-group">
+        {% for doc in documents %}
+        <div class="list-group-item">
+            <h5>User: {{ doc.user.email }}</h5>
+            <p>Document Type: {{ doc.document_type }}</p>
+            <p>Submitted: {{ doc.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            
+            <div class="d-flex gap-2">
+                <form action="{{ url_for('verify_document', doc_id=doc.id, action='approve') }}" method="POST" class="d-inline">
+                    <input type="text" name="notes" placeholder="Review notes" class="form-control mb-2">
+                    <button type="submit" class="btn btn-success">Approve</button>
+                </form>
+                
+                <form action="{{ url_for('verify_document', doc_id=doc.id, action='reject') }}" method="POST" class="d-inline">
+                    <input type="text" name="notes" placeholder="Rejection reason" class="form-control mb-2">
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No pending verification documents</p>
+    {% endif %}
+</div>
+{% endblock %}

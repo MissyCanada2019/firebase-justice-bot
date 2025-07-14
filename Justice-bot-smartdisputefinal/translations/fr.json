@@ -1,0 +1,25 @@
+{
+  "app_name": "SmartDispute.ai",
+  "tagline": "Autonomiser les Canadiens par la Justice",
+  "charter_protection": "Protégé par la Charte canadienne des droits et libertés",
+  "legal_categories": {
+    "family_law": "Droit de la famille",
+    "housing_law": "Droit du logement et des locataires",
+    "employment_law": "Droit du travail",
+    "criminal_law": "Droit pénal",
+    "human_rights": "Droits de la personne"
+  },
+  "forms": {
+    "t2_application": "Demande T2 (Droits des locataires)",
+    "t6_application": "Demande T6 (Entretien et réparations)",
+    "hrto_application": "Demande au Tribunal des droits de la personne"
+  },
+  "dashboard": {
+    "upload_documents": "Télécharger des documents",
+    "case_dashboard": "Tableau de bord des dossiers",
+    "merit_score": "Score de mérite",
+    "legal_analysis": "Analyse juridique",
+    "recommended_actions": "Actions recommandées"
+  },
+  "legal_disclaimer": "Ceci fournit des informations juridiques, pas de conseils juridiques. Nous ne sommes pas des avocats."
+}

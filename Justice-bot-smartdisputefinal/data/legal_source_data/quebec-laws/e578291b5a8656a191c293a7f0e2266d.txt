@@ -1,0 +1,62 @@
+They are the texts included in the Compilation of QuÃ©bec Laws and Regulations (CQLR), i.e. the grouping, by the Minister of Justice, of statutes and regulations of a general and permanent nature. This corpus is regularly updated by the Service de la refonte des lois et des rÃ¨glements of the ministÃ¨re de la Justice (MJQ), on the basis of the statutes adopted by the National Assembly and the regulations made by the Government. In LÃ©gisQuÃ©bec, the texts that are part of the CQLR are referred to as âConsolidated Statutes and Regulationsâ.
+Many of the statutes adopted each year by the National Assembly are selected by the Minister of Justice to be included in the CQLR as new statutes. From that point on, a unique alphanumeric designation is attributed to them by the Service de la refonte des lois et des rÃ¨glements of the MJQ.
+Certain statutes adopted by the National Assembly amend statutes already included in the CQLR. After their adoption, the Service de la refonte des lois et des rÃ¨glements of the MJQ makes the necessary amendments to the existing statutes, in accordance with the coming into force date.
+In LÃ©gisQuÃ©bec, the corpus of Annual Statutes brings together the statutes adopted by the National Assembly that were included in the CQLR or that amend statutes already included in the CQLR. To consult all the annual statutes adopted by the National Assembly, refer to the Annual Statutes of QuÃ©bec section of Les Publications du QuÃ©bec website.
+As is the case for annual statutes, many of the regulations made by the Government are selected and included in the CQLR as new regulations or as regulations amending other regulations already included in the CQLR.
+Hence, LÃ©gisQuÃ©bec includes the annual regulations made by the Government that were included in the CQLR or that amend regulations already included in the CQLR. To consult all the annual regulations, refer to the Gazette officielle du QuÃ©bec.
+The official nature of the Consolidated Statutes and Regulations is established under section 7 of the Act respecting the Compilation of QuÃ©bec Laws and Regulations (CQLR, chapter R-2.2.0.0.2):
+Publication of the compilation, or of any extract from it, by the QuÃ©bec Official Publisher, whatever the medium used, confers official status on the texts.
+Updating the CQLR is the process of integrating repeals, replacements, additions and other amendments adopted by the competent authorities into the texts, in accordance with the provisions that come into force. It also involves purging the texts of obsolete provisions or those whose purpose is accomplished, while ensuring the consistency of the CQLR as a whole.
+The Service de la refonte des lois et des rÃ¨glements of the MJQ integrates these amendments into the source files of the CQLR. These are then sent to the QuÃ©bec Official Publisher for publication on LÃ©gisQuÃ©bec. It is therefore possible that there will be a certain delay between the effective date of the amendments and their publication on LÃ©gisQuÃ©bec.
+A document entitled âInformation noteâ precedes each updating of the CQLR and is posted on LÃ©gisQuÃ©bec, in accordance with the second paragraph of section 4 of the Act respecting the Compilation of QuÃ©bec Laws and Regulations (CQLR, chapter R-2.2.0.0.2).
+The information note is drafted by the Service de la refonte des lois et des rÃ¨glements of the MJQ. It includes the detailed amendments made under the âconsolidatorâs general powerâ in both the statutes and regulations. The scope of that power is described in the second paragraph of section 3 of the Act respecting the Compilation of QuÃ©bec Laws and Regulations (CQLR, chapter R-2.2.0.0.2).
+For proper consultation, the fact that four separate files called âinformation noteâ must be taken into account:
+It should be noted that the updates made are not necessarily the same in both languages.
+Among the historical references under a section or an article, the amendment identified in an information note is designated by the abbreviation âI.N.â, which is followed by the updated date on which the amendment was made, for example âI.N. 2015-09-01â. This type of reference has been used since January 1, 2014.
+The alphanumeric designation is a classification method. It uses the first letter of the first distinctive noun in the French title of the consolidated statute followed by a number, which corresponds to the alphabetic order of the French title in its group.
+For example:
+The Act respecting the Barreau du QuÃ©bec (Loi sur le Barreau), CQLR, chapter B-1
+The Unclaimed Property Act (Loi sur les biens non rÃ©clamÃ©s), CQLR, chapter B-5.1
+Given that this numbering system began at the time of the last complete consolidation of statutes in 1977, decimals had to be introduced to insert new statutes whose titles, in alphabetic order, fall between two statutes with established chapter numbers.
+| B | |
+|---|---|
+| Barreau | B-1 |
+| BÃ¢timent | B-1.1 |
+| BibliothÃ¨que et Archives | B-1.2 |
+| BibliothÃ¨que nationale | B-2 |
+Hence, a change in title can lead to a change in the alphanumeric designation so as to reconcile it with the alphabetic order. For example, the Act to establish the Grande bibliothÃ¨que du QuÃ©bec (Loi sur la Grande bibliothÃ¨que du QuÃ©bec) was given the alphanumeric designation G-3 after its coming into force in 1998. In 2002, its title was changed to the Act respecting the BibliothÃ¨que nationale du QuÃ©bec (Loi sur la BibliothÃ¨que nationale du QuÃ©bec) and its alphanumeric designation became B-2.2. Lastly, its title was changed again in 2006 to the Act respecting BibliothÃ¨que et Archives nationales du QuÃ©bec (Loi sur BibliothÃ¨que et Archives nationales du QuÃ©bec) and its alphanumeric designation became B-1.2.
+The principles for classifying consolidated statutes also apply to regulations. However, regulations are first grouped according to the statute under which they were made.
+For example, the alphanumeric designation of all the regulations made under the Food Products Act (Loi sur les produits alimentaires) starts with P-29, followed by the letter âr.â, to indicate a regulation. Next comes a number corresponding to the regulationâs alphabetic order in the group according to the first important word in the French title of the regulation:
+| Title | Alphanumeric designation |
+|---|---|
+| Regulation respecting food (Aliments, RÃ¨glement sur lesâ¦) |
+CQLR, chapter P-29, r. 1 |
+| Regulation respecting bottled water (Eaux embouteillÃ©es, RÃ¨glement sur lesâ¦) |
+CQLR, chapter P-29, r. 2 |
+| Regulation respecting fresh fruits and vegetables (Fruits et lÃ©gumes frais, RÃ¨glement sur lesâ¦) |
+CQLR, chapter P-29, r. 3 |
+| Regulation respecting the reimbursement of the costs of permanent inspection (Remboursement des coÃ»ts dâinspection permanente, RÃ¨glement sur leâ¦) |
+CQLR, chapter P-29, r. 4 |
+The terms and conditions of the coming into force of Annual Statutes and Regulations are indicated in the last section or article, called âoperative partâ.
+The terms and conditions of their coming into force are always indicated.
+The terms and conditions of their coming into force are generally indicated. When that is not the case, refer to the part introducing the document when it is published in the Gazette officielle du QuÃ©bec or to the Regulations Act (CQLR, chapter R-18.1), which stipulates that regulations come into force 15 days after the date of their publication in the Gazette officielle du QuÃ©bec or on the date of their publication if the prescribed conditions are abided by.
+Texts may come into force in whole or in part, hence, on various dates.
+There are several terms and conditions of provisions brought into force:
+Fortunately, there is an exhaustive tool in which each provision brought into force is listed for every QuÃ©bec statute assented to since January 1, 1978. The document is updated by the Service de la refonte des lois et des rÃ¨glements of the MJQ and is made available free of charge on the LÃ©gisQuÃ©bec website:
+Table of provisions brought into force
+When a statute or a regulation has been repealed or replaced, or has ceased to have effect, that information is indicated, for example, in the upper right-hand corner of the full text. The text is also displayed in red in order to draw the userâs attention to this feature, as it has a significant impact on the relevance of the content.
+The updated version of a consolidated statute or regulation is the most recent, full version available of that document. All the amendments in force on that date have therefore been incorporated by the Service de la refonte des lois et des rÃ¨glements of the MJQ and are included in the document displayed.
+The historical version of a consolidated statute or regulation is the full text of the document, as it read on a date prior to that of the updated version.
+A historical version is created for each date of coming into force of an amendment to a document.
+It is possible to consult the full text of a statute in force on a specific date, as of April 1, 1999.
+However, when consulting versions of a particular section or article, the history may go back to December 31, 1977, the date of the last complete consolidation of statutes.
+Regarding the historical versions of regulations, it is possible to go back to September 1, 2012, either for the full document or individual sections or articles.
+LÃ©gisQuÃ©bec makes it possible to consult legislative texts in the following formats:
+HTML for on-screen viewing
+PDF for on-screen viewing or for printing with structured page layout
+ePUB for viewing on a mobile device
+An ePUB is a computer file designed to be downloaded and viewed on a mobile device. One of the characteristics of ePUB is that its content adjusts to the type of device used. To do so, the device must be equipped with software making it possible to read those files and, depending on the software used, it is possible to increase the font size, do a keyword search, add bookmarks or personal notes, and so on.
+LÃ©gisQuÃ©bec is the property of Les Publications du QuÃ©bec, which holds exclusive intellectual property rights, including copyright.
+A reproduction licence is therefore required. The request must be completed on the QuÃ©bec.ca website.
+The request may involve obtaining XML files, a machine-readable markup language.
+For more information, please consult Droits d'auteur.

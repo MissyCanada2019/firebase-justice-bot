@@ -1,0 +1,6 @@
+[workflow]
+name = "Flask Port 8080"
+entryPoint = "python flask_port8080.py"
+runOnOpen = true
+terminateOn = "shutdown"
+onBoot = true

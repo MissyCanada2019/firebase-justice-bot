@@ -1,0 +1,6 @@
+[deployment]
+run = ["python3", "simplified_8080.py"]
+
+[hosting]
+route = "/"
+port = 8080

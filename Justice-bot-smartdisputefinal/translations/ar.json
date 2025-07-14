@@ -1,0 +1,25 @@
+{
+  "app_name": "SmartDispute.ai",
+  "tagline": "تمكين الكنديين من خلال العدالة",
+  "charter_protection": "محمي بميثاق الحقوق والحريات الكندي",
+  "legal_categories": {
+    "family_law": "قانون الأسرة",
+    "housing_law": "قانون الإسكان والمستأجرين",
+    "employment_law": "قانون العمل",
+    "criminal_law": "القانون الجنائي",
+    "human_rights": "حقوق الإنسان"
+  },
+  "forms": {
+    "t2_application": "طلب T2 (حقوق المستأجرين)",
+    "t6_application": "طلب T6 (الصيانة والإصلاحات)",
+    "hrto_application": "طلب محكمة حقوق الإنسان"
+  },
+  "dashboard": {
+    "upload_documents": "رفع المستندات",
+    "case_dashboard": "لوحة تحكم القضية",
+    "merit_score": "نقاط الجدارة",
+    "legal_analysis": "التحليل القانوني",
+    "recommended_actions": "الإجراءات الموصى بها"
+  },
+  "legal_disclaimer": "هذا يوفر معلومات قانونية، وليس استشارة قانونية. نحن لسنا محامين."
+}

@@ -1,0 +1,25 @@
+{
+  "app_name": "SmartDispute.ai",
+  "tagline": "Empowering Canadians through Justice",
+  "charter_protection": "Protected by the Canadian Charter of Rights and Freedoms",
+  "legal_categories": {
+    "family_law": "Family Law",
+    "housing_law": "Housing & Tenant Law",
+    "employment_law": "Employment Law",
+    "criminal_law": "Criminal Law",
+    "human_rights": "Human Rights"
+  },
+  "forms": {
+    "t2_application": "T2 Application (Tenant Rights)",
+    "t6_application": "T6 Application (Maintenance & Repairs)",
+    "hrto_application": "Human Rights Tribunal Application"
+  },
+  "dashboard": {
+    "upload_documents": "Upload Documents",
+    "case_dashboard": "Case Dashboard",
+    "merit_score": "Merit Score",
+    "legal_analysis": "Legal Analysis",
+    "recommended_actions": "Recommended Actions"
+  },
+  "legal_disclaimer": "This provides legal information, not legal advice. We are not lawyers."
+}

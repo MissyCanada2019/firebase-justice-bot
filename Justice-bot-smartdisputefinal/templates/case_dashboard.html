@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{% block title %}Case Dashboard - {{ case.title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Case Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">
+                        <i class="fas fa-gavel me-2"></i>
+                        Case: {{ case.title }}
+                    </h2>
+                    <small class="text-light">Created: {{ case.created_at.strftime('%B %d, %Y at %I:%M %p') }}</small>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-info-circle text-primary me-2"></i>Case Details</h5>
+                            <p><strong>Type:</strong> {{ case.case_type|title if case.case_type else 'General Legal' }}</p>
+                            <p><strong>Status:</strong> 
+                                <span class="badge bg-{{ 'success' if case_stage.stage == 'analysis_complete' else 'warning' }}">
+                                    {{ case_stage.description if case_stage else 'In Progress' }}
+                                </span>
+                            </p>
+                            {% if case.description %}
+                            <p><strong>Description:</strong> {{ case.description }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            {% if merit_score and merit_score.score %}
+                            <h5><i class="fas fa-chart-line text-success me-2"></i>Merit Score Analysis</h5>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="progress flex-grow-1 me-3" style="height: 20px;">
+                                    <div class="progress-bar bg-{{ 'success' if merit_score.score >= 70 else 'warning' if merit_score.score >= 50 else 'danger' }}" 
+                                         role="progressbar" style="width: {{ merit_score.score }}%">
+                                        {{ merit_score.score }}%
+                                    </div>
+                                </div>
+                                <span class="badge bg-{{ 'success' if merit_score.score >= 70 else 'warning' if merit_score.score >= 50 else 'danger' }}">
+                                    {% if merit_score.score >= 70 %}Strong Case
+                                    {% elif merit_score.score >= 50 %}Moderate Case
+                                    {% else %}Challenging Case{% endif %}
+                                </span>
+                            </div>
+                            {% if merit_score.summary %}
+                            <p class="small text-muted">{{ merit_score.summary }}</p>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documents Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4><i class="fas fa-file-alt me-2"></i>Uploaded Documents ({{ documents|length }})</h4>
+                </div>
+                <div class="card-body">
+                    {% if documents %}
+                    <div class="row">
+                        {% for doc in documents %}
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card border-{{ 'success' if doc.evidence_type == 'supporting' else 'danger' if doc.evidence_type == 'opposition' else 'warning' }}">
+                                <div class="card-body p-3">
+                                    <h6 class="card-title">
+                                        <i class="fas fa-file me-1"></i>
+                                        {{ doc.filename }}
+                                    </h6>
+                                    <p class="card-text small">
+                                        <span class="badge bg-{{ 'success' if doc.evidence_type == 'supporting' else 'danger' if doc.evidence_type == 'opposition' else 'warning' }}">
+                                            {{ doc.evidence_type|title }} Evidence
+                                        </span><br>
+                                        <small class="text-muted">
+                                            Size: {{ "%.1f"|format(doc.file_size / 1024) }} KB<br>
+                                            Uploaded: {{ doc.created_at.strftime('%m/%d/%Y') }}
+                                        </small>
+                                    </p>
+                                    {% if doc.extracted_text %}
+                                    <small class="text-success">
+                                        <i class="fas fa-check-circle me-1"></i>
+                                        Text extracted ({{ doc.extracted_text|length }} chars)
+                                    </small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-upload fa-3x mb-3"></i>
+                        <p>No documents uploaded yet.</p>
+                        <a href="{{ url_for('upload') }}" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i>Upload Documents
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Analysis Results -->
+    {% if ai_analysis %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4><i class="fas fa-brain me-2"></i>AI Legal Analysis</h4>
+                </div>
+                <div class="card-body">
+                    {% if ai_analysis.legal_issue_type %}
+                    <div class="mb-3">
+                        <h6><i class="fas fa-tag me-1"></i>Legal Issue Type</h6>
+                        <span class="badge bg-info">{{ ai_analysis.legal_issue_type|title }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if ai_analysis.key_facts %}
+                    <div class="mb-3">
+                        <h6><i class="fas fa-list me-1"></i>Key Facts Identified</h6>
+                        <ul class="list-group list-group-flush">
+                            {% for fact in ai_analysis.key_facts[:5] %}
+                            <li class="list-group-item py-1 px-0 border-0">
+                                <i class="fas fa-check-circle text-success me-2"></i>{{ fact }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if ai_analysis.self_representation_confidence %}
+                    <div class="mb-3">
+                        <h6><i class="fas fa-user-tie me-1"></i>Self-Representation Assessment</h6>
+                        <div class="alert alert-{{ 'success' if ai_analysis.self_representation_confidence.level == 'high' else 'warning' if ai_analysis.self_representation_confidence.level == 'moderate' else 'info' }}">
+                            <strong>{{ ai_analysis.self_representation_confidence.level|title }} Confidence</strong>
+                            {% if ai_analysis.self_representation_confidence.reasoning %}
+                            <p class="mb-0 mt-2">{{ ai_analysis.self_representation_confidence.reasoning }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Next Actions -->
+    {% if next_actions %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4><i class="fas fa-tasks me-2"></i>Recommended Next Steps</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for action in next_actions[:4] %}
+                        <div class="col-md-6 mb-3">
+                            <div class="card border-primary h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        <i class="fas fa-arrow-right text-primary me-1"></i>
+                                        {{ action.title }}
+                                    </h6>
+                                    <p class="card-text small">{{ action.description }}</p>
+                                    {% if action.priority %}
+                                    <span class="badge bg-{{ 'danger' if action.priority == 'high' else 'warning' if action.priority == 'medium' else 'success' }}">
+                                        {{ action.priority|title }} Priority
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5><i class="fas fa-tools me-2"></i>Case Actions</h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{{ url_for('upload') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-plus me-1"></i>Add More Documents
+                        </a>
+                        <a href="{{ url_for('generate_document') }}" class="btn btn-success">
+                            <i class="fas fa-file-pdf me-1"></i>Generate Court Documents
+                        </a>
+                        {% if merit_score %}
+                        <a href="{{ url_for('my_documents') }}" class="btn btn-outline-info">
+                            <i class="fas fa-folder me-1"></i>View All Documents
+                        </a>
+                        {% endif %}
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Legal Disclaimer -->
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-warning">
+                <h6><i class="fas fa-exclamation-triangle me-2"></i>Important Legal Disclaimer</h6>
+                <p class="mb-0 small">
+                    This AI analysis provides legal information, not legal advice. We are not lawyers. 
+                    All generated documents and analysis should be reviewed carefully before filing with any court or tribunal. 
+                    Consider consulting with a qualified legal professional for complex matters.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Canadian Charter Section -->
+<div class="mt-4 p-4 bg-dark text-white rounded">
+    <div class="text-center">
+        <h5 class="text-danger mb-3">
+            <i class="fas fa-maple-leaf me-2"></i>
+            Canadian Charter of Rights and Freedoms - Section 7
+            <i class="fas fa-maple-leaf ms-2"></i>
+        </h5>
+        <blockquote class="blockquote">
+            <p class="mb-0 fst-italic">
+                "Everyone has the right to life, liberty and security of the person and the right not to be deprived 
+                thereof except in accordance with the principles of fundamental justice."
+            </p>
+        </blockquote>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Google Analytics event tracking for case dashboard views
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'case_dashboard_view', {
+            'event_category': 'Case Management',
+            'event_label': 'Case Dashboard View',
+            'case_type': '{{ case.case_type or "general" }}',
+            'documents_count': {{ documents|length }},
+            'value': 1
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justice-Bot - Canadian Legal Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #dc3545 0%, white 100%);
+            color: black;
+            padding: 60px 0;
+        }
+        .maple-leaf {
+            color: #dc3545;
+        }
+        .feature-card {
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="Justice-Bot Logo" height="40" class="d-inline-block align-text-top me-2">
+                Justice-Bot
+            </a>
+            <div class="ms-auto">
+                <a href="/login" class="btn btn-primary">Login</a>
+                <a href="/auth/register" class="btn btn-outline-primary">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Welcome to Justice-Bot</h1>
+            <p class="lead">Your AI-Powered Canadian Legal Assistant</p>
+            <p class="mt-3">Making justice accessible to all Canadians through intelligent legal document analysis and guidance</p>
+            <a href="/auth/register" class="btn btn-light btn-lg mt-3">
+                <i class="fas fa-gavel"></i> Get Started Free
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">How Justice-Bot Helps You</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 feature-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-brain text-primary" style="font-size: 3rem;"></i>
+                            <h4 class="mt-3">AI-Powered Analysis</h4>
+                            <p>Upload your legal documents and receive instant merit scoring (1-100) based on Canadian law</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 feature-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-file-alt text-success" style="font-size: 3rem;"></i>
+                            <h4 class="mt-3">Document Generation</h4>
+                            <p>Generate court-ready documents with proper formatting and legal citations</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 feature-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-map-marker-alt text-danger" style="font-size: 3rem;"></i>
+                            <h4 class="mt-3">Court Locator</h4>
+                            <p>Find the right Canadian courthouse for your case with complete contact information</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legal Areas Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Legal Areas We Cover</h2>
+            <div class="row text-center">
+                <div class="col-6 col-md-3 mb-3">
+                    <i class="fas fa-users text-primary" style="font-size: 2rem;"></i>
+                    <p class="mt-2">Family Law</p>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <i class="fas fa-home text-primary" style="font-size: 2rem;"></i>
+                    <p class="mt-2">Landlord & Tenant</p>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <i class="fas fa-briefcase text-primary" style="font-size: 2rem;"></i>
+                    <p class="mt-2">Employment</p>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <i class="fas fa-balance-scale text-primary" style="font-size: 2rem;"></i>
+                    <p class="mt-2">Civil Rights</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5">
+        <div class="container text-center">
+            <h2>Ready to Get Started?</h2>
+            <p class="lead">Join thousands of Canadians who have simplified their legal journey</p>
+            <a href="/auth/register" class="btn btn-primary btn-lg">
+                <i class="fas fa-maple-leaf"></i> Start Your Free Trial
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Justice-Bot. Making Canadian justice accessible to all.</p>
+            <p class="mb-0 small mt-2">Legal information, not legal advice.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

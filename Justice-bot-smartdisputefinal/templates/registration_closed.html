@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Closed - SmartDispute.ai</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .maple-leaf {
+            font-size: 4rem;
+            color: #d32f2f;
+            margin-bottom: 20px;
+        }
+        .closed-header {
+            color: #d32f2f;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+        .thank-you {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .final-count {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .charter-quote {
+            background: #f8f9fa;
+            border-left: 4px solid #d32f2f;
+            padding: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: #666;
+        }
+        .btn-home {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        .btn-home:hover {
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+        .future-updates {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="maple-leaf">🍁</div>
+        
+        <h1 class="closed-header">Pilot Program Complete</h1>
+        
+        <div class="thank-you">
+            <strong>Thank you for your interest in SmartDispute.ai!</strong><br>
+            Our pilot program has successfully reached capacity with all 1,000 spots filled.
+        </div>
+
+        <div class="final-count">
+            🎯 PILOT PROGRAM: {{ user_count }}/1,000 PARTICIPANTS
+            <br><small>Registration is now permanently closed</small>
+        </div>
+
+        <div class="charter-quote">
+            <strong>Charter Section 7:</strong> "Everyone has the right to life, liberty and security of the person and the right not to be deprived thereof except in accordance with the principles of fundamental justice."
+            <br><br>
+            <em>We've successfully empowered 1,000 Canadians with AI-powered legal tools to defend their Charter rights.</em>
+        </div>
+
+        <div class="future-updates">
+            <h3>🚀 What's Next?</h3>
+            <p>Our pilot data will help us build an even better platform for all Canadians. Stay tuned for future announcements about our full public launch.</p>
+            
+            <p><strong>For urgent legal assistance:</strong><br>
+            Contact teresa@justice-bot.com for priority support options.</p>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="btn-home">🇨🇦 Return to Home</a>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #999; font-size: 14px;">
+            <p><strong>Mission Accomplished:</strong> Making Canadian courts "a place of real fairness and justice, not a game of money and privilege"</p>
+            <p><em>Proudly Canadian • Charter Compliant • PIPEDA Protected</em></p>
+        </div>
+    </div>
+</body>
+</html>

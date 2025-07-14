@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}My Mailings - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="h4 mb-0">My Document Mailings</h2>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-sm btn-outline-light">
+                            <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if mailing_requests %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Document</th>
+                                    <th>Recipient</th>
+                                    <th>Mail Type</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for request in mailing_requests %}
+                                <tr>
+                                    <td>
+                                        <span class="d-inline-block text-truncate" style="max-width: 120px;">
+                                            {{ request.reference_number }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            {{ request.generated_form.form_title }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                                            {{ request.recipient_name }}
+                                        </span>
+                                    </td>
+                                    <td>{{ request.mail_type|title }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ {'pending': 'warning', 'processing': 'info', 'shipped': 'primary', 'in_transit': 'primary', 'delivered': 'success', 'cancelled': 'danger'}[request.status] }}">
+                                            {{ request.status|title }}
+                                        </span>
+                                    </td>
+                                    <td>{{ request.created_at.strftime('%b %d, %Y') }}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="{{ url_for('mailing_status', mailing_id=request.id) }}" class="btn btn-outline-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            {% if request.status == 'pending' %}
+                                            <a href="{{ url_for('pay_mailing', mailing_id=request.id) }}" class="btn btn-outline-success">
+                                                <i class="fas fa-credit-card"></i>
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <div class="mb-4">
+                            <i class="fas fa-envelope fa-4x text-muted"></i>
+                        </div>
+                        <h4>No Mailing Requests Yet</h4>
+                        <p class="text-muted mb-4">You haven't requested any documents to be mailed yet.</p>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">
+                            <i class="fas fa-file-alt me-1"></i> View My Documents
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="card mt-4 border-0 shadow-sm">
+                <div class="card-header bg-light">
+                    <h3 class="h5 mb-0">About Our Mailing Service</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                        <i class="fas fa-print text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5>Professional Printing</h5>
+                                    <p class="text-muted mb-0">All documents are printed on high-quality paper with professional formatting.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                        <i class="fas fa-shipping-fast text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5>Reliable Delivery</h5>
+                                    <p class="text-muted mb-0">Track your documents with real-time updates on delivery status.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                        <i class="fas fa-shield-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5>Secure Handling</h5>
+                                    <p class="text-muted mb-0">Your legal documents are handled with strict confidentiality and care.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

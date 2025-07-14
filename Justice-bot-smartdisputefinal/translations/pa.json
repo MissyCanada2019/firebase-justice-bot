@@ -1,0 +1,25 @@
+{
+  "app_name": "SmartDispute.ai",
+  "tagline": "ਨਿਆਂ ਰਾਹੀਂ ਕੈਨੇਡੀਅਨਾਂ ਨੂੰ ਸ਼ਕਤੀ ਦੇਣਾ",
+  "charter_protection": "ਕੈਨੇਡੀਅਨ ਚਾਰਟਰ ਆਫ਼ ਰਾਈਟਸ ਐਂਡ ਫਰੀਡਮਜ਼ ਦੁਆਰਾ ਸੁਰੱਖਿਅਤ",
+  "legal_categories": {
+    "family_law": "ਪਰਿਵਾਰਕ ਕਾਨੂੰਨ",
+    "housing_law": "ਹਾਊਸਿੰਗ ਅਤੇ ਕਿਰਾਏਦਾਰ ਕਾਨੂੰਨ",
+    "employment_law": "ਰੁਜ਼ਗਾਰ ਕਾਨੂੰਨ",
+    "criminal_law": "ਫੌਜਦਾਰੀ ਕਾਨੂੰਨ",
+    "human_rights": "ਮਨੁੱਖੀ ਅਧਿਕਾਰ"
+  },
+  "forms": {
+    "t2_application": "T2 ਅਰਜ਼ੀ (ਕਿਰਾਏਦਾਰ ਅਧਿਕਾਰ)",
+    "t6_application": "T6 ਅਰਜ਼ੀ (ਰੱਖ-ਰਖਾਅ ਅਤੇ ਮੁਰੰਮਤ)",
+    "hrto_application": "ਮਨੁੱਖੀ ਅਧਿਕਾਰ ਟ੍ਰਿਬਿਊਨਲ ਅਰਜ਼ੀ"
+  },
+  "dashboard": {
+    "upload_documents": "ਦਸਤਾਵੇਜ਼ ਅੱਪਲੋਡ ਕਰੋ",
+    "case_dashboard": "ਕੇਸ ਡੈਸ਼ਬੋਰਡ",
+    "merit_score": "ਮੈਰਿਟ ਸਕੋਰ",
+    "legal_analysis": "ਕਾਨੂੰਨੀ ਵਿਸ਼ਲੇਸ਼ਣ",
+    "recommended_actions": "ਸਿਫਾਰਸ਼ ਕੀਤੀਆਂ ਕਾਰਵਾਈਆਂ"
+  },
+  "legal_disclaimer": "ਇਹ ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ, ਕਾਨੂੰਨੀ ਸਲਾਹ ਨਹੀਂ। ਅਸੀਂ ਵਕੀਲ ਨਹੀਂ ਹਾਂ।"
+}

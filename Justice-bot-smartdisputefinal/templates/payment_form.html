@@ -1,0 +1,42 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form id="payment-form">
+                <div id="payment-element"></div>
+                <button id="submit" class="btn btn-primary mt-3">Pay now</button>
+                <div id="error-message"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+const stripe = Stripe('{{ stripe_publishable_key }}');
+const elements = stripe.elements({
+    clientSecret: '{{ client_secret }}'
+});
+
+const paymentElement = elements.create('payment');
+paymentElement.mount('#payment-element');
+
+const form = document.getElementById('payment-form');
+form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const {error} = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+            return_url: window.location.origin + '/payment/success',
+        },
+    });
+    if (error) {
+        const messageDiv = document.getElementById('error-message');
+        messageDiv.textContent = error.message;
+    }
+});
+</script>
+{% endblock %}

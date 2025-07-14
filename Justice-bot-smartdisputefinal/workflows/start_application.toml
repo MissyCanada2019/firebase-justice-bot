@@ -1,0 +1,6 @@
+[workflow]
+name = "Start application"
+entryPoint = "gunicorn --bind 0.0.0.0:5000 --reuse-port --reload main:app"
+runOnOpen = true
+terminateOn = "shutdown"
+onBoot = true

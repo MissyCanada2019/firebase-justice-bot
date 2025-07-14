@@ -1,0 +1,482 @@
+/* SmartDispute.ai Custom Styles - Canadian Theme */
+
+:root {
+    /* Canadian-inspired color palette */
+    --canadian-red: #e62e2e;
+    --darker-red: #c11f1f;
+    --canadian-white: #f0f0f0;
+    --maple-leaf-gold: #f3c677;
+    --canadian-blue: #326295;
+    --darker-blue: #274e76;
+    --forest-green: #2d4f3a;
+}
+
+/* Override Bootstrap theme colors */
+[data-bs-theme=dark] {
+    --bs-primary: var(--canadian-red);
+    --bs-primary-rgb: 230, 46, 46;
+    --bs-primary-darker: var(--darker-red);
+    --bs-secondary: var(--canadian-blue);
+    --bs-secondary-rgb: 50, 98, 149;
+    --bs-success: #3e9d6e;
+    --bs-info: var(--canadian-blue);
+    --bs-light: var(--canadian-white);
+    --bs-light-rgb: 240, 240, 240;
+}
+
+/* Canadian-themed button styles */
+.btn-primary {
+    background-color: var(--canadian-red);
+    border-color: var(--canadian-red);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: var(--darker-red) !important;
+    border-color: var(--darker-red) !important;
+}
+
+.btn-outline-primary {
+    color: var(--canadian-red);
+    border-color: var(--canadian-red);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+    background-color: var(--canadian-red) !important;
+    border-color: var(--canadian-red) !important;
+    color: white !important;
+}
+
+/* Header & Footer styling */
+.navbar-dark {
+    background-color: var(--bs-dark);
+    border-bottom: 3px solid var(--canadian-red);
+}
+
+footer {
+    border-top: 3px solid var(--canadian-red);
+}
+
+/* Add a maple leaf accent to certain elements */
+.card-body h2:not(.h4):before,
+.card-body h3:not(.h4):before {
+    content: "🍁 ";
+    margin-right: 0.3rem;
+}
+
+/* Hero section with subtle maple leaf background */
+.hero {
+    background-color: rgba(30, 30, 30, 0.7);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 25 25' fill='rgba(230, 46, 46, 0.05)'%3E%3Cpath d='M12,0L9.5,5.5L5.5,2.5L5,7L1,7.5L4,11L0,14.5L5,15L5.5,19L9.5,17L12,22L14.5,17L18.5,19L19,15L24,14.5L20,11L23,7.5L19,7L18.5,2.5L14.5,5.5L12,0Z'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Floating help button */
+.floating-help {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--bs-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.2s ease;
+}
+
+.floating-help:hover {
+    transform: scale(1.1);
+    color: white;
+    background-color: var(--bs-primary-darker, #2a4fd0);
+}
+
+.floating-help i {
+    font-size: 24px;
+}
+
+/* Legal category cards */
+.category-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--bs-primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.category-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--bs-primary);
+}
+
+/* Pricing tables */
+.pricing-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+    border-color: var(--bs-primary);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-card.featured {
+    border-color: var(--bs-primary);
+    transform: scale(1.05);
+    position: relative;
+    z-index: 1;
+}
+
+.pricing-card.featured:hover {
+    transform: scale(1.07);
+}
+
+.price {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+/* Form styles */
+.form-control:focus, .form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(74, 111, 220, 0.25);
+}
+
+/* Document upload area */
+.upload-area {
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 3rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.upload-area:hover, .upload-area.dragover {
+    border-color: var(--bs-primary);
+    background-color: rgba(74, 111, 220, 0.05);
+}
+
+.upload-area i {
+    font-size: 3rem;
+    color: var(--bs-primary);
+    margin-bottom: 1rem;
+}
+
+/* Chat interface */
+.chat-container {
+    height: 500px;
+    overflow-y: auto;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.chat-message {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 75%;
+}
+
+.chat-message.user {
+    background-color: var(--bs-primary);
+    color: white;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.chat-message.ai {
+    background-color: rgba(255, 255, 255, 0.1);
+    align-self: flex-start;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pricing-card.featured {
+        transform: scale(1);
+    }
+
+    .chat-message {
+        max-width: 90%;
+    }
+}
+
+/* Merit score indicator */
+.merit-score {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 auto 1rem;
+}
+
+.merit-score.high {
+    background-color: var(--bs-success);
+    color: white;
+}
+
+.merit-score.medium {
+    background-color: var(--bs-warning);
+    color: black;
+}
+
+.merit-score.low {
+    background-color: var(--bs-danger);
+    color: white;
+}
+
+/* Accessibility features */
+.accessibility-controls {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 1000;
+}
+
+.accessibility-toggle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.accessibility-panel {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    width: 280px;
+    z-index: 1001;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* High contrast mode */
+body.high-contrast {
+    --bs-body-bg: #000000;
+    --bs-dark: #000000;
+    --bs-dark-rgb: 0, 0, 0;
+    --bs-body-color: #ffffff;
+    --bs-primary: #ffcc00;
+    --bs-primary-rgb: 255, 204, 0;
+}
+
+body.high-contrast .card,
+body.high-contrast .navbar,
+body.high-contrast footer,
+body.high-contrast .list-group-item {
+    background-color: #000000 !important;
+    border-color: #ffffff !important;
+}
+
+body.high-contrast .text-muted {
+    color: #ffffff !important;
+}
+
+body.high-contrast a:not(.btn) {
+    color: #ffcc00 !important;
+    text-decoration: underline;
+}
+
+body.high-contrast .btn-primary {
+    background-color: #ffcc00;
+    border-color: #ffcc00;
+    color: #000000;
+}
+
+body.high-contrast .btn-outline-primary {
+    border-color: #ffcc00;
+    color: #ffcc00;
+}
+
+body.high-contrast .btn-outline-primary:hover {
+    background-color: #ffcc00;
+    color: #000000 !important;
+}
+
+/* Responsive improvements */
+@media (max-width: 767px) {
+    .card-body {
+        padding: 1rem;
+    }
+
+    h1.display-4 {
+        font-size: 2.5rem;
+    }
+
+    .hero {
+        padding: 2rem 1rem !important;
+    }
+
+    .container {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    .accessibility-panel {
+        width: 240px;
+    }
+
+    /* Prevent overflow in tables on mobile */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Improve form layout on mobile */
+    .input-group {
+        flex-wrap: wrap;
+    }
+
+    .input-group > .form-control {
+        flex: 1 0 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-group > .input-group-append,
+    .input-group > .input-group-prepend {
+        flex: 0 0 auto;
+    }
+}
+
+/* Steps progress */
+.steps-progress {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+.step {
+    position: relative;
+    z-index: 1;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--bs-gray-700);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.5rem;
+}
+
+.step.active .step-circle {
+    background-color: var(--bs-primary);
+}
+
+.step.completed .step-circle {
+    background-color: var(--bs-success);
+}
+
+.steps-progress::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 70px;
+    right: 70px;
+    height: 2px;
+    background-color: var(--bs-gray-700);
+    transform: translateY(-50%);
+}
+
+.steps-progress-bar {
+    position: absolute;
+    top: 20px;
+    left: 70px;
+    height: 2px;
+    background-color: var(--bs-primary);
+    transform: translateY(-50%);
+    transition: width 0.3s ease;
+}
+.theme-toggle .btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle .feather-sun,
+.theme-toggle .feather-moon {
+    width: 20px;
+    height: 20px;
+}
+
+[data-bs-theme="light"] {
+    --bs-body-bg: #ffffff;
+    --bs-body-color: #212529;
+    --bs-dark: #212529;
+}
+
+/* Card styles */
+.card {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(230,46,46,0.1);
+    border-color: var(--canadian-red);
+}
+
+.card-header {
+    border-bottom: 2px solid var(--canadian-red);
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 1.5rem;
+}

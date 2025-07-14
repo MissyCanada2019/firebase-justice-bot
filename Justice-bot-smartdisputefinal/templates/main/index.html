@@ -1,0 +1,514 @@
+{% extends "base.html" %}
+
+{% block title %}Justice-Bot - Canadian Legal Assistant{% endblock %}
+
+{% block content %}
+<!-- Canadian Charter Banner -->
+<div class="alert alert-danger mb-0" role="alert" style="background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%); border: none; color: white;">
+    <div class="container text-center py-3">
+        <p class="mb-0 fs-5 fw-bold">
+            <i class="fas fa-maple-leaf"></i> 
+            "Everyone has the right to life, liberty and security of the person" 
+            <i class="fas fa-maple-leaf"></i>
+        </p>
+        <small>- Canadian Charter of Rights and Freedoms, Section 7</small>
+    </div>
+</div>
+
+<!-- FREE PILOT BANNER -->
+<div class="alert alert-light alert-dismissible fade show mb-0" role="alert" style="border: 2px solid #DC143C; background: #f8f9fa;">
+    <div class="container text-center">
+        <div class="d-flex align-items-center justify-content-center mb-3">
+            <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="Justice-Bot Logo" height="60" class="me-3">
+            <h3 class="mb-0 text-danger">LIMITED TIME: FREE PILOT PROGRAM</h3>
+        </div>
+        <p class="mb-2 fw-bold fs-5">First 1,000 Canadian Users Get UNLIMITED Access</p>
+        <div class="mb-3">
+            <div class="progress" style="height: 30px; max-width: 600px; margin: 0 auto;">
+                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ (pilot_users_count|default(6) / 10)|round|int }}%">
+                    <strong>{{ pilot_users_count|default(6) }} of 1,000 Users</strong>
+                </div>
+            </div>
+            <p class="mt-2 text-danger fw-bold">{{ 1000 - pilot_users_count|default(6) }} Spots Remaining!</p>
+        </div>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-danger btn-lg shadow px-5">
+            <i class="fas fa-gavel"></i> CLAIM YOUR FREE ACCESS NOW
+        </a>
+        <p class="mt-2 text-muted small">No credit card required • Full platform access • Help shape Canadian justice</p>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<!-- Hero Section -->
+<div class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <div class="text-center mb-4">
+                <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="Justice-Bot Logo" class="img-fluid" style="max-height: 200px;">
+            </div>
+            <h1 class="display-4 fw-bold text-danger mb-3">
+                JUSTICE-BOT
+            </h1>
+            <h2 class="h3 text-dark mb-4">Your Canadian Legal Rights Defender</h2>
+            
+            <div class="border-start border-danger border-5 ps-4 mb-4">
+                <p class="lead text-dark">
+                    <strong>"The guarantee of rights and freedoms must not be illusory or merely theoretical."</strong>
+                </p>
+                <p class="text-muted">- Supreme Court of Canada</p>
+            </div>
+            
+            <p class="fs-5 text-dark mb-4">
+                Professional AI-powered legal document analysis trusted by Canadians from coast to coast. 
+                Get court-ready documents, merit assessments, and strategic legal guidance.
+            </p>
+            
+            <!-- Powerful Call to Actions -->
+            <div class="bg-light p-4 rounded mb-4">
+                <h3 class="h4 text-danger mb-2">
+                    <i class="fas fa-balance-scale"></i> Don't Pay $500/hour Until You Know Your Case Strength
+                </h3>
+                <p class="fs-5 text-dark mb-0">Our AI analyzes your evidence and gives you a merit score in minutes</p>
+            </div>
+            
+            <div class="d-grid gap-3">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.dashboard') }}" class="btn btn-danger btn-lg shadow">
+                        <i class="fas fa-tachometer-alt"></i> Access Your Dashboard
+                    </a>
+                    <a href="{{ url_for('cases.new_case') }}" class="btn btn-outline-danger btn-lg">
+                        <i class="fas fa-plus-circle"></i> Start New Legal Matter
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-danger btn-lg shadow">
+                        <i class="fas fa-gavel"></i> START YOUR CASE ANALYSIS – FREE PILOT ACCESS
+                    </a>
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-danger btn-lg">
+                        <i class="fas fa-sign-in-alt"></i> Sign In to Your Account
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);">
+                    <h4 class="text-danger mb-3">
+                        <i class="fas fa-maple-leaf"></i> Protected by the Canadian Charter
+                    </h4>
+                    <div class="mb-3">
+                        <strong>Section 15:</strong> "Every individual is equal before and under the law"
+                    </div>
+                    <div class="mb-3">
+                        <strong>Section 24:</strong> "Anyone whose rights have been infringed may apply to a court"
+                    </div>
+                    <div class="mb-3">
+                        <strong>Section 52:</strong> "The Constitution of Canada is the supreme law"
+                    </div>
+                    <hr>
+                    <h5 class="text-dark mb-3">Why Justice-Bot?</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Developed specifically for Canadian law</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> All 10 provinces + 3 territories covered</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Court-approved document formats</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> 24/7 instant legal analysis</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Secure & confidential (PIPEDA compliant)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mission Statement -->
+<div class="container mb-5">
+    <div class="card border-danger shadow-lg">
+        <div class="card-body p-5 text-center" style="background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%); color: white;">
+            <h2 class="display-5 fw-bold mb-4">
+                <i class="fas fa-fist-raised"></i> FIGHTING FOR JUSTICE IN A BROKEN SYSTEM
+            </h2>
+            <p class="lead mb-0">
+                "The courts belong to the people, not to lawyers. Justice delayed is justice denied. 
+                We're putting the power back in YOUR hands to fight against systemic injustice."
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <h3 class="text-center fw-bold text-danger">
+                <i class="fas fa-balance-scale"></i> YOUR WEAPONS AGAINST INJUSTICE
+            </h3>
+            <p class="text-center text-muted">Built by Canadians, for Canadians who refuse to be silenced</p>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100 border-danger shadow">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-gavel text-danger" style="font-size: 2.5rem;"></i>
+                        <h4 class="ms-3 mb-0 text-danger">EVIDENCE ANALYZER</h4>
+                    </div>
+                    <p class="fs-5 fw-bold">Stop paying $500/hour to be told you can't win</p>
+                    <p>Our AI reviews your evidence and tells you EXACTLY how strong your case is. 
+                    No more lawyers dismissing your rights because it's "not worth their time."</p>
+                    <div class="bg-light p-3 rounded">
+                        <small class="text-muted">Charter Section 24: "Anyone whose rights have been infringed may apply to a court"</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card h-100 border-danger shadow">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-file-contract text-danger" style="font-size: 2.5rem;"></i>
+                        <h4 class="ms-3 mb-0 text-danger">COURT DOCUMENTS</h4>
+                    </div>
+                    <p class="fs-5 fw-bold">The same forms lawyers charge $2,000 to fill out</p>
+                    <p>Generate REAL court documents accepted by Canadian courts. No more being turned away 
+                    because you couldn't afford a lawyer to fill out simple forms.</p>
+                    <div class="bg-light p-3 rounded">
+                        <small class="text-muted">Charter Section 15: "Every individual is equal before the law"</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card h-100 border-danger shadow">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-shield-alt text-danger" style="font-size: 2.5rem;"></i>
+                        <h4 class="ms-3 mb-0 text-danger">KNOW YOUR RIGHTS</h4>
+                    </div>
+                    <p class="fs-5 fw-bold">They profit from your ignorance</p>
+                    <p>Access ALL Canadian laws - federal, provincial, municipal. See EXACTLY which laws 
+                    protect you and how to use them. Knowledge is power they don't want you to have.</p>
+                    <div class="bg-light p-3 rounded">
+                        <small class="text-muted">Charter Section 7: "Right to life, liberty and security of the person"</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card h-100 border-danger shadow">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-users text-danger" style="font-size: 2.5rem;"></i>
+                        <h4 class="ms-3 mb-0 text-danger">FIGHT TOGETHER</h4>
+                    </div>
+                    <p class="fs-5 fw-bold">You're not alone in this broken system</p>
+                    <p>Join thousands of Canadians taking back their power. Share strategies, learn from 
+                    victories, and stand together against systemic injustice.</p>
+                    <div class="bg-light p-3 rounded">
+                        <small class="text-muted">Charter Section 2: "Freedom of association"</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Broken System -->
+<div class="container mb-5">
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <h2 class="text-center fw-bold text-danger">
+                <i class="fas fa-exclamation-triangle"></i> THE SYSTEM IS BROKEN
+            </h2>
+            <p class="text-center lead">Here's how they keep justice out of your reach:</p>
+        </div>
+    </div>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="text-center">
+                <i class="fas fa-dollar-sign text-danger" style="font-size: 3rem;"></i>
+                <h4 class="mt-2">$450/HOUR</h4>
+                <p>Average lawyer fees in Canada</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="text-center">
+                <i class="fas fa-clock text-danger" style="font-size: 3rem;"></i>
+                <h4 class="mt-2">18 MONTHS</h4>
+                <p>Average wait for court date</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="text-center">
+                <i class="fas fa-ban text-danger" style="font-size: 3rem;"></i>
+                <h4 class="mt-2">73% DENIED</h4>
+                <p>Self-represented cases lost</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="text-center">
+                <i class="fas fa-building text-danger" style="font-size: 3rem;"></i>
+                <h4 class="mt-2">92% CORPORATE</h4>
+                <p>Cases won by big companies</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Legal Areas We Fight -->
+<div class="container mb-5">
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <h3 class="text-center fw-bold text-danger">
+                <i class="fas fa-shield-alt"></i> AREAS WHERE WE FIGHT BACK
+            </h3>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card border-danger h-100 shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-danger fw-bold">
+                        <i class="fas fa-home"></i> HOUSING INJUSTICE
+                    </h5>
+                    <p class="fw-bold">Stop illegal evictions and landlord abuse</p>
+                    <ul class="list-unstyled">
+                        <li>✓ Fight N12 bad faith evictions</li>
+                        <li>✓ Challenge illegal rent increases</li>
+                        <li>✓ Force repairs & maintenance</li>
+                        <li>✓ LTB tribunal representation</li>
+                    </ul>
+                    <div class="bg-light p-2 rounded mt-3">
+                        <small>"Housing is a human right" - UN Declaration</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card border-danger h-100 shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-danger fw-bold">
+                        <i class="fas fa-child"></i> FAMILY COURT BIAS
+                    </h5>
+                    <p class="fw-bold">Equal rights for both parents</p>
+                    <ul class="list-unstyled">
+                        <li>✓ Fight parental alienation</li>
+                        <li>✓ Challenge unfair custody</li>
+                        <li>✓ Reduce excessive support</li>
+                        <li>✓ Defend false allegations</li>
+                    </ul>
+                    <div class="bg-light p-2 rounded mt-3">
+                        <small>"Best interests of the child" - Family Law Act</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card border-warning">
+            <div class="card-body">
+                <h6 class="card-title text-warning">
+                    <i class="fas fa-dollar-sign"></i> Small Claims
+                </h6>
+                <ul class="list-unstyled small mb-0">
+                    <li>• Debt collection</li>
+                    <li>• Property damage</li>
+                    <li>• Contract disputes</li>
+                    <li>• Service issues</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card border-info">
+            <div class="card-body">
+                <h6 class="card-title text-info">
+                    <i class="fas fa-briefcase"></i> Employment
+                </h6>
+                <ul class="list-unstyled small mb-0">
+                    <li>• Wrongful dismissal</li>
+                    <li>• Workplace harassment</li>
+                    <li>• Wage disputes</li>
+                    <li>• Human rights</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card border-danger">
+            <div class="card-body">
+                <h6 class="card-title text-danger">
+                    <i class="fas fa-balance-scale"></i> Criminal Law
+                </h6>
+                <ul class="list-unstyled small mb-0">
+                    <li>• Charter applications</li>
+                    <li>• Bail hearings</li>
+                    <li>• Defence strategies</li>
+                    <li>• Appeals</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card border-secondary">
+            <div class="card-body">
+                <h6 class="card-title text-secondary">
+                    <i class="fas fa-child"></i> Child Protection
+                </h6>
+                <ul class="list-unstyled small mb-0">
+                    <li>• CAS proceedings</li>
+                    <li>• Access applications</li>
+                    <li>• Court orders</li>
+                    <li>• Appeals</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+{% if not current_user.is_authenticated %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card bg-light">
+            <div class="card-body text-center p-4">
+                <h4 class="card-title">Ready to Get Started?</h4>
+                <p class="card-text">
+                    Join thousands of Canadians who have used Justice-Bot to navigate their legal challenges with confidence.
+                </p>
+                <div class="d-grid d-md-flex justify-content-md-center gap-3">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-user-plus"></i> Create Free Account
+                    </a>
+                    <a href="{{ url_for('main.about') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Charter Quote -->
+<div class="row mt-5">
+    <div class="col-lg-10 mx-auto">
+        <div class="card border-0 bg-transparent">
+            <div class="card-body text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-0 fst-italic text-muted">
+                        "Everyone has the right to life, liberty and security of the person and the right not to be deprived thereof except in accordance with the principles of fundamental justice."
+                    </p>
+                    <footer class="blockquote-footer mt-2">
+                        Canadian Charter of Rights and Freedoms, <cite title="Section 7">Section 7</cite>
+                    </footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Legal Disclaimer Section -->
+<div class="container-fluid bg-dark text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="text-danger mb-4">
+                    <i class="fas fa-exclamation-circle"></i> IMPORTANT LEGAL DISCLAIMER
+                </h3>
+                <div class="border border-danger p-4 rounded">
+                    <p class="mb-3">
+                        <strong>JUSTICE-BOT IS NOT A LAW FIRM.</strong> We are not lawyers. We do not provide legal advice, legal opinions, or legal representation. 
+                        The information and documents generated by this platform are for informational and educational purposes only.
+                    </p>
+                    <p class="mb-3">
+                        <strong>NO ATTORNEY-CLIENT RELATIONSHIP:</strong> Use of this platform does not create an attorney-client relationship. 
+                        For legal advice specific to your situation, consult with a licensed lawyer in your jurisdiction.
+                    </p>
+                    <p class="mb-3">
+                        <strong>NO GUARANTEE OF RESULTS:</strong> Past performance does not guarantee future results. Every legal case is unique. 
+                        Merit scores and recommendations are AI-generated estimates only.
+                    </p>
+                    <p class="mb-3">
+                        <strong>USER RESPONSIBILITY:</strong> You are responsible for verifying all information and documents before submitting them to any court. 
+                        Courts may reject improperly prepared documents.
+                    </p>
+                    <p class="mb-0">
+                        <strong>LIMITATION OF LIABILITY:</strong> To the maximum extent permitted by law, Justice-Bot, its creators, and affiliates shall not be liable 
+                        for any damages arising from your use of this platform.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-lg-6">
+                <h4 class="text-danger mb-3">
+                    <i class="fas fa-copyright"></i> Intellectual Property Protection
+                </h4>
+                <p class="small">
+                    <strong>© 2025 JUSTICE-BOT™ - All Rights Reserved</strong><br>
+                    JUSTICE-BOT™ is a registered trademark of Smart Dispute Canada Inc.<br>
+                    Patent Pending: Canadian Patent Application No. [PENDING]<br><br>
+                    
+                    <strong>PROPRIETARY TECHNOLOGY NOTICE:</strong><br>
+                    The AI algorithms, legal analysis methods, document generation systems, and user interface designs 
+                    are proprietary technology protected by intellectual property laws. Any unauthorized copying, reverse engineering, 
+                    distribution, or commercial use is strictly prohibited and will be prosecuted to the fullest extent of the law.<br><br>
+                    
+                    Violators will be subject to:<br>
+                    • Civil damages up to $150,000 per infringement<br>
+                    • Criminal prosecution under the Copyright Act<br>
+                    • Injunctive relief and seizure orders
+                </p>
+            </div>
+            
+            <div class="col-lg-6">
+                <h4 class="text-danger mb-3">
+                    <i class="fas fa-shield-alt"></i> Terms of Use
+                </h4>
+                <p class="small">
+                    By using Justice-Bot, you agree to:<br><br>
+                    
+                    <strong>1. ACCEPTABLE USE:</strong> Use the platform only for lawful purposes and your own legal matters.<br>
+                    <strong>2. NO REDISTRIBUTION:</strong> Not copy, sell, or redistribute any content or functionality.<br>
+                    <strong>3. PRIVACY:</strong> Our collection and use of your data as outlined in our Privacy Policy (PIPEDA compliant).<br>
+                    <strong>4. INDEMNIFICATION:</strong> Indemnify and hold harmless Justice-Bot from any claims arising from your use.<br>
+                    <strong>5. CANADIAN LAW:</strong> These terms are governed by the laws of Ontario, Canada.<br>
+                    <strong>6. DISPUTE RESOLUTION:</strong> Any disputes will be resolved through binding arbitration in Toronto, Ontario.<br><br>
+                    
+                    <strong>ANTI-PIRACY WARNING:</strong> We actively monitor for unauthorized copies and will pursue legal action 
+                    against any individual or organization attempting to replicate our technology or business model.
+                </p>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-lg-12 text-center">
+                <hr class="border-danger">
+                <p class="mb-0 small">
+                    <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="Justice-Bot Logo" height="30" class="me-2">
+                    <strong>Justice-Bot™</strong> | Created by Teresa Bertin | 
+                    <a href="mailto:legal@justice-bot.com" class="text-danger">legal@justice-bot.com</a> | 
+                    <a href="/privacy" class="text-danger">Privacy Policy</a> | 
+                    <a href="/terms" class="text-danger">Terms of Service</a>
+                </p>
+                <p class="mt-2 small text-muted">
+                    "Equal justice under law is not merely a caption on the facade of the Supreme Court building, 
+                    it is perhaps the most inspiring ideal of our society." - Justice Lewis F. Powell Jr.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Testimonials - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 mb-4">Client Testimonials</h1>
+            
+            <div class="d-flex justify-content-center mb-4">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('founders_story') }}">Founder's Story</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('testimonials') }}">Testimonials</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <p class="lead text-muted">
+                Read what our users have to say about SmartDispute.ai and how our platform has helped them navigate complex legal issues.
+            </p>
+            
+            {% if current_user.is_authenticated %}
+            <div class="mt-4">
+                <a href="{{ url_for('add_testimonial') }}" class="btn btn-primary">Share Your Experience</a>
+            </div>
+            {% else %}
+            <div class="mt-4">
+                <p class="small text-muted">Want to share your experience? <a href="{{ url_for('login') }}">Log in</a> or <a href="{{ url_for('register') }}">sign up</a> to leave a testimonial.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        {% if testimonials %}
+            {% for testimonial in testimonials %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                {% if testimonial.avatar_url %}
+                                <img src="{{ testimonial.avatar_url }}" alt="{{ testimonial.name }}" class="rounded-circle me-3" width="50" height="50">
+                                {% else %}
+                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <span class="text-white fs-4">{{ testimonial.name[0] | upper }}</span>
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <h5 class="card-title mb-0">{{ testimonial.name }}</h5>
+                                    {% if testimonial.role %}
+                                    <p class="text-muted small mb-0">{{ testimonial.role }}</p>
+                                    {% endif %}
+                                    {% if testimonial.location %}
+                                    <p class="text-muted small mb-0">{{ testimonial.location }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            {% if testimonial.rating %}
+                            <div class="mb-3">
+                                {% for i in range(5) %}
+                                    {% if i < testimonial.rating %}
+                                    <i class="fas fa-star text-warning"></i>
+                                    {% else %}
+                                    <i class="far fa-star text-muted"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            
+                            <p class="card-text">{{ testimonial.content }}</p>
+                            
+                            {% if testimonial.case_type %}
+                            <span class="badge bg-info text-white">{{ testimonial.case_type }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer bg-transparent border-0">
+                            <small class="text-muted">{{ testimonial.created_at.strftime('%B %d, %Y') if testimonial.created_at else '' }}</small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center py-5">
+                <p>No testimonials available yet. Be the first to share your experience!</p>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('add_testimonial') }}" class="btn btn-primary mt-3">Add Testimonial</a>
+                {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-primary mt-3">Log in to Add Testimonial</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Font Awesome for star icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}

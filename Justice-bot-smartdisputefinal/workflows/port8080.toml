@@ -1,0 +1,3 @@
+[workflow]
+name = "Port 8080 Application"
+command = "python3 main_8080.py"

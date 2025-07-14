@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+
+{% block title %}Generate Legal Document - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-file-contract me-2"></i>
+                        Generate Court-Ready Legal Document
+                    </h3>
+                    <p class="mb-0 mt-2">Create professional legal documents with proper citations and formatting</p>
+                </div>
+                
+                <div class="card-body p-4">
+                    <!-- Charter Quote -->
+                    <div class="alert alert-info border-left-primary mb-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-balance-scale text-primary me-3" style="font-size: 2rem;"></i>
+                            <div>
+                                <strong>Section 7 - Canadian Charter of Rights and Freedoms:</strong>
+                                <em>"Everyone has the right to life, liberty and security of the person and the right not to be deprived thereof except in accordance with the principles of fundamental justice."</em>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if user_cases|length == 0 %}
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>No Cases Found</h5>
+                        <p class="mb-2">You need to create a case before generating legal documents.</p>
+                        <a href="{{ url_for('upload') }}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Create New Case
+                        </a>
+                    </div>
+                    {% else %}
+                    
+                    <form method="POST" action="{{ url_for('generate_document') }}" id="documentForm">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        
+                        <!-- Document Type Selection -->
+                        <div class="mb-4">
+                            <label for="document_type" class="form-label fw-bold">
+                                <i class="fas fa-file-alt me-2"></i>Document Type
+                            </label>
+                            <select class="form-select form-select-lg" id="document_type" name="document_type" required>
+                                <option value="">Select document type to generate...</option>
+                                {% for doc in available_documents %}
+                                <option value="{{ doc.type }}" data-description="{{ doc.description }}">
+                                    {{ doc.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text" id="documentDescription">
+                                Choose the type of legal document you need for your case
+                            </div>
+                        </div>
+
+                        <!-- Case Selection -->
+                        <div class="mb-4">
+                            <label for="case_id" class="form-label fw-bold">
+                                <i class="fas fa-folder-open me-2"></i>Select Case
+                            </label>
+                            <select class="form-select form-select-lg" id="case_id" name="case_id" required>
+                                <option value="">Choose which case this document is for...</option>
+                                {% for case in user_cases %}
+                                <option value="{{ case.id }}" data-category="{{ case.legal_category }}" data-summary="{{ case.case_summary }}">
+                                    {{ case.legal_category }} - {{ case.case_summary[:50] }}{% if case.case_summary|length > 50 %}...{% endif %}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Custom Claims Section -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-list-ul me-2"></i>Legal Claims
+                            </label>
+                            <div id="claimsContainer">
+                                <div class="claim-item mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text">1.</span>
+                                        <textarea class="form-control" name="custom_claims[]" 
+                                                placeholder="Enter your first legal claim or leave blank to use case summary..."
+                                                rows="2"></textarea>
+                                        <button type="button" class="btn btn-outline-danger remove-claim" style="display: none;">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-outline-primary btn-sm" id="addClaim">
+                                <i class="fas fa-plus me-2"></i>Add Another Claim
+                            </button>
+                        </div>
+
+                        <!-- Relief Sought -->
+                        <div class="mb-4">
+                            <label for="relief_sought" class="form-label fw-bold">
+                                <i class="fas fa-gavel me-2"></i>Relief Sought
+                            </label>
+                            <textarea class="form-control form-control-lg" id="relief_sought" name="relief_sought" 
+                                    rows="3" placeholder="What specific orders or relief are you asking the court to grant?"></textarea>
+                            <div class="form-text">
+                                Describe what you want the court to order (e.g., custody arrangements, financial support, damages)
+                            </div>
+                        </div>
+
+                        <!-- Legal Disclaimers -->
+                        <div class="alert alert-warning border-left-warning mb-4">
+                            <h6><i class="fas fa-exclamation-triangle me-2"></i>Important Legal Disclaimers</h6>
+                            <ul class="mb-0 small">
+                                <li><strong>We are not lawyers</strong> and this platform does not provide legal advice</li>
+                                <li>This system provides <strong>legal information</strong> and document templates only</li>
+                                <li>All generated documents should be <strong>reviewed by a qualified lawyer</strong> before filing</li>
+                                <li>You are responsible for verifying all legal citations and ensuring accuracy</li>
+                                <li>This platform is designed to help with <strong>self-representation</strong> but does not replace professional legal counsel</li>
+                            </ul>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-magic me-2"></i>Generate Legal Document
+                            </button>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Document Information Cards -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-certificate text-primary mb-3" style="font-size: 2rem;"></i>
+                            <h5>Verified Citations</h5>
+                            <p class="text-muted small">All legal citations are verified against current Canadian law sources</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-file-download text-success mb-3" style="font-size: 2rem;"></i>
+                            <h5>Court-Ready Format</h5>
+                            <p class="text-muted small">Documents generated in proper legal format with filing instructions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.border-left-primary {
+    border-left: 4px solid #dc3545 !important;
+}
+
+.border-left-warning {
+    border-left: 4px solid #ffc107 !important;
+}
+
+.claim-item {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #c82333, #a71e2a);
+    transform: translateY(-1px);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const documentTypeSelect = document.getElementById('document_type');
+    const descriptionDiv = document.getElementById('documentDescription');
+    const addClaimBtn = document.getElementById('addClaim');
+    const claimsContainer = document.getElementById('claimsContainer');
+    let claimCount = 1;
+
+    // Update description when document type changes
+    documentTypeSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        if (selectedOption.dataset.description) {
+            descriptionDiv.textContent = selectedOption.dataset.description;
+            descriptionDiv.className = 'form-text text-primary';
+        } else {
+            descriptionDiv.textContent = 'Choose the type of legal document you need for your case';
+            descriptionDiv.className = 'form-text';
+        }
+    });
+
+    // Add new claim functionality
+    addClaimBtn.addEventListener('click', function() {
+        if (claimCount < 10) { // Limit to 10 claims
+            claimCount++;
+            const newClaim = document.createElement('div');
+            newClaim.className = 'claim-item mb-3';
+            newClaim.innerHTML = `
+                <div class="input-group">
+                    <span class="input-group-text">${claimCount}.</span>
+                    <textarea class="form-control" name="custom_claims[]" 
+                            placeholder="Enter additional legal claim..."
+                            rows="2"></textarea>
+                    <button type="button" class="btn btn-outline-danger remove-claim">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            claimsContainer.appendChild(newClaim);
+            
+            // Show remove buttons when there are multiple claims
+            updateRemoveButtons();
+        }
+    });
+
+    // Remove claim functionality
+    claimsContainer.addEventListener('click', function(e) {
+        if (e.target.closest('.remove-claim')) {
+            e.target.closest('.claim-item').remove();
+            claimCount--;
+            renumberClaims();
+            updateRemoveButtons();
+        }
+    });
+
+    function renumberClaims() {
+        const claims = claimsContainer.querySelectorAll('.claim-item');
+        claims.forEach((claim, index) => {
+            claim.querySelector('.input-group-text').textContent = (index + 1) + '.';
+        });
+        claimCount = claims.length;
+    }
+
+    function updateRemoveButtons() {
+        const removeButtons = claimsContainer.querySelectorAll('.remove-claim');
+        removeButtons.forEach(btn => {
+            btn.style.display = claimCount > 1 ? 'block' : 'none';
+        });
+    }
+
+    // Form validation
+    document.getElementById('documentForm').addEventListener('submit', function(e) {
+        const documentType = document.getElementById('document_type').value;
+        const caseId = document.getElementById('case_id').value;
+        
+        if (!documentType || !caseId) {
+            e.preventDefault();
+            alert('Please select both a document type and a case before generating the document.');
+            return false;
+        }
+        
+        // Show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Generating Document...';
+        submitBtn.disabled = true;
+    });
+});
+</script>
+{% endblock %}

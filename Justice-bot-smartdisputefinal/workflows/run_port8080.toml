@@ -1,0 +1,5 @@
+name = "Port 8080 Direct"
+entrypoint = "python run_port8080.py"
+
+[languages.python3]
+channel = "stable-23_04"

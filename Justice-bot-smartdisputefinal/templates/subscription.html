@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+
+{% block title %}Choose Your Subscription | SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 mb-3">Choose Your Subscription Plan</h1>
+        <p class="lead mb-4">Select the plan that best fits your legal needs</p>
+    </div>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <div class="card bg-dark shadow">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="subscriptionTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly" type="button" role="tab" aria-controls="monthly" aria-selected="true">Monthly</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="annual-tab" data-bs-toggle="tab" data-bs-target="#annual" type="button" role="tab" aria-controls="annual" aria-selected="false">Annual</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="low-income-tab" data-bs-toggle="tab" data-bs-target="#low-income" type="button" role="tab" aria-controls="low-income" aria-selected="false">Low Income</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="subscriptionTabsContent">
+                        <!-- Monthly Plan -->
+                        <div class="tab-pane fade show active" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
+                            <div class="subscription-details mb-4">
+                                <h3 class="h4 mb-3">Monthly Unlimited Access</h3>
+                                <div class="price text-primary mb-3">$49.99<small class="fs-6">/month</small></div>
+                                <p>Get unlimited access to all premium features for a monthly subscription.</p>
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> Unlimited documents</li>
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> Advanced AI legal assistant</li>
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> Multiple document revisions</li>
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> Priority processing</li>
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> Cancel anytime</li>
+                                </ul>
+                            </div>
+                            <form action="{{ url_for('subscribe') }}" method="POST" id="monthly-subscription-form">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="plan_type" value="monthly">
+                                <input type="hidden" name="paypal_order_id" id="monthly-paypal-order-id">
+                                
+                                <div id="monthly-paypal-button-container" class="mb-3"></div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="monthly-submit-button" disabled>
+                                        Complete Subscription
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Annual Plan -->
+                        <div class="tab-pane fade" id="annual" role="tabpanel" aria-labelledby="annual-tab">
+                            <div class="subscription-details mb-4">
+                                <h3 class="h4 mb-3">Annual Unlimited Access <span class="badge bg-success">Save 16%</span></h3>
+                                <div class="price text-primary mb-3">$499.99<small class="fs-6">/year</small></div>
+                                <p>Get unlimited access to all premium features with our annual plan and save money.</p>
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> All monthly features</li>
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> Best value (equivalent to $41.67/month)</li>
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> Priority support</li>
+                                </ul>
+                            </div>
+                            <form action="{{ url_for('subscribe') }}" method="POST" id="annual-subscription-form">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="plan_type" value="annual">
+                                <input type="hidden" name="paypal_order_id" id="annual-paypal-order-id">
+                                
+                                <div id="annual-paypal-button-container" class="mb-3"></div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="annual-submit-button" disabled>
+                                        Complete Subscription
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Low Income Plan -->
+                        <div class="tab-pane fade" id="low-income" role="tabpanel" aria-labelledby="low-income-tab">
+                            <div class="subscription-details mb-4">
+                                <h3 class="h4 mb-3">Low-Income Access <span class="badge bg-info">Subsidized Plan</span></h3>
+                                <div class="price text-primary mb-3">$25.00<small class="fs-6">/year</small></div>
+                                <p>Subsidized plan for individuals with limited financial resources.</p>
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> All premium features</li>
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> Unlimited documents</li>
+                                    <li class="mb-2"><i class="feather-check text-success me-2"></i> Eligibility verification required</li>
+                                </ul>
+                                <div class="alert alert-info">
+                                    <h5 class="alert-heading"><i class="feather-info me-2"></i> Eligibility Information</h5>
+                                    <p class="mb-0">After subscribing, you'll need to submit proof of eligibility (ODSP documentation, Ontario Works, Notice of Assessment, etc.) through your account profile. Your access will be fully activated after verification.</p>
+                                </div>
+                            </div>
+                            <form action="{{ url_for('subscribe') }}" method="POST" id="low-income-subscription-form">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="plan_type" value="low_income">
+                                <input type="hidden" name="paypal_order_id" id="low-income-paypal-order-id">
+                                
+                                <div id="low-income-paypal-button-container" class="mb-3"></div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="low-income-submit-button" disabled>
+                                        Complete Subscription
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                        <i class="feather-shield me-1"></i> Secure Payment Processing
+                        <span class="mx-2">•</span>
+                        <i class="feather-lock me-1"></i> 256-bit SSL Encryption
+                        <span class="mx-2">•</span>
+                        <i class="feather-clock me-1"></i> 7-Day Satisfaction Guarantee
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('pricing') }}" class="btn btn-outline-secondary">
+            <i class="feather-arrow-left me-2"></i> Return to Pricing Page
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=CAD"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Monthly Subscription PayPal Button
+    if (document.getElementById('monthly-paypal-button-container')) {
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '79.99',
+                            currency_code: 'CAD'
+                        },
+                        description: 'SmartDispute.ai - Monthly Subscription'
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                document.getElementById('monthly-paypal-order-id').value = data.orderID;
+                document.getElementById('monthly-submit-button').disabled = false;
+                return actions.order.capture().then(function(details) {
+                    document.getElementById('monthly-subscription-form').submit();
+                });
+            }
+        }).render('#monthly-paypal-button-container');
+    }
+    
+    // Annual Subscription PayPal Button
+    if (document.getElementById('annual-paypal-button-container')) {
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '499.99',
+                            currency_code: 'CAD'
+                        },
+                        description: 'SmartDispute.ai - Annual Subscription'
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                document.getElementById('annual-paypal-order-id').value = data.orderID;
+                document.getElementById('annual-submit-button').disabled = false;
+                return actions.order.capture().then(function(details) {
+                    document.getElementById('annual-subscription-form').submit();
+                });
+            }
+        }).render('#annual-paypal-button-container');
+    }
+    
+    // Low Income Subscription PayPal Button
+    if (document.getElementById('low-income-paypal-button-container')) {
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '25.00',
+                            currency_code: 'CAD'
+                        },
+                        description: 'SmartDispute.ai - Low Income Subscription'
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                document.getElementById('low-income-paypal-order-id').value = data.orderID;
+                document.getElementById('low-income-submit-button').disabled = false;
+                return actions.order.capture().then(function(details) {
+                    document.getElementById('low-income-subscription-form').submit();
+                });
+            }
+        }).render('#low-income-paypal-button-container');
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,377 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Documents | SmartDispute.ai{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/simple-upload.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        feather.replace();
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Canadian Charter Quote -->
+<div class="charter-quote">
+    <strong>Section 8:</strong> "Everyone has the right to be secure against unreasonable search or seizure."
+    <br><small class="text-muted">- Your evidence is protected under Canadian Charter</small>
+</div>
+
+<div class="container py-4">
+    <!-- Floating maple leaves -->
+    <div class="floating-maple" style="top: 15%; right: 8%;">🍁</div>
+    <div class="floating-maple" style="top: 60%; left: 3%; animation-delay: -3s;">🍁</div>
+    
+    <div class="row mb-4">
+        <div class="col">
+            <h1 style="color: var(--charter-red);">Upload Your Evidence</h1>
+            <p class="text-muted">Upload your legal documents, photos, and evidence to begin analyzing your case under Canadian law</p>
+            
+            <!-- Trust indicators -->
+            <div class="mb-3">
+                <span class="trust-badge">Charter Protected</span>
+                <span class="trust-badge">PIPEDA Compliant</span>
+                <span class="trust-badge">Canadian Legal Standards</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Canadian Pride Bar -->
+    <div class="canadian-pride"></div>
+    
+    <div class="card bg-dark border-0 shadow-sm">
+        <div class="card-body p-4">
+            <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" id="uploadForm" data-autosave="true">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
+                <!-- Progress indicator -->
+                <div class="progress mb-4" style="height: 6px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="case_title" class="form-label">Case Title</label>
+                            <input type="text" class="form-control" id="case_title" name="case_title" 
+                                   placeholder="e.g., Eviction Notice Dispute" required>
+                            <div class="form-text">Give your case a descriptive name for easy reference</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="case_category" class="form-label">Legal Category</label>
+                            <select class="form-select" id="case_category" name="case_category" required>
+                                <option value="" selected disabled>Select a category</option>
+                                <optgroup label="Family Law - Fathers' Rights">
+                                    <option value="fathers-custody">Fathers' Custody Rights & Equal Parenting</option>
+                                    <option value="fathers-access">Father Access Rights & Enforcement</option>
+                                    <option value="fathers-support">Unfair Child Support Calculations</option>
+                                    <option value="fathers-alienation">Parental Alienation Defence</option>
+                                    <option value="fathers-false-allegations">False Allegations Defence</option>
+                                    <option value="fathers-enforcement">Court Order Enforcement</option>
+                                </optgroup>
+                                <optgroup label="General Family Law">
+                                    <option value="family-custody">Child Custody & Access</option>
+                                    <option value="family-support">Child/Spousal Support</option>
+                                    <option value="family-divorce">Divorce & Separation</option>
+                                    <option value="family-property">Property Division</option>
+                                    <option value="family-adoption">Adoption Proceedings</option>
+                                    <option value="family-domestic">Domestic Violence/Restraining Orders</option>
+                                </optgroup>
+                                <optgroup label="Child Protection Services">
+                                    <option value="cas-investigation">CAS Investigation</option>
+                                    <option value="cas-removal">Child Removal/Apprehension</option>
+                                    <option value="cas-custody">CAS Custody Proceedings</option>
+                                    <option value="cas-access">Supervised Access/Visitation</option>
+                                    <option value="cas-appeal">CAS Decision Appeal</option>
+                                    <option value="cas-complaint">CAS Complaint/Misconduct</option>
+                                </optgroup>
+                                <optgroup label="Housing & Tenancy">
+                                    <option value="landlord-tenant">Landlord-Tenant Dispute</option>
+                                    <option value="housing-eviction">Eviction Defence</option>
+                                    <option value="housing-repairs">Maintenance & Repairs</option>
+                                    <option value="housing-discrimination">Housing Discrimination</option>
+                                </optgroup>
+                                <optgroup label="Employment & Benefits">
+                                    <option value="employment-wrongful">Wrongful Dismissal</option>
+                                    <option value="employment-harassment">Workplace Harassment</option>
+                                    <option value="employment-wages">Unpaid Wages/Benefits</option>
+                                    <option value="employment-discrimination">Employment Discrimination</option>
+                                </optgroup>
+                                <optgroup label="Criminal & Charter Rights">
+                                    <option value="criminal-charges">Criminal Charges</option>
+                                    <option value="criminal-bail">Bail Applications</option>
+                                    <option value="criminal-appeal">Criminal Appeal</option>
+                                    <option value="charter-breach">Charter Rights Violation</option>
+                                    <option value="police-complaint">Police Complaint/Misconduct</option>
+                                </optgroup>
+                                <optgroup label="Civil & Administrative">
+                                    <option value="small-claims">Small Claims Court</option>
+                                    <option value="human-rights">Human Rights Complaint</option>
+                                    <option value="credit-issues">Credit Report/Debt Issues</option>
+                                    <option value="government-benefits">Government Benefits/Services</option>
+                                    <option value="immigration">Immigration/Refugee Issues</option>
+                                </optgroup>
+                            </select>
+                            <div class="form-text">Choose the legal category that best matches your issue</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Evidence Type Selection -->
+                <div class="mb-4">
+                    <label class="form-label">Click Evidence Type to Upload Files</label>
+                    <p class="text-muted small mb-3">👆 Click any evidence category below to immediately open your file browser</p>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="card evidence-type-card active clickable-card" data-type="supporting" style="cursor: pointer; border: 2px solid #28a745;">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-shield-alt fa-2x text-success mb-2"></i>
+                                    <h6>Supporting Evidence</h6>
+                                    <p class="small text-muted">Click to upload documents that support your case</p>
+                                    <div class="small text-success fw-bold">📁 CLICK TO BROWSE</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card evidence-type-card clickable-card" data-type="opposition" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-exclamation-triangle fa-2x text-warning mb-2"></i>
+                                    <h6>Opposition Evidence</h6>
+                                    <p class="small text-muted">Click to upload documents from the other party</p>
+                                    <div class="small text-warning fw-bold">📁 CLICK TO BROWSE</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card evidence-type-card clickable-card" data-type="counter" style="cursor: pointer;">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-balance-scale fa-2x text-info mb-2"></i>
+                                    <h6>Counter Evidence</h6>
+                                    <p class="small text-muted">Click to upload evidence that refutes opposition claims</p>
+                                    <div class="small text-info fw-bold">📁 CLICK TO BROWSE</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="evidenceType" name="evidence_type" value="supporting">
+                </div>
+
+                <!-- Upload Options -->
+                <div class="mb-4">
+                    <label class="form-label">Upload Your Evidence</label>
+                    
+                    <!-- Upload Method Tabs -->
+                    <ul class="nav nav-pills mb-3" id="uploadTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="local-tab" data-bs-toggle="pill" data-bs-target="#local-upload" type="button" role="tab">
+                                <i class="feather-upload me-2"></i>Local Files
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="googledrive-tab" data-bs-toggle="pill" data-bs-target="#googledrive-upload" type="button" role="tab">
+                                <i class="fab fa-google-drive me-2"></i>Google Drive
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="onedrive-tab" data-bs-toggle="pill" data-bs-target="#onedrive-upload" type="button" role="tab">
+                                <i class="fab fa-microsoft me-2"></i>OneDrive
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="dropbox-tab" data-bs-toggle="pill" data-bs-target="#dropbox-upload" type="button" role="tab">
+                                <i class="fab fa-dropbox me-2"></i>Dropbox
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Upload Method Content -->
+                    <div class="tab-content" id="uploadTabContent">
+                        <!-- Local File Upload -->
+                        <div class="tab-pane fade show active" id="local-upload" role="tabpanel">
+                            <div class="upload-dropzone" id="uploadDropzone">
+                                <div class="text-center py-4">
+                                    <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                                    <h5>Drag & Drop Multiple Files Here</h5>
+                                    <p class="text-muted">or click to browse your device</p>
+                                    <button type="button" class="btn btn-primary mt-2" id="browseFilesBtn">
+                                        <i class="fas fa-folder-open me-2"></i>Browse Files
+                                    </button>
+                                    <input type="file" class="d-none" id="simpleFileInput" name="files" multiple accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.txt,.rtf,.xls,.xlsx,.tiff,.tif,.bmp,.gif">
+                                </div>
+                            </div>
+                            <div class="form-text mt-2">
+                                Supported: PDF, Images (JPG, PNG, TIFF, BMP, GIF), Word Documents, Excel, Text Files<br>
+                                Maximum: 2GB total, up to 1000 files for comprehensive court cases
+                            </div>
+                            
+                            <!-- File Preview Area -->
+                            <div id="filePreviewArea" class="mt-3" style="display: none;">
+                                <h6>Selected Files:</h6>
+                                <div id="fileList" class="row g-2"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Google Drive -->
+                        <div class="tab-pane fade" id="googledrive-upload" role="tabpanel">
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-outline-primary" id="googleDriveBtn">
+                                    <i class="fab fa-google-drive me-2"></i>Select from Google Drive
+                                </button>
+                            </div>
+                            <div class="form-text mt-2">
+                                Access your documents stored in Google Drive directly
+                            </div>
+                            <div id="googleDriveFiles" class="mt-3" style="display: none;">
+                                <!-- Selected files will appear here -->
+                            </div>
+                        </div>
+                        
+                        <!-- OneDrive -->
+                        <div class="tab-pane fade" id="onedrive-upload" role="tabpanel">
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-outline-primary" id="oneDriveBtn">
+                                    <i class="fab fa-microsoft me-2"></i>Select from OneDrive
+                                </button>
+                            </div>
+                            <div class="form-text mt-2">
+                                Access your documents stored in Microsoft OneDrive
+                            </div>
+                            <div id="oneDriveFiles" class="mt-3" style="display: none;">
+                                <!-- Selected files will appear here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Dropbox -->
+                        <div class="tab-pane fade" id="dropbox-upload" role="tabpanel">
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-outline-primary" id="dropboxBtn">
+                                    <i class="fab fa-dropbox me-2"></i>Select from Dropbox
+                                </button>
+                            </div>
+                            <div class="form-text mt-2">
+                                Access your documents stored in Dropbox
+                            </div>
+                            <div id="dropboxFiles" class="mt-3" style="display: none;">
+                                <!-- Selected files will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- File Preview Area -->
+                <div id="filePreviewArea" class="mt-4" style="display: none;">
+                    <div class="card border-primary">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0"><i class="fas fa-file-alt me-2"></i>Selected Documents</h6>
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" class="btn btn-outline-light btn-sm" onclick="saveDocuments()">
+                                    <i class="fas fa-save me-1"></i>Save Selection
+                                </button>
+                                <button type="button" class="btn btn-outline-light btn-sm" onclick="clearAllFiles()">
+                                    <i class="fas fa-trash me-1"></i>Clear All
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="fileSummary" class="mb-3"></div>
+                            
+                            <!-- File List -->
+                            <div class="row" id="fileList">
+                                <!-- Files will appear here -->
+                            </div>
+                            
+                            <!-- File Management Options -->
+                            <div class="mt-3 p-3 bg-light rounded">
+                                <h6 class="mb-2">Document Management Options</h6>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="rememberDocuments" checked>
+                                    <label class="form-check-label" for="rememberDocuments">
+                                        Remember these documents for future uploads
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="autoDeleteAfterAnalysis">
+                                    <label class="form-check-label" for="autoDeleteAfterAnalysis">
+                                        Automatically delete documents after analysis (privacy protection)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="createBackup" checked>
+                                    <label class="form-check-label" for="createBackup">
+                                        Create secure backup for legal proceedings
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Evidence Type Summary -->
+                            <div class="mt-3">
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <div class="text-center">
+                                            <span class="badge bg-success rounded-pill" id="supportingCount">0</span>
+                                            <div class="small text-muted">Supporting</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-center">
+                                            <span class="badge bg-warning rounded-pill" id="oppositionCount">0</span>
+                                            <div class="small text-muted">Opposition</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-center">
+                                            <span class="badge bg-info rounded-pill" id="counterCount">0</span>
+                                            <div class="small text-muted">Counter</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid d-md-flex justify-content-md-end mt-4">
+                    <button type="submit" class="btn btn-charter btn-lg" id="submit-files">
+                        <i class="feather-upload me-2"></i> <span id="submit-btn-text">Browse Files to Get Started</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card bg-dark h-100">
+                <div class="card-body">
+                    <h4>Privacy & Security</h4>
+                    <p class="text-muted">Your privacy is our top priority. All documents are securely stored and encrypted.</p>
+                    <ul class="text-muted">
+                        <li>Files are encrypted using industry-standard protocols</li>
+                        <li>Access is restricted to authorized users only</li>
+                        <li>Automated deletion after 90 days of inactivity</li>
+                        <li>Never shared with third parties</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-4 mt-md-0">
+            <div class="card bg-dark h-100">
+                <div class="card-body">
+                    <h4>Tips for Better Results</h4>
+                    <p class="text-muted">To get the most accurate analysis:</p>
+                    <ul class="text-muted">
+                        <li>Upload clear, high-resolution images or scans</li>
+                        <li>Include all relevant documents, even if they seem minor</li>
+                        <li>Make sure text is legible and properly oriented</li>
+                        <li>Provide any correspondence related to your case</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

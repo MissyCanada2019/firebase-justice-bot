@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h3 mb-0">
+                        <i class="fas fa-gavel me-2"></i>
+                        {{ title }}
+                    </h1>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning mb-4">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Important Notice:</strong> SmartDispute.ai is not a law firm. We are not lawyers. 
+                        This platform provides legal information, not legal advice.
+                    </div>
+                    
+                    <div class="legal-content">
+                        {{ content | nl2br | safe }}
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-top">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="text-muted small mb-0">
+                                    <i class="fas fa-calendar me-1"></i>
+                                    Last Updated: June 28, 2025
+                                </p>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-arrow-left me-1"></i>
+                                    Return to Home
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.legal-content {
+    line-height: 1.6;
+    color: #333;
+}
+
+.legal-content h2 {
+    color: var(--charter-blue);
+    border-bottom: 2px solid var(--canadian-red);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.legal-content h3 {
+    color: var(--charter-blue);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.legal-content ul {
+    margin-left: 1.5rem;
+}
+
+.legal-content li {
+    margin-bottom: 0.5rem;
+}
+
+.legal-content strong {
+    color: var(--charter-blue);
+}
+
+.legal-content p {
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--charter-blue) 0%, var(--canadian-red) 100%) !important;
+}
+</style>
+{% endblock %}

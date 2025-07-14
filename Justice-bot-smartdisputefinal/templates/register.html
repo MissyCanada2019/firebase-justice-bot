@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - SmartDispute.ai</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #d32f2f;
+        }
+        .legal-notice {
+            background: #f8f9fa;
+            border-left: 4px solid #d32f2f;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .legal-notice h3 {
+            margin-top: 0;
+            color: #d32f2f;
+        }
+        .btn-register {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+        }
+        .flashes {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .flashes li {
+            background: #ffebee;
+            border: 1px solid #ef5350;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .pilot-info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .required {
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍁 SmartDispute.ai Registration</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            <strong>Empowering Canadians through Justice – Protected by the Canadian Charter</strong>
+        </p>
+
+        <div class="pilot-info">
+            <h3>🎯 Pilot Program - First 1,000 Users</h3>
+            <p>Join our exclusive pilot program! We're accepting the first 1,000 Canadian users to test our AI-powered legal assistance platform.</p>
+            <p><strong>Current participants:</strong> {{ user_count or 0 }}/1,000</p>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <div class="legal-notice">
+            <h3>⚖️ Important: Legal Documentation Requirements</h3>
+            <p><strong>Please use your complete legal name and current address exactly as they appear on government-issued ID.</strong></p>
+            <p>This information will be used to generate court-ready legal documents. Accuracy is essential for proper legal filing and document validity under Canadian law.</p>
+            <p><em>Protected by Charter Section 7: "Everyone has the right to life, liberty and security of the person and the right not to be deprived thereof except in accordance with the principles of fundamental justice."</em></p>
+        </div>
+
+        <form method="POST" id="registration-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password <span class="required">*</span></label>
+                <input type="password" id="password" name="password" required placeholder="Create a secure password" minlength="8">
+            </div>
+
+            <div class="form-group">
+                <label for="first_name">Legal First Name <span class="required">*</span></label>
+                <input type="text" id="first_name" name="first_name" required placeholder="As shown on government ID">
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Legal Last Name <span class="required">*</span></label>
+                <input type="text" id="last_name" name="last_name" required placeholder="As shown on government ID">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phone" name="phone" required placeholder="(xxx) xxx-xxxx" pattern="[0-9\s\(\)\-\+\.]{10,}">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Street Address <span class="required">*</span></label>
+                <input type="text" id="address" name="address" required placeholder="123 Main Street, Unit/Apt #">
+            </div>
+
+            <div class="form-group">
+                <label for="city">City <span class="required">*</span></label>
+                <input type="text" id="city" name="city" required placeholder="Toronto">
+            </div>
+
+            <div class="form-group">
+                <label for="province">Province <span class="required">*</span></label>
+                <select id="province" name="province" required>
+                    <option value="">Select Province/Territory</option>
+                    <option value="AB">Alberta</option>
+                    <option value="BC">British Columbia</option>
+                    <option value="MB">Manitoba</option>
+                    <option value="NB">New Brunswick</option>
+                    <option value="NL">Newfoundland and Labrador</option>
+                    <option value="NS">Nova Scotia</option>
+                    <option value="ON">Ontario</option>
+                    <option value="PE">Prince Edward Island</option>
+                    <option value="QC">Quebec</option>
+                    <option value="SK">Saskatchewan</option>
+                    <option value="NT">Northwest Territories</option>
+                    <option value="NU">Nunavut</option>
+                    <option value="YT">Yukon</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="postal_code">Postal Code <span class="required">*</span></label>
+                <input type="text" id="postal_code" name="postal_code" required placeholder="A1A 1A1" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]">
+            </div>
+
+            <div class="form-group">
+                <label for="legal_issue_type">Primary Legal Issue <span class="required">*</span></label>
+                <select id="legal_issue_type" name="legal_issue_type" required>
+                    <option value="">Select your main legal concern</option>
+                    <option value="housing">Housing/Landlord-Tenant</option>
+                    <option value="employment">Employment Issues</option>
+                    <option value="consumer">Consumer Rights</option>
+                    <option value="family">Family Law</option>
+                    <option value="human_rights">Human Rights</option>
+                    <option value="small_claims">Small Claims</option>
+                    <option value="government">Government/Administrative</option>
+                    <option value="other">Other Legal Matter</option>
+                </select>
+            </div>
+
+            <!-- COMPREHENSIVE LEGAL DISCLAIMERS -->
+            <div class="legal-notice" style="background: #ffebee; border-left: 4px solid #d32f2f; margin: 30px 0;">
+                <h3 style="color: #d32f2f;">⚖️ CRITICAL LEGAL DISCLAIMERS - READ CAREFULLY</h3>
+                <p><strong>YOU MUST ACCEPT ALL TERMS TO PROCEED:</strong></p>
+            </div>
+
+            <div class="form-group" style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <label style="font-weight: normal;">
+                    <input type="checkbox" name="no_legal_advice" required style="margin-right: 10px;">
+                    <strong>NO LEGAL ADVICE DISCLAIMER:</strong> I understand that JUSTICE-BOT™ is NOT a law firm and does NOT provide legal advice. 
+                    All information and documents are for educational purposes only. I acknowledge that:
+                    <ul style="margin-top: 10px; margin-left: 25px;">
+                        <li>No attorney-client relationship is created</li>
+                        <li>I should consult a licensed lawyer for legal advice</li>
+                        <li>Merit scores are AI estimates, not guarantees</li>
+                        <li>Court acceptance of documents is not guaranteed</li>
+                    </ul>
+                    <span class="required">*</span>
+                </label>
+            </div>
+
+            <div class="form-group" style="background: #fff3e0; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <label style="font-weight: normal;">
+                    <input type="checkbox" name="liability_waiver" required style="margin-right: 10px;">
+                    <strong>LIABILITY WAIVER & INDEMNIFICATION:</strong> I agree to the following:
+                    <ul style="margin-top: 10px; margin-left: 25px;">
+                        <li>I WAIVE ALL CLAIMS against Justice-Bot, its creators, employees, and affiliates</li>
+                        <li>I assume FULL RESPONSIBILITY for all legal outcomes</li>
+                        <li>I will NOT hold Justice-Bot liable for any damages, losses, or legal consequences</li>
+                        <li>I will INDEMNIFY Justice-Bot against any third-party claims arising from my use</li>
+                        <li>Maximum liability is limited to fees paid (currently $0 in pilot)</li>
+                    </ul>
+                    <span class="required">*</span>
+                </label>
+            </div>
+
+            <div class="form-group" style="background: #e8f5e9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <label style="font-weight: normal;">
+                    <input type="checkbox" name="ip_acknowledgment" required style="margin-right: 10px;">
+                    <strong>INTELLECTUAL PROPERTY & TRADEMARK:</strong> I acknowledge that:
+                    <ul style="margin-top: 10px; margin-left: 25px;">
+                        <li>JUSTICE-BOT™ is a registered trademark of Smart Dispute Canada Inc.</li>
+                        <li>All technology, algorithms, and content are PROPRIETARY and PROTECTED</li>
+                        <li>Copying, reverse engineering, or commercial use is STRICTLY PROHIBITED</li>
+                        <li>Violations subject to $150,000 civil damages per infringement</li>
+                        <li>Criminal prosecution possible under Copyright Act</li>
+                    </ul>
+                    <span class="required">*</span>
+                </label>
+            </div>
+
+            <div class="form-group" style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <label style="font-weight: normal;">
+                    <input type="checkbox" name="privacy_consent" required style="margin-right: 10px;">
+                    <strong>PRIVACY POLICY & DATA USE:</strong> I consent to:
+                    <ul style="margin-top: 10px; margin-left: 25px;">
+                        <li>Collection and processing of my personal and case data</li>
+                        <li>PIPEDA-compliant data handling practices</li>
+                        <li>Use of anonymized data for service improvement</li>
+                        <li>Data storage on Canadian servers</li>
+                        <li>Sharing data with courts when I submit documents</li>
+                    </ul>
+                    <span class="required">*</span>
+                </label>
+            </div>
+
+            <div class="form-group" style="background: #fce4ec; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <label style="font-weight: normal;">
+                    <input type="checkbox" name="terms_acceptance" required style="margin-right: 10px;">
+                    <strong>TERMS OF SERVICE:</strong> I agree to:
+                    <ul style="margin-top: 10px; margin-left: 25px;">
+                        <li>Use the platform ONLY for lawful purposes</li>
+                        <li>NOT share my account or redistribute content</li>
+                        <li>Be bound by Ontario law and Toronto arbitration</li>
+                        <li>Accept that terms may change with notice</li>
+                        <li>Verify ALL information before court submission</li>
+                    </ul>
+                    <span class="required">*</span>
+                </label>
+            </div>
+
+            <div class="form-group" style="background: #f3e5f5; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                <label style="font-weight: normal;">
+                    <input type="checkbox" name="pilot_consent" required style="margin-right: 10px;">
+                    <strong>PILOT PROGRAM CONSENT:</strong> As a pilot user, I understand:
+                    <ul style="margin-top: 10px; margin-left: 25px;">
+                        <li>This is a BETA service under active development</li>
+                        <li>Features may change or have errors</li>
+                        <li>My feedback will help improve the platform</li>
+                        <li>Free access may convert to paid after pilot</li>
+                    </ul>
+                    <span class="required">*</span>
+                </label>
+            </div>
+
+            <div style="border: 3px solid #d32f2f; padding: 20px; background: #ffebee; border-radius: 8px; text-align: center; margin-bottom: 20px;">
+                <p style="font-size: 18px; font-weight: bold; color: #d32f2f; margin: 0;">
+                    BY CLICKING "CREATE MY LEGAL ACCOUNT" YOU CONFIRM THAT YOU HAVE READ, 
+                    UNDERSTOOD, AND AGREE TO BE LEGALLY BOUND BY ALL TERMS ABOVE
+                </p>
+            </div>
+
+            <button type="submit" class="btn-register">🇨🇦 Create My Legal Account</button>
+        </form>
+
+        <p style="text-align: center; margin-top: 20px; color: #666;">
+            Already have an account? <a href="{{ url_for('login') }}" style="color: #d32f2f;">Login here</a>
+        </p>
+
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+            <p style="font-size: 14px; color: #999;">
+                <strong>Limited Time:</strong> First 1,000 users get lifetime access to premium features.<br>
+                <em>Proudly Canadian • Charter Compliant • PIPEDA Protected</em>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Format postal code input
+        document.getElementById('postal_code').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '').toUpperCase();
+            if (value.length > 3) {
+                value = value.substring(0, 3) + ' ' + value.substring(3, 6);
+            }
+            e.target.value = value;
+        });
+
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 6) {
+                value = value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+            } else if (value.length >= 3) {
+                value = value.replace(/(\d{3})(\d{0,3})/, '($1) $2');
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

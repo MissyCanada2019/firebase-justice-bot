@@ -1,0 +1,309 @@
+{% extends 'base.html' %}
+
+{% block title %}Mail Document - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Mail Your Document</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-info-circle fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Done-for-you Mailing Service</h5>
+                                <p>We'll print and mail your document to the court, agency, or recipient of your choice. No need to handle the printing and mailing yourself!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="mb-3">Document Details</h4>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-file-pdf text-danger me-2"></i>
+                                    <h5 class="mb-0">{{ form.form_title }}</h5>
+                                </div>
+                                <div class="text-muted small mb-2">
+                                    <span class="me-3"><i class="fas fa-calendar-alt me-1"></i> Created: {{ form.created_at.strftime('%b %d, %Y') }}</span>
+                                    <span><i class="fas fa-file-alt me-1"></i> Type: {{ form.form_type }}</span>
+                                </div>
+                                <div class="mt-3">
+                                    <a href="{{ url_for('view_generated_form', form_id=form.id) }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                        <i class="fas fa-eye me-1"></i> Preview Document
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if existing_requests %}
+                    <div class="mb-4">
+                        <h4 class="mb-3">Previous Mailing Requests</h4>
+                        <div class="alert alert-secondary">
+                            <p>You have previously requested mailing for this document:</p>
+                            <ul class="list-unstyled">
+                                {% for request in existing_requests %}
+                                <li class="mb-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="badge bg-{{ {'pending': 'warning', 'processing': 'info', 'shipped': 'primary', 'in_transit': 'primary', 'delivered': 'success', 'cancelled': 'danger'}[request.status] }}">
+                                                {{ request.status|title }}
+                                            </span>
+                                            <span class="ms-2">{{ request.mail_type|title }} - {{ request.reference_number }}</span>
+                                        </div>
+                                        <a href="{{ url_for('mailing_status', mailing_id=request.id) }}" class="btn btn-sm btn-outline-secondary">
+                                            View Status
+                                        </a>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <form method="POST" action="{{ url_for('mail_document', form_id=form.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        
+                        <div class="mb-4">
+                            <h4 class="mb-3">Mailing Options</h4>
+                            <div class="card-deck row">
+                                {% for mail_key, mail_option in mailing_options.items() %}
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="mail_type" 
+                                                       id="mail_type_{{ mail_key }}" value="{{ mail_key }}" 
+                                                       {% if loop.first %}checked{% endif %}>
+                                                <label class="form-check-label fw-bold" for="mail_type_{{ mail_key }}">
+                                                    {{ mail_option.name }}
+                                                </label>
+                                            </div>
+                                            <p class="card-text small mt-2">{{ mail_option.description }}</p>
+                                            <p class="card-text text-primary fw-bold">${{ "%.2f"|format(mail_option.base_price) }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="mb-3">Destination</h4>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Where are you sending this document?</label>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="destination_type" 
+                                           id="destination_court" value="court" checked>
+                                    <label class="form-check-label" for="destination_court">
+                                        Court
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="destination_type" 
+                                           id="destination_agency" value="agency">
+                                    <label class="form-check-label" for="destination_agency">
+                                        Government Agency
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="destination_type" 
+                                           id="destination_other" value="other">
+                                    <label class="form-check-label" for="destination_other">
+                                        Other Recipient
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="mb-3">Document Details</h4>
+                            <div class="form-group mb-3">
+                                <label for="page_count" class="form-label">Number of Pages</label>
+                                <input type="number" class="form-control" id="page_count" name="page_count" 
+                                       value="1" min="1" max="100">
+                                <div class="form-text">Estimate the number of pages in your document.</div>
+                            </div>
+                            
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="include_copies" name="include_copies" value="yes">
+                                <label class="form-check-label" for="include_copies">
+                                    Include additional copies for filing
+                                </label>
+                            </div>
+                            
+                            <div class="form-group mb-3" id="copy_count_group" style="display: none;">
+                                <label for="copy_count" class="form-label">Number of Additional Copies</label>
+                                <input type="number" class="form-control" id="copy_count" name="copy_count" 
+                                       value="1" min="1" max="10">
+                                <div class="form-text">Some courts require multiple copies when filing documents.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="mb-3">Recipient Address</h4>
+                            <div class="form-group mb-3">
+                                <label for="recipient_name" class="form-label">Recipient Name</label>
+                                <input type="text" class="form-control" id="recipient_name" name="recipient_name" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="recipient_address_line1" class="form-label">Address Line 1</label>
+                                <input type="text" class="form-control" id="recipient_address_line1" name="recipient_address_line1" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="recipient_address_line2" class="form-label">Address Line 2 (Optional)</label>
+                                <input type="text" class="form-control" id="recipient_address_line2" name="recipient_address_line2">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 mb-3">
+                                    <label for="recipient_city" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="recipient_city" name="recipient_city" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="recipient_province" class="form-label">Province</label>
+                                    <select class="form-select" id="recipient_province" name="recipient_province" required>
+                                        <option value="">Select...</option>
+                                        <option value="AB">Alberta</option>
+                                        <option value="BC">British Columbia</option>
+                                        <option value="MB">Manitoba</option>
+                                        <option value="NB">New Brunswick</option>
+                                        <option value="NL">Newfoundland and Labrador</option>
+                                        <option value="NS">Nova Scotia</option>
+                                        <option value="NT">Northwest Territories</option>
+                                        <option value="NU">Nunavut</option>
+                                        <option value="ON">Ontario</option>
+                                        <option value="PE">Prince Edward Island</option>
+                                        <option value="QC">Quebec</option>
+                                        <option value="SK">Saskatchewan</option>
+                                        <option value="YT">Yukon</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="recipient_postal_code" class="form-label">Postal Code</label>
+                                    <input type="text" class="form-control" id="recipient_postal_code" name="recipient_postal_code" 
+                                           placeholder="A1A 1A1" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="use_return_address" name="use_return_address" value="yes">
+                                <label class="form-check-label" for="use_return_address">
+                                    Include a return address (recommended)
+                                </label>
+                            </div>
+                            
+                            <div id="return_address_section" style="display: none;">
+                                <h4 class="mb-3">Return Address</h4>
+                                <div class="form-group mb-3">
+                                    <label for="return_name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="return_name" name="return_name">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="return_address_line1" class="form-label">Address Line 1</label>
+                                    <input type="text" class="form-control" id="return_address_line1" name="return_address_line1">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="return_address_line2" class="form-label">Address Line 2 (Optional)</label>
+                                    <input type="text" class="form-control" id="return_address_line2" name="return_address_line2">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 mb-3">
+                                        <label for="return_city" class="form-label">City</label>
+                                        <input type="text" class="form-control" id="return_city" name="return_city">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="return_province" class="form-label">Province</label>
+                                        <select class="form-select" id="return_province" name="return_province">
+                                            <option value="">Select...</option>
+                                            <option value="AB">Alberta</option>
+                                            <option value="BC">British Columbia</option>
+                                            <option value="MB">Manitoba</option>
+                                            <option value="NB">New Brunswick</option>
+                                            <option value="NL">Newfoundland and Labrador</option>
+                                            <option value="NS">Nova Scotia</option>
+                                            <option value="NT">Northwest Territories</option>
+                                            <option value="NU">Nunavut</option>
+                                            <option value="ON">Ontario</option>
+                                            <option value="PE">Prince Edward Island</option>
+                                            <option value="QC">Quebec</option>
+                                            <option value="SK">Saskatchewan</option>
+                                            <option value="YT">Yukon</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label for="return_postal_code" class="form-label">Postal Code</label>
+                                        <input type="text" class="form-control" id="return_postal_code" name="return_postal_code" 
+                                               placeholder="A1A 1A1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Continue to Payment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle copy count visibility
+        const includeCheckbox = document.getElementById('include_copies');
+        const copyCountGroup = document.getElementById('copy_count_group');
+        
+        includeCheckbox.addEventListener('change', function() {
+            copyCountGroup.style.display = this.checked ? 'block' : 'none';
+        });
+        
+        // Handle return address visibility
+        const returnAddressCheckbox = document.getElementById('use_return_address');
+        const returnAddressSection = document.getElementById('return_address_section');
+        
+        returnAddressCheckbox.addEventListener('change', function() {
+            returnAddressSection.style.display = this.checked ? 'block' : 'none';
+            
+            // Make return address fields required when checkbox is checked
+            const returnFields = returnAddressSection.querySelectorAll('input, select');
+            returnFields.forEach(field => {
+                field.required = this.checked;
+            });
+        });
+        
+        // Format postal code input
+        const postalCodeInputs = document.querySelectorAll('input[id$="postal_code"]');
+        postalCodeInputs.forEach(input => {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.toUpperCase();
+                value = value.replace(/[^A-Z0-9]/g, '');
+                
+                if (value.length > 6) {
+                    value = value.substring(0, 6);
+                }
+                
+                if (value.length > 3) {
+                    value = value.substring(0, 3) + ' ' + value.substring(3);
+                }
+                
+                e.target.value = value;
+            });
+        });
+    });
+</script>
+{% endblock %}

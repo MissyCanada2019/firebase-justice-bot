@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Recommendations - SmartDispute.ai</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            line-height: 1.6;
+        }
+        
+        .recommendations-header {
+            background: linear-gradient(135deg, #b22234, #8B1538);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+        
+        .recommendations-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .recommendation-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #b22234;
+            transition: all 0.3s ease;
+        }
+        
+        .recommendation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .charter-section {
+            background: linear-gradient(135deg, #fff8dc, #f7f3e9);
+            border-left-color: #FFD700;
+        }
+        
+        .legal-precedent {
+            background: linear-gradient(135deg, #f0f8ff, #e6f3ff);
+            border-left-color: #1e90ff;
+        }
+        
+        .resource-guide {
+            background: linear-gradient(135deg, #f0fff0, #e6ffe6);
+            border-left-color: #32cd32;
+        }
+        
+        .relevance-score {
+            display: inline-block;
+            background: #b22234;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .section-header {
+            font-family: 'Playfair Display', serif;
+            color: #1a365d;
+            border-bottom: 2px solid #b22234;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .user-profile-card {
+            background: linear-gradient(135deg, #b22234, #8B1538);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .interest-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            margin: 3px;
+            font-size: 0.9rem;
+        }
+        
+        .charter-quote {
+            font-style: italic;
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #FFD700;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        
+        .btn-recommendation {
+            background: linear-gradient(45deg, #b22234, #a11d30);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-recommendation:hover {
+            background: linear-gradient(45deg, #a11d30, #8b1926);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .refresh-recommendations {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #b22234;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            box-shadow: 0 4px 15px rgba(178, 34, 52, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .refresh-recommendations:hover {
+            background: #a11d30;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="recommendations-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-maple-leaf me-3" style="color: #FFD700;"></i>Your Legal Recommendations</h1>
+                    <p class="mb-0">Personalized Canadian legal resources based on your profile and interests</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-outline-light" onclick="refreshRecommendations()">
+                        <i class="fas fa-sync-alt me-2"></i>Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- User Profile Summary -->
+        {% if recommendations.user_profile %}
+        <div class="user-profile-card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4><i class="fas fa-user-circle me-2"></i>Your Legal Profile</h4>
+                    <p>Experience Level: <strong>{{ recommendations.user_profile.experience_level|title }}</strong></p>
+                    <p>Total Cases: <strong>{{ recommendations.user_profile.total_cases }}</strong> | 
+                       Documents: <strong>{{ recommendations.user_profile.total_documents }}</strong></p>
+                    
+                    {% if recommendations.user_profile.legal_interests %}
+                    <div class="mt-3">
+                        <strong>Your Legal Interests:</strong><br>
+                        {% for interest, score in recommendations.user_profile.legal_interests.items() %}
+                            <span class="interest-tag">{{ interest|title }} ({{ "%.0f"|format(score * 100) }}%)</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-chart-pie fa-4x mb-3" style="opacity: 0.7;"></i>
+                    <p><small>Last Updated: {{ recommendations.generated_at[:10] }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="row">
+            <!-- Charter Sections -->
+            <div class="col-md-6">
+                <h3 class="section-header">
+                    <i class="fas fa-scroll me-2"></i>Relevant Charter Sections
+                </h3>
+                
+                {% if recommendations.charter_sections %}
+                    {% for charter in recommendations.charter_sections %}
+                    <div class="recommendation-card charter-section">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5><i class="fas fa-balance-scale me-2"></i>Section {{ charter.section }}</h5>
+                            <span class="relevance-score">{{ charter.relevance_score }}% Match</span>
+                        </div>
+                        <h6 class="text-primary">{{ charter.title }}</h6>
+                        <div class="charter-quote">
+                            "{{ charter.description }}"
+                        </div>
+                        <div class="mt-3">
+                            <a href="/recommendations/api/charter/{{ charter.section }}" class="btn-recommendation">
+                                <i class="fas fa-book me-1"></i>Learn More
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="recommendation-card">
+                        <p class="text-muted">No Charter recommendations available yet. Start by creating a case or uploading documents to get personalized suggestions.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Legal Resources -->
+            <div class="col-md-6">
+                <h3 class="section-header">
+                    <i class="fas fa-book-open me-2"></i>Recommended Resources
+                </h3>
+                
+                {% if recommendations.resources %}
+                    {% for resource in recommendations.resources %}
+                    <div class="recommendation-card resource-guide">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h6><i class="fas fa-{{ 'file-alt' if resource.type == 'guide' else 'clipboard-list' }} me-2"></i>{{ resource.title }}</h6>
+                            <span class="relevance-score">{{ resource.relevance_score }}% Match</span>
+                        </div>
+                        <p class="text-muted mb-2">{{ resource.description }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-tag me-1"></i>{{ resource.category|title }} | 
+                                <i class="fas fa-layer-group me-1"></i>{{ resource.difficulty|title }}
+                            </small>
+                            <a href="{{ resource.url }}" class="btn-recommendation btn-sm">
+                                <i class="fas fa-external-link-alt me-1"></i>Access
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="recommendation-card">
+                        <p class="text-muted">No resource recommendations available yet. Build your profile by using our legal tools to get personalized resource suggestions.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Legal Precedents -->
+        {% if recommendations.legal_precedents %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3 class="section-header">
+                    <i class="fas fa-gavel me-2"></i>Relevant Legal Precedents
+                </h3>
+                
+                <div class="row">
+                    {% for precedent in recommendations.legal_precedents %}
+                    <div class="col-md-6 mb-3">
+                        <div class="recommendation-card legal-precedent">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h6><i class="fas fa-landmark me-2"></i>{{ precedent.title }}</h6>
+                                <span class="relevance-score">{{ precedent.relevance_score }}% Match</span>
+                            </div>
+                            <p class="text-muted small mb-2">
+                                <strong>Citation:</strong> {{ precedent.citation }}<br>
+                                <strong>Jurisdiction:</strong> {{ precedent.jurisdiction|title }}<br>
+                                {% if precedent.year %}<strong>Year:</strong> {{ precedent.year }}{% endif %}
+                            </p>
+                            {% if precedent.content_snippet %}
+                            <div class="charter-quote">
+                                {{ precedent.content_snippet[:200] }}{% if precedent.content_snippet|length > 200 %}...{% endif %}
+                            </div>
+                            {% endif %}
+                            {% if precedent.url %}
+                            <div class="mt-3">
+                                <a href="{{ precedent.url }}" target="_blank" class="btn-recommendation btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Read Full Case
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Legal Insights -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="recommendation-card" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef);">
+                    <h5><i class="fas fa-lightbulb me-2 text-warning"></i>Legal Insights & Tips</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6 class="text-primary">Know Your Rights</h6>
+                            <p class="small">The Canadian Charter of Rights and Freedoms protects your fundamental rights. Understanding these protections is crucial for any legal matter.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-primary">Document Everything</h6>
+                            <p class="small">Keep detailed records of all communications, incidents, and relevant documents. This evidence can be crucial for your case.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-primary">Seek Early Help</h6>
+                            <p class="small">Many legal issues can be resolved more effectively when addressed early. Don't wait until problems escalate.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refresh Button -->
+    <button class="refresh-recommendations" onclick="refreshRecommendations()" title="Refresh Recommendations">
+        <i class="fas fa-sync-alt fa-lg"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function refreshRecommendations() {
+            try {
+                const button = document.querySelector('.refresh-recommendations');
+                button.innerHTML = '<i class="fas fa-spinner fa-spin fa-lg"></i>';
+                button.disabled = true;
+                
+                const response = await fetch('/recommendations/api/generate');
+                
+                if (response.ok) {
+                    // Reload the page with fresh recommendations
+                    window.location.reload();
+                } else {
+                    throw new Error('Failed to refresh recommendations');
+                }
+            } catch (error) {
+                console.error('Error refreshing recommendations:', error);
+                alert('Failed to refresh recommendations. Please try again.');
+                
+                const button = document.querySelector('.refresh-recommendations');
+                button.innerHTML = '<i class="fas fa-sync-alt fa-lg"></i>';
+                button.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

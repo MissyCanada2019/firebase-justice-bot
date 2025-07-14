@@ -1,0 +1,5 @@
+name = "Port Adapter"
+entrypoint = "python port_adapter.py"
+
+[languages.python3]
+channel = "stable-23_04"

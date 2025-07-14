@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+
+{% block title %}Pilot Program Feedback - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 text-dark mb-3">
+                    <i class="feather-message-circle text-primary me-3"></i>
+                    Help Shape SmartDispute.ai
+                </h1>
+                <p class="lead text-muted">
+                    Your feedback is crucial for improving legal access for all Canadians
+                </p>
+                <div class="alert alert-info">
+                    <i class="feather-users me-2"></i>
+                    <strong>Pilot Participant:</strong> You are one of our valued 1000 test users helping build the future of legal technology
+                </div>
+            </div>
+
+            <!-- Feedback Form -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="feather-clipboard me-2"></i>User Experience Feedback</h4>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <!-- Overall Experience -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">Overall Experience</h5>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="overallRating" class="form-label">How would you rate your overall experience? *</label>
+                                <select class="form-select" id="overallRating" required>
+                                    <option value="">Select rating</option>
+                                    <option value="5">Excellent - Exceeded expectations</option>
+                                    <option value="4">Very Good - Met expectations</option>
+                                    <option value="3">Good - Mostly satisfactory</option>
+                                    <option value="2">Fair - Some issues</option>
+                                    <option value="1">Poor - Major problems</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="recommendLikelihood" class="form-label">How likely are you to recommend SmartDispute.ai to others? *</label>
+                                <select class="form-select" id="recommendLikelihood" required>
+                                    <option value="">Select likelihood</option>
+                                    <option value="10">10 - Extremely likely</option>
+                                    <option value="9">9 - Very likely</option>
+                                    <option value="8">8 - Likely</option>
+                                    <option value="7">7 - Somewhat likely</option>
+                                    <option value="6">6 - Neutral</option>
+                                    <option value="5">5 - Slightly unlikely</option>
+                                    <option value="4">4 - Unlikely</option>
+                                    <option value="3">3 - Very unlikely</option>
+                                    <option value="2">2 - Extremely unlikely</option>
+                                    <option value="1">1 - Would not recommend</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Feature Usage -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">Feature Usage & Effectiveness</h5>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Which features did you use? (Check all that apply) *</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="documentUpload" name="featuresUsed" value="document_upload">
+                                            <label class="form-check-label" for="documentUpload">Document Upload & Analysis</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="aiAnalysis" name="featuresUsed" value="ai_analysis">
+                                            <label class="form-check-label" for="aiAnalysis">AI Evidence Analysis</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="legalPathways" name="featuresUsed" value="legal_pathways">
+                                            <label class="form-check-label" for="legalPathways">Legal Pathway Recommendations</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="courtForms" name="featuresUsed" value="court_forms">
+                                            <label class="form-check-label" for="courtForms">Pre-filled Court Forms</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="meritScoring" name="featuresUsed" value="merit_scoring">
+                                            <label class="form-check-label" for="meritScoring">Case Merit Scoring</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="workflowEngine" name="featuresUsed" value="workflow_engine">
+                                            <label class="form-check-label" for="workflowEngine">Legal Workflow Engine</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="mostValuableFeature" class="form-label">Which feature was most valuable to your legal situation? *</label>
+                                <select class="form-select" id="mostValuableFeature" required>
+                                    <option value="">Select most valuable feature</option>
+                                    <option value="document_analysis">AI Document Analysis</option>
+                                    <option value="legal_pathways">Legal Pathway Generation</option>
+                                    <option value="court_forms">Pre-filled Court Forms</option>
+                                    <option value="merit_scoring">Case Merit Assessment</option>
+                                    <option value="workflow_guidance">Step-by-step Legal Guidance</option>
+                                    <option value="charter_compliance">Charter Rights Integration</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Usability & Interface -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">Usability & Interface</h5>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="easeOfUse" class="form-label">How easy was the platform to use? *</label>
+                                <select class="form-select" id="easeOfUse" required>
+                                    <option value="">Select ease of use</option>
+                                    <option value="5">Very Easy</option>
+                                    <option value="4">Easy</option>
+                                    <option value="3">Moderate</option>
+                                    <option value="2">Difficult</option>
+                                    <option value="1">Very Difficult</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="navigationClarity" class="form-label">How clear was the navigation? *</label>
+                                <select class="form-select" id="navigationClarity" required>
+                                    <option value="">Select clarity</option>
+                                    <option value="5">Very Clear</option>
+                                    <option value="4">Clear</option>
+                                    <option value="3">Somewhat Clear</option>
+                                    <option value="2">Confusing</option>
+                                    <option value="1">Very Confusing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Value Proposition -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">Value & Pricing</h5>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="pricingPreference" class="form-label">Which pricing model would you prefer? *</label>
+                                <select class="form-select" id="pricingPreference" required>
+                                    <option value="">Select pricing preference</option>
+                                    <option value="per_document">Per Document ($5.99 each)</option>
+                                    <option value="monthly">Monthly Subscription ($19.99/month)</option>
+                                    <option value="yearly">Yearly Subscription ($99.99/year)</option>
+                                    <option value="low_income">Low Income Program ($15.99/year)</option>
+                                    <option value="combination">Combination of options</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="perceivedValue" class="form-label">How much value did SmartDispute.ai provide compared to traditional legal services? *</label>
+                                <select class="form-select" id="perceivedValue" required>
+                                    <option value="">Select perceived value</option>
+                                    <option value="much_higher">Much Higher Value - Saved significant money</option>
+                                    <option value="higher">Higher Value - Good cost savings</option>
+                                    <option value="equal">Equal Value - Similar to alternatives</option>
+                                    <option value="lower">Lower Value - Limited savings</option>
+                                    <option value="much_lower">Much Lower Value - Not cost effective</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Open Feedback -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">Detailed Feedback</h5>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="improveFeatures" class="form-label">What features or aspects need improvement? *</label>
+                                <textarea class="form-control" id="improveFeatures" rows="4" placeholder="Please describe specific areas for improvement..." required></textarea>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="missingFeatures" class="form-label">What features are missing that you would find valuable?</label>
+                                <textarea class="form-control" id="missingFeatures" rows="3" placeholder="Describe any missing features that would help your legal situation..."></textarea>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="successStory" class="form-label">How did SmartDispute.ai help with your legal situation?</label>
+                                <textarea class="form-control" id="successStory" rows="4" placeholder="Share your experience and any positive outcomes..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Technical Issues -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">Technical Experience</h5>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="technicalIssues" class="form-label">Did you experience any technical issues?</label>
+                                <select class="form-select" id="technicalIssues">
+                                    <option value="">Select response</option>
+                                    <option value="none">No issues</option>
+                                    <option value="minor">Minor issues that didn't impact usage</option>
+                                    <option value="moderate">Some issues that slowed me down</option>
+                                    <option value="major">Major issues that prevented completion</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="issueDetails" class="form-label">If you experienced issues, please describe them:</label>
+                                <textarea class="form-control" id="issueDetails" rows="3" placeholder="Describe any technical problems, error messages, or bugs encountered..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Contact Permission -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="followUpConsent">
+                                    <label class="form-check-label" for="followUpConsent">
+                                        I consent to being contacted for follow-up questions about my feedback
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="testimonialConsent">
+                                    <label class="form-check-label" for="testimonialConsent">
+                                        I consent to my feedback being used as a testimonial (anonymized)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg" disabled>
+                                <i class="feather-send me-2"></i>Submit Feedback (Coming Soon)
+                            </button>
+                            <p class="text-muted small mt-2">Thank you for helping improve legal access for all Canadians</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Incentive Information -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="alert alert-success">
+                        <h6><i class="feather-gift me-2"></i>Thank You for Your Participation</h6>
+                        <p class="mb-0">
+                            As a pilot program participant, you'll receive priority access to paid features when they launch,
+                            plus a special discount on your first subscription. Your feedback is invaluable in building 
+                            a platform that truly serves Canadian legal needs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

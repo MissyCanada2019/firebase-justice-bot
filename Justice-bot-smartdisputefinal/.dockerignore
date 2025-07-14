@@ -1,0 +1,97 @@
+# Exclude development and unnecessary files to reduce image size
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache
+.hypothesis
+
+# Remove backup files
+*.bak
+*.backup
+backup_*
+temp_*
+export_pkg/
+attached_assets/
+data/
+
+# Remove development scripts
+*_test.py
+*_debug.py
+check_*.py
+fix_*.py
+create_*.py
+cleanup_*.py
+debug_*.py
+migrate_*.py
+seed_*.py
+reset_*.py
+
+# Remove duplicate deployment files
+*_8080.py
+*_port8080.py
+*_port_8080.py
+app_*.py
+main_*.py
+deploy_*.py
+run_*.py
+start_*.py
+stop_*.py
+dual_*.py
+port_*.py
+simple_*.py
+minimal_*.py
+direct_*.py
+combined_*.py
+replit_*.py
+flask_*.py
+basic_*.py
+quick_*.py
+final_*.py
+auto_*.py
+enhanced_*.py
+ultra_*.py
+absolutely_*.py
+
+# Remove shell scripts
+*.sh
+*.pid
+*.log
+
+# Remove documentation
+*.md
+*.txt
+ADMIN_CREDENTIALS.txt
+
+# Remove temporary files
+instance/
+logs/
+cookies.txt
+csrf_cookies.txt
+*.zip
+
+# Keep only essential files
+!main.py
+!app.py
+!models.py
+!routes.py
+!auth_blueprint.py
+!requirements.txt
+!pyproject.toml
+!static/
+!templates/
+!gunicorn.conf.py

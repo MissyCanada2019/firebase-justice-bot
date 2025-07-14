@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+
+{% block title %}Pay for Document - {{ case.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('analyze', case_id=case.id) }}">Case Analysis</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('preview', form_id=form.id) }}">Document Preview</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Payment</li>
+        </ol>
+    </nav>
+    
+    <h1 class="mb-4">Document Payment</h1>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h5 mb-0">Document Details</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Case:</strong> {{ case.title }}</p>
+                            <p><strong>Document Type:</strong> {{ form.form_type }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Created:</strong> {{ form.created_at.strftime('%Y-%m-%d') }}</p>
+                            <p><strong>Category:</strong> {{ case.category }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h5 mb-0">Payment Information</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-4">
+                        <i class="bi bi-info-circle-fill"></i> This is a one-time payment of ${{ document_fee }} for your legal document. After payment, you'll have permanent access to download and use this document.
+                    </div>
+
+                    <form id="payment-form" method="POST" action="{{ url_for('pay_document', form_id=form.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="payment_method" id="payment_method" value="paypal">
+                        <input type="hidden" name="paypal_order_id" id="paypal_order_id" value="">
+                        <input type="hidden" name="stripe_session_id" id="stripe_session_id" value="">
+                        
+                        <div class="mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="payment_option" id="payment_option_paypal" value="paypal" checked>
+                                <label class="form-check-label" for="payment_option_paypal">
+                                    <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" height="26">
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="payment_option" id="payment_option_stripe" value="stripe">
+                                <label class="form-check-label" for="payment_option_stripe">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" height="26">
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="paypal-button-container" class="mb-4"></div>
+                        
+                        <div id="stripe-button-container" style="display:none;" class="mb-4">
+                            <div class="d-grid gap-2">
+                                <button type="button" id="stripe-checkout-button" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-credit-card"></i> Pay with Card
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-success">
+                            <i class="bi bi-check-circle-fill"></i> Once payment is complete, you can download your document immediately.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h5 mb-0">Order Summary</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <td>Document fee:</td>
+                            <td class="text-end">${{ document_fee }} CAD</td>
+                        </tr>
+                        <tr class="table-active">
+                            <th>Total:</th>
+                            <th class="text-end">${{ document_fee }} CAD</th>
+                        </tr>
+                    </table>
+                    
+                    <div class="mt-3">
+                        <div class="d-grid gap-2">
+                            <a href="{{ url_for('preview', form_id=form.id) }}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to Preview
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h5 mb-0">Payment Options</h2>
+                </div>
+                <div class="card-body">
+                    <p>We support the following payment options:</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" height="26">
+                            Secure payment through PayPal
+                        </li>
+                        <li class="mb-2">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" height="26">
+                            Secure card payment through Stripe
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="small text-muted">
+                        <p>Your payment is processed securely. SmartDispute.ai does not store your payment information.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://www.paypal.com/sdk/js?client-id=Aa2wlVSlsfPeKRT-HoZx7zBiC3wrF4gpRNkNWgryYsnDcrJJo43Cwu0VCIZAjAVogiEGrMUDoH5TkiXj&currency=CAD"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+// PayPal integration
+paypal.Buttons({
+  createOrder: function (data, actions) {
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          value: '{{ document_fee }}'  // Use the document fee from the template
+        }
+      }]
+    });
+  },
+  onApprove: function (data, actions) {
+    return actions.order.capture().then(function (details) {
+      alert('Payment successful, ' + details.payer.name.given_name + '!');
+      
+      // Set the PayPal order ID in the hidden field
+      document.getElementById('paypal_order_id').value = details.id;
+      document.getElementById('payment_method').value = 'paypal';
+      
+      // Submit the form to complete the payment on the server
+      document.getElementById('payment-form').submit();
+    });
+  }
+}).render('#paypal-button-container');
+
+// Stripe integration
+const stripePublishableKey = '{{ stripe_publishable_key }}';
+const stripe = Stripe(stripePublishableKey);
+
+// Handle payment option selection
+const paymentOptionInputs = document.querySelectorAll('input[name="payment_option"]');
+const paypalContainer = document.getElementById('paypal-button-container');
+const stripeContainer = document.getElementById('stripe-button-container');
+
+paymentOptionInputs.forEach(input => {
+  input.addEventListener('change', function() {
+    if (this.value === 'paypal') {
+      paypalContainer.style.display = 'block';
+      stripeContainer.style.display = 'none';
+      document.getElementById('payment_method').value = 'paypal';
+    } else if (this.value === 'stripe') {
+      paypalContainer.style.display = 'none';
+      stripeContainer.style.display = 'block';
+      document.getElementById('payment_method').value = 'stripe';
+    }
+  });
+});
+
+// Handle Stripe checkout button click
+document.getElementById('stripe-checkout-button').addEventListener('click', async function() {
+  try {
+    // Fetch a new checkout session ID from the server
+    const response = await fetch(`/create-stripe-session/${{{ form.id }}}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    
+    const session = await response.json();
+    
+    if (session.error) {
+      alert('Error: ' + session.error);
+      return;
+    }
+    
+    // Store session ID in hidden field
+    document.getElementById('stripe_session_id').value = session.id;
+    
+    // Redirect to Stripe Checkout
+    stripe.redirectToCheckout({ sessionId: session.id })
+      .then(function(result) {
+        if (result.error) {
+          alert(result.error.message);
+        }
+      });
+      
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while processing your payment. Please try again.');
+  }
+});
+</script>
+{% endblock %}

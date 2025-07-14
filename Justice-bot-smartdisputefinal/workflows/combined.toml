@@ -1,0 +1,4 @@
+name = "Combined Application"
+command = "python combined_workflow.py"
+onBoot = true
+restartOn = { libraries = true, replit = false, input = false, exited = true, signal = true }

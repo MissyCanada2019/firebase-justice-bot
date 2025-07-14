@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Google OAuth Setup - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0"><i class="feather-settings me-2"></i>Google OAuth Configuration Required</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-4">
+                        <h5><i class="feather-info me-2"></i>Error 401: invalid_client</h5>
+                        <p class="mb-0">Your Google OAuth client needs the correct redirect URI registered in Google Cloud Console.</p>
+                    </div>
+
+                    <h5>Steps to Fix Google OAuth:</h5>
+                    <ol class="mb-4">
+                        <li class="mb-3">
+                            <strong>Go to Google Cloud Console:</strong>
+                            <br><a href="https://console.cloud.google.com/apis/credentials" target="_blank" class="btn btn-sm btn-outline-primary mt-1">Open Google Cloud Console</a>
+                        </li>
+                        <li class="mb-3">
+                            <strong>Select your project</strong> (LegallySmart or the project containing your OAuth credentials)
+                        </li>
+                        <li class="mb-3">
+                            <strong>Find your OAuth 2.0 Client ID</strong> in the credentials list
+                        </li>
+                        <li class="mb-3">
+                            <strong>Add this redirect URI:</strong>
+                            <div class="bg-light p-3 rounded border mt-2">
+                                <code class="text-dark">https://{{ replit_domain }}/auth/google/callback</code>
+                                <button class="btn btn-sm btn-outline-secondary ms-2" onclick="copyToClipboard('https://{{ replit_domain }}/auth/google/callback')">
+                                    <i class="feather-copy"></i> Copy
+                                </button>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <strong>Save the changes</strong> in Google Cloud Console
+                        </li>
+                        <li class="mb-3">
+                            <strong>Test the login</strong> - it may take a few minutes for changes to propagate
+                        </li>
+                    </ol>
+
+                    <div class="alert alert-warning">
+                        <h6><i class="feather-clock me-2"></i>Temporary Workaround for Pilot Testing</h6>
+                        <p class="mb-2">While you fix the Google OAuth setup, pilot users can still register and login using email/password:</p>
+                        <div class="d-flex gap-2">
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm">Register with Email</a>
+                            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary btn-sm">Login with Email</a>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h6>Current Configuration:</h6>
+                            <ul class="list-unstyled small">
+                                <li><strong>Replit Domain:</strong> {{ replit_domain }}</li>
+                                <li><strong>Required Redirect URI:</strong> https://{{ replit_domain }}/auth/google/callback</li>
+                                <li><strong>OAuth Client ID:</strong> {% if google_client_id %}Configured{% else %}Missing{% endif %}</li>
+                                <li><strong>OAuth Client Secret:</strong> {% if google_client_secret %}Configured{% else %}Missing{% endif %}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Alternative Login Methods:</h6>
+                            <ul class="list-unstyled small">
+                                <li><i class="feather-check text-success me-1"></i> Email/Password Registration</li>
+                                <li><i class="feather-check text-success me-1"></i> Email/Password Login</li>
+                                <li><i class="feather-x text-danger me-1"></i> Google OAuth (needs setup)</li>
+                                <li><i class="feather-clock text-warning me-1"></i> Firebase Auth (configured)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="feather-users me-2"></i>Pilot Program Status</h5>
+                </div>
+                <div class="card-body">
+                    <p>Your 1000-user pilot program is active and collecting valuable feedback. Users can access the platform using email authentication while you configure Google OAuth.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="bg-primary text-white p-3 rounded text-center">
+                                <h4 class="mb-1">10/1000</h4>
+                                <small>Pilot Participants</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="bg-success text-white p-3 rounded text-center">
+                                <h4 class="mb-1">Free</h4>
+                                <small>Current Access</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="bg-warning text-dark p-3 rounded text-center">
+                                <h4 class="mb-1">Active</h4>
+                                <small>Development Phase</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Redirect URI copied to clipboard!');
+    });
+}
+</script>
+{% endblock %}

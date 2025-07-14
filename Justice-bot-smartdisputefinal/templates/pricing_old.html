@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Pricing - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <h1 class="display-4 text-dark mb-3">
+                    <i class="feather-dollar-sign text-danger me-3"></i>
+                    Fair Legal Justice for All Canadians
+                </h1>
+                <p class="lead text-muted">
+                    Protected by the Canadian Charter of Rights and Freedoms Section 7:
+                    <em>"Everyone has the right to life, liberty and security of the person"</em>
+                </p>
+                <div class="alert alert-info mt-3">
+                    <i class="feather-info me-2"></i>
+                    <strong>1000 User Pilot Program:</strong> Currently serving 10/1000 participants
+                </div>
+            </div>
+
+            <!-- Pricing Plans -->
+            <div class="row">
+                <!-- Basic Plan -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-primary">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h3>Basic Legal Support</h3>
+                            <h2 class="mb-0">$49 CAD</h2>
+                            <small>Per legal issue</small>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Document analysis and merit scoring</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Basic court form generation</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Canadian Charter compliance check</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Email support</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Access to legal resource database</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-primary btn-lg" disabled>
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Plan -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-danger shadow">
+                        <div class="card-header bg-danger text-white text-center">
+                            <h3>Premium Legal Advocacy</h3>
+                            <h2 class="mb-0">$149 CAD</h2>
+                            <small>Per legal issue</small>
+                            <span class="badge bg-warning text-dark ms-2">Most Popular</span>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Everything in Basic Plan</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>AI-powered legal strategy recommendations</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Advanced court-ready document package</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Case law research and precedent matching</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Priority email support</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Provincial and federal law coverage</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>CAS and family law specialization</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-danger btn-lg" disabled>
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white">
+                            <h4 class="mb-0">
+                                <i class="feather-credit-card me-2"></i>
+                                Payment Methods
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5><i class="feather-globe text-primary me-2"></i>PayPal</h5>
+                                    <p>Secure international payment processing with instant service activation.</p>
+                                    <button class="btn btn-primary" disabled>
+                                        Coming Soon
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5><i class="feather-maple-leaf text-danger me-2"></i>Canadian e-Transfer</h5>
+                                    <p>Send Interac e-Transfer to: <strong>teresa@justice-bot.com</strong></p>
+                                    <button class="btn btn-outline-danger" disabled>
+                                        Coming Soon
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charter Commitment -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="alert alert-light border-danger">
+                        <h5 class="text-danger">
+                            <i class="feather-shield me-2"></i>
+                            Our Charter Commitment
+                        </h5>
+                        <p class="mb-2">
+                            <strong>Section 15:</strong> "Every individual is equal before and under the law and has the right to the equal protection and equal benefit of the law without discrimination."
+                        </p>
+                        <p class="mb-0">
+                            SmartDispute.ai is committed to making legal justice accessible to all Canadians, regardless of economic status. Our mission is to ensure courtrooms become places of real fairness and justice, not games of money and privilege.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

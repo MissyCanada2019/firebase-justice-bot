@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SmartDispute.ai</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-header {
+            background: linear-gradient(135deg, #FF0000 0%, #003366 100%);
+            color: white;
+            padding: 20px 0;
+        }
+        .maple-leaf { color: #FFD700; }
+        .stats-card {
+            border-left: 4px solid #FF0000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .charter-quote {
+            background: rgba(255, 255, 255, 0.95);
+            border-left: 4px solid #FF0000;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1><i class="fas fa-maple-leaf maple-leaf me-2"></i>SmartDispute.ai Admin</h1>
+                    <p class="mb-0">Canadian Legal Technology Platform Administration</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <span class="me-3">Welcome, {{ current_user.first_name }} {{ current_user.last_name }}</span>
+                    <a href="/logout" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container">
+            <div class="navbar-nav">
+                <a class="nav-link active" href="/admin/">
+                    <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                </a>
+                <a class="nav-link" href="/admin/user-management">
+                    <i class="fas fa-users me-1"></i>User Management
+                </a>
+                <a class="nav-link" href="/admin/create-test-accounts">
+                    <i class="fas fa-user-plus me-1"></i>Test Accounts
+                </a>
+                {% if current_user.role == 'superadmin' %}
+                <a class="nav-link" href="/admin/create-admin">
+                    <i class="fas fa-user-shield me-1"></i>Admin Management
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-4">
+        <!-- Charter Quote -->
+        <div class="charter-quote">
+            <p class="mb-2"><strong>"Everyone has the right to life, liberty and security of the person and the right not to be deprived thereof except in accordance with the principles of fundamental justice."</strong></p>
+            <small class="text-muted">— Section 7, Canadian Charter of Rights and Freedoms</small>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-muted">Total Users</h6>
+                                <h2 class="text-primary">{{ total_users }}</h2>
+                            </div>
+                            <i class="fas fa-users fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-muted">Test Accounts</h6>
+                                <h2 class="text-success">{{ test_users }}</h2>
+                            </div>
+                            <i class="fas fa-user-check fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-muted">Admin Users</h6>
+                                <h2 class="text-warning">{{ admin_users }}</h2>
+                            </div>
+                            <i class="fas fa-user-shield fa-2x text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card stats-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-muted">System Status</h6>
+                                <h6 class="text-success">
+                                    <i class="fas fa-check-circle me-1"></i>Online
+                                </h6>
+                            </div>
+                            <i class="fas fa-server fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h4><i class="fas fa-bolt me-2"></i>Quick Actions</h4>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                                <h5 class="card-title">Create Test Accounts</h5>
+                                <p class="card-text">Generate test user accounts for system testing</p>
+                                <a href="/admin/create-test-accounts" class="btn btn-primary">
+                                    <i class="fas fa-plus me-1"></i>Create Accounts
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-users-cog fa-3x text-success mb-3"></i>
+                                <h5 class="card-title">Manage Users</h5>
+                                <p class="card-text">View and manage all user accounts</p>
+                                <a href="/admin/user-management" class="btn btn-success">
+                                    <i class="fas fa-cog me-1"></i>Manage Users
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-list fa-3x text-info mb-3"></i>
+                                <h5 class="card-title">Test Account List</h5>
+                                <p class="card-text">View all created test accounts</p>
+                                <a href="/admin/test-accounts-list" class="btn btn-info">
+                                    <i class="fas fa-list me-1"></i>View List
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Users -->
+        <div class="row">
+            <div class="col-md-12">
+                <h4><i class="fas fa-clock me-2"></i>Recent Users</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Created</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in recent_users %}
+                                    <tr>
+                                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>
+                                            <span class="badge bg-{% if user.role == 'admin' or user.role == 'superadmin' %}warning{% elif user.role == 'test_user' %}info{% else %}primary{% endif %}">
+                                                {{ user.role }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-{% if user.account_status == 'active' %}success{% else %}secondary{% endif %}">
+                                                {{ user.account_status }}
+                                            </span>
+                                        </td>
+                                        <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M') if user.created_at else 'N/A' }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+name = "Port Forwarder"
+entrypoint = "python port_forwarder_workflow.py"
+
+[languages.python3]
+channel = "stable-23_04"

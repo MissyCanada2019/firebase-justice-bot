@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}New Case - Justice-Bot{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h2 class="mb-4">Create New Legal Case</h2>
+        
+        <form method="POST" action="{{ url_for('new_case') }}">
+            <div class="mb-3">
+                <label for="title" class="form-label">Case Title</label>
+                <input type="text" class="form-control" id="title" name="title" required 
+                       placeholder="Brief description of your legal issue">
+            </div>
+            
+            <div class="mb-3">
+                <label for="legal_issue_type" class="form-label">Legal Issue Type</label>
+                <select class="form-control" id="legal_issue_type" name="legal_issue_type" required>
+                    <option value="">Select...</option>
+                    <option value="family_law">Family Law</option>
+                    <option value="landlord_tenant">Landlord & Tenant</option>
+                    <option value="employment">Employment</option>
+                    <option value="small_claims">Small Claims</option>
+                    <option value="criminal">Criminal</option>
+                    <option value="civil_rights">Civil Rights</option>
+                    <option value="immigration">Immigration</option>
+                    <option value="child_protection">Child Protection</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="description" class="form-label">Case Description</label>
+                <textarea class="form-control" id="description" name="description" rows="6" required
+                          placeholder="Provide details about your legal situation..."></textarea>
+            </div>
+            
+            <div class="d-flex gap-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Create Case
+                </button>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,6 @@
+[workflow]
+name = "Port 8080 Direct"
+entryPoint = "python port8080_direct.py"
+runOnOpen = true
+terminateOn = "shutdown"
+onBoot = true

@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block title %}Low Income Assistance Application - SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 text-dark mb-3">
+                    <i class="feather-heart text-warning me-3"></i>
+                    Low Income Assistance Application
+                </h1>
+                <p class="lead text-muted">
+                    Equal access to justice for all Canadians - $15.99/year unlimited access
+                </p>
+                <div class="alert alert-info">
+                    <i class="feather-info me-2"></i>
+                    <strong>Charter Section 15:</strong> "Every individual is equal before and under the law and has the right to the equal protection and equal benefit of the law without discrimination"
+                </div>
+            </div>
+
+            <!-- Application Form -->
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0"><i class="feather-file-text me-2"></i>Application Form</h4>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <!-- Personal Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-warning mb-3">Personal Information</h5>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fullName" class="form-label">Full Legal Name *</label>
+                                <input type="text" class="form-control" id="fullName" placeholder="Enter your full legal name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" placeholder="your.email@domain.com" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="(555) 123-4567" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="province" class="form-label">Province/Territory *</label>
+                                <select class="form-select" id="province" required>
+                                    <option value="">Select your province</option>
+                                    <option value="ON">Ontario</option>
+                                    <option value="BC">British Columbia</option>
+                                    <option value="AB">Alberta</option>
+                                    <option value="SK">Saskatchewan</option>
+                                    <option value="MB">Manitoba</option>
+                                    <option value="QC">Quebec</option>
+                                    <option value="NB">New Brunswick</option>
+                                    <option value="NS">Nova Scotia</option>
+                                    <option value="PE">Prince Edward Island</option>
+                                    <option value="NL">Newfoundland and Labrador</option>
+                                    <option value="YT">Yukon</option>
+                                    <option value="NT">Northwest Territories</option>
+                                    <option value="NU">Nunavut</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Income Assistance Program -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-warning mb-3">Income Assistance Program *</h5>
+                                <p class="text-muted small">Select the program you are currently receiving assistance from:</p>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="assistanceProgram" id="osap" value="osap">
+                                            <label class="form-check-label" for="osap">
+                                                <strong>OSAP</strong> (Ontario Student Assistance Program)
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="assistanceProgram" id="ontarioWorks" value="ontario_works">
+                                            <label class="form-check-label" for="ontarioWorks">
+                                                <strong>Ontario Works</strong> (Social Assistance)
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="assistanceProgram" id="odsp" value="odsp">
+                                            <label class="form-check-label" for="odsp">
+                                                <strong>ODSP</strong> (Ontario Disability Support Program)
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="assistanceProgram" id="bcAssistance" value="bc_assistance">
+                                            <label class="form-check-label" for="bcAssistance">
+                                                <strong>BC Income Assistance</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="assistanceProgram" id="albertaWorks" value="alberta_works">
+                                            <label class="form-check-label" for="albertaWorks">
+                                                <strong>Alberta Works</strong>
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="assistanceProgram" id="saskAssistance" value="sask_assistance">
+                                            <label class="form-check-label" for="saskAssistance">
+                                                <strong>Saskatchewan Assistance Program</strong>
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="assistanceProgram" id="eiaBenefit" value="eia_benefit">
+                                            <label class="form-check-label" for="eiaBenefit">
+                                                <strong>EIA</strong> (Employment and Income Assistance - MB)
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="assistanceProgram" id="other" value="other">
+                                            <label class="form-check-label" for="other">
+                                                <strong>Other Provincial Program</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Document Upload -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-warning mb-3">Proof of Income Assistance *</h5>
+                                <p class="text-muted small">Upload documentation proving your enrollment in an income assistance program:</p>
+                                
+                                <div class="mb-3">
+                                    <label for="proofDocument" class="form-label">Upload Document</label>
+                                    <input type="file" class="form-control" id="proofDocument" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
+                                    <div class="form-text">Accepted formats: PDF, JPG, PNG, DOC, DOCX (Max 5MB)</div>
+                                </div>
+
+                                <div class="alert alert-info">
+                                    <h6><i class="feather-file-text me-2"></i>Acceptable Documents:</h6>
+                                    <ul class="mb-0 small">
+                                        <li>Current income assistance statement or letter</li>
+                                        <li>OSAP funding confirmation letter</li>
+                                        <li>Ontario Works payment stub</li>
+                                        <li>ODSP payment statement</li>
+                                        <li>Provincial assistance program documentation</li>
+                                        <li>Official government letter confirming assistance status</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Legal Issue Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-warning mb-3">Legal Issue Information</h5>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="legalIssueType" class="form-label">Type of Legal Issue *</label>
+                                <select class="form-select" id="legalIssueType" required>
+                                    <option value="">Select your legal issue type</option>
+                                    <option value="family">Family Law (Custody, Divorce, Support)</option>
+                                    <option value="criminal">Criminal Law</option>
+                                    <option value="cas">CAS/Child Protection</option>
+                                    <option value="housing">Housing/Landlord-Tenant</option>
+                                    <option value="employment">Employment Issues</option>
+                                    <option value="civil_rights">Civil Rights/Charter Violations</option>
+                                    <option value="immigration">Immigration</option>
+                                    <option value="small_claims">Small Claims</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="urgencyLevel" class="form-label">Urgency Level *</label>
+                                <select class="form-select" id="urgencyLevel" required>
+                                    <option value="">Select urgency level</option>
+                                    <option value="immediate">Immediate (Court date within 30 days)</option>
+                                    <option value="urgent">Urgent (Court date within 60 days)</option>
+                                    <option value="standard">Standard (No immediate deadlines)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Agreement and Submit -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="termsAgreement" required>
+                                    <label class="form-check-label" for="termsAgreement">
+                                        I agree that the information provided is accurate and I understand that providing false information may result in denial of services *
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="privacyConsent" required>
+                                    <label class="form-check-label" for="privacyConsent">
+                                        I consent to SmartDispute.ai processing my personal information in accordance with PIPEDA and Canadian privacy laws *
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-warning btn-lg" disabled>
+                                <i class="feather-send me-2"></i>Submit Application (Coming Soon)
+                            </button>
+                            <p class="text-muted small mt-2">Applications will be reviewed within 2-3 business days</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Information Section -->
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="feather-help-circle text-warning me-2"></i>What Happens Next?</h5>
+                            <ol class="card-text">
+                                <li>Submit your application with required documentation</li>
+                                <li>Our team reviews your eligibility (2-3 business days)</li>
+                                <li>Receive approval notification via email</li>
+                                <li>Get access to unlimited legal document generation</li>
+                                <li>Start using all SmartDispute.ai features for $15.99/year</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="feather-shield text-warning me-2"></i>Your Information is Protected</h5>
+                            <ul class="card-text list-unstyled">
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>PIPEDA compliant data handling</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Secure document storage</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>Confidential review process</li>
+                                <li class="mb-2"><i class="feather-check text-success me-2"></i>No sharing with third parties</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="alert alert-light border-warning">
+                        <h6 class="text-warning"><i class="feather-mail me-2"></i>Questions About Your Application?</h6>
+                        <p class="mb-0">
+                            Contact us at <strong>teresa@justice-bot.com</strong> for assistance with your low-income application.
+                            We're here to help ensure equal access to justice for all Canadians.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

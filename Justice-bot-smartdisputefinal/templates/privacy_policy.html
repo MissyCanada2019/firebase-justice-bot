@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Privacy Policy | SmartDispute.ai{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h1 class="display-4 mb-4 text-center">Privacy Policy</h1>
+
+            <div class="card bg-dark border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="h4 mb-4">Welcome to SmartDispute.ai Canada</h2>
+                    <p class="mb-0">We take your privacy seriously. This Privacy Policy explains what information we collect, how we use it, and how we protect it.</p>
+                </div>
+            </div>
+
+            <div class="card bg-dark border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="h4 mb-4">1. Information We Collect</h2>
+                    <h5 class="mb-3">Google Account Information</h5>
+                    <ul>
+                        <li>When you sign in using Google OAuth, we only access your name and email address to create your SmartDispute.ai profile.</li>
+                        <li>We do not collect or store your Google password.</li>
+                    </ul>
+
+                    <h5 class="mb-3 mt-4">Payment Information</h5>
+                    <ul>
+                        <li>Payments are processed securely through PayPal.</li>
+                        <li>We do not store your credit card, banking, or payment information on our servers.</li>
+                    </ul>
+
+                    <h5 class="mb-3 mt-4">Basic Usage Data</h5>
+                    <ul>
+                        <li>We may collect non-personal information like IP addresses, browser types, and device information for security, analytics, and improving your experience.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card bg-dark border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="h4 mb-4">2. How We Use Your Information</h2>
+                    <ul>
+                        <li>To create and manage your SmartDispute.ai account</li>
+                        <li>To provide access to services and documents</li>
+                        <li>To process your payments via PayPal</li>
+                        <li>To improve our platform and security measures</li>
+                        <li>To communicate with you regarding your account or services</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card bg-dark border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="h4 mb-4">3. How We Protect Your Information</h2>
+                    <ul>
+                        <li>We use HTTPS encryption to protect data during transmission.</li>
+                        <li>We limit data collection to only essential information.</li>
+                        <li>We never share, sell, or rent your personal data to third parties for marketing.</li>
+                        <li>We store minimal user data securely and monitor access to our systems.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card bg-dark border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="h4 mb-4">4. Third-Party Services</h2>
+                    <p>We use trusted third parties to operate our service:</p>
+                    <ul>
+                        <li>Google OAuth 2.0 for login and authentication</li>
+                        <li>PayPal for secure payment processing</li>
+                    </ul>
+                    <p>Their use of your information is governed by their own privacy policies.</p>
+                </div>
+            </div>
+
+            <div class="card bg-dark border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="h4 mb-4">5. Your Rights</h2>
+                    <p>You have the right to:</p>
+                    <ul>
+                        <li>Access the information we collect about you</li>
+                        <li>Request correction or deletion of your personal information</li>
+                        <li>Withdraw your consent at any time (which may impact your access to services)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card bg-dark border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="h4 mb-4">6. Contact Us</h2>
+                    <p>If you have any questions about this Privacy Policy or your data, you can contact:</p>
+                    <p>SmartDispute.ai Canada<br>
+                    Email: <a href="mailto:smartdisputecanada@gmail.com">smartdisputecanada@gmail.com</a></p>
+                </div>
+            </div>
+
+            <div class="card bg-dark border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="h4 mb-4">Summary</h2>
+                    <ul>
+                        <li>We take your privacy seriously.</li>
+                        <li>We protect your data with encryption.</li>
+                        <li>We use trusted services like Google and PayPal.</li>
+                        <li>We don't store sensitive financial information or passwords.</li>
+                    </ul>
+
+                    <p class="mt-4">Effective Date: April 25, 2025</p>
+                </div>
+            </div>
+
+            <div class="mt-5 text-center">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">Return to Homepage</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

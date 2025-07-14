@@ -1,0 +1,4 @@
+name = "Start application"
+command = "python deploy_8080.py"
+onBoot = true
+restartOn = { libraries = true, replit = false, input = false, exited = true, signal = true }

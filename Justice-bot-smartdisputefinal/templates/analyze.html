@@ -1,0 +1,513 @@
+{% extends 'base.html' %}
+
+{% block title %}Case Analysis | SmartDispute.ai{% endblock %}
+
+{% block content %}
+<script>
+// Case analysis page tracking
+gtag('event', 'case_analysis_view', {
+  'event_category': 'Legal Platform',
+  'event_label': 'Case Analysis Page',
+  'case_id': '{{ case.id }}',
+  'case_category': '{{ case.category }}',
+  'merit_score': {{ merit_score }}
+});
+console.log('Case analysis tracking fired for case {{ case.id }}');
+</script>
+<div class="mb-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">My Cases</a></li>
+            <li class="breadcrumb-item active">Case Analysis</li>
+        </ol>
+    </nav>
+    <h1>Case Analysis: {{ case.title }}</h1>
+    <p class="text-muted">
+        Uploaded on {{ case.created_at.strftime('%B %d, %Y') }} • 
+        Category: <span class="badge bg-secondary">{{ case.category.replace('-', ' ').title() }}</span>
+    </p>
+</div>
+
+<div class="row">
+    <!-- Merit Score Column -->
+    <div class="col-md-4 mb-4">
+        <div class="card bg-dark h-100 shadow">
+            <div class="card-body text-center">
+                <h4 class="card-title mb-4">Case Merit Score</h4>
+                
+                <div class="merit-score" data-score="{{ merit_score }}">
+                    {{ (merit_score * 100)|int }}%
+                </div>
+                
+                <p class="mt-4">
+                    {% if analysis.analysis_method == 'error' or 'error' in analysis %}
+                        <span class="badge bg-secondary">Analysis Limited</span>
+                        <p class="mt-2">We're currently using our standard analysis tool. AI-enhanced analysis is temporarily unavailable.</p>
+                    {% elif merit_score >= 0.7 %}
+                        <span class="badge bg-success">Strong Case</span>
+                        <p class="mt-2">Your evidence strongly supports your position.</p>
+                    {% elif merit_score >= 0.4 %}
+                        <span class="badge bg-warning">Moderate Case</span>
+                        <p class="mt-2">Your case has merit but could benefit from additional evidence.</p>
+                    {% else %}
+                        <span class="badge bg-danger">Weak Case</span>
+                        <p class="mt-2">Your case needs stronger evidence to support your position.</p>
+                    {% endif %}
+                </p>
+                
+                <div class="mt-4">
+                    <a href="{{ url_for('chat', case_id=case.id) }}" class="btn btn-outline-primary">
+                        <i class="feather-help-circle me-2"></i> Ask AI for Help
+                    </a>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                <small>
+                    Score based on document evidence strength, issue clarity, and relevant law.
+                    <a href="#" data-bs-toggle="tooltip" title="Our AI analyzes your documents, extracts key information, and compares it to successful legal precedents to calculate this score.">
+                        <i class="feather-info"></i>
+                    </a>
+                </small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Analysis Column -->
+    <div class="col-md-8 mb-4">
+        <div class="card bg-dark h-100 shadow">
+            <div class="card-header">
+                <h4 class="mb-0">AI Analysis Results</h4>
+            </div>
+            <div class="card-body">
+                <h5 class="mb-3">Detected Legal Issues</h5>
+                {% if analysis.detected_issues %}
+                    <div class="list-group mb-4">
+                        {% for issue in analysis.detected_issues %}
+                            <div class="list-group-item bg-dark border-light">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <h6 class="mb-1">{{ issue.name }}</h6>
+                                    <span class="badge badge-score 
+                                        {% if issue.score >= 7 %}
+                                            badge-score-high
+                                        {% elif issue.score >= 4 %}
+                                            badge-score-medium
+                                        {% else %}
+                                            badge-score-low
+                                        {% endif %}
+                                    ">Match: {{ issue.score }}</span>
+                                </div>
+                                <p class="mb-1 small">{{ issue.description }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">No specific legal issues detected. Upload more evidence or chat with our AI for assistance.</p>
+                {% endif %}
+                
+                <h5 class="mb-3">Key Information Extracted</h5>
+                <div class="row">
+                    {% if analysis.dates %}
+                        <div class="col-md-6 mb-3">
+                            <h6><i class="feather-calendar me-2 text-primary"></i> Important Dates</h6>
+                            <ul class="list-unstyled text-muted ms-4">
+                                {% for date in analysis.dates[:5] %}
+                                    <li>{{ date }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    
+                    {% if analysis.names %}
+                        <div class="col-md-6 mb-3">
+                            <h6><i class="feather-users me-2 text-primary"></i> People Mentioned</h6>
+                            <ul class="list-unstyled text-muted ms-4">
+                                {% for name in analysis.names[:5] %}
+                                    <li>{{ name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    
+                    {% if analysis.key_entities.addresses %}
+                        <div class="col-md-6 mb-3">
+                            <h6><i class="feather-map-pin me-2 text-primary"></i> Addresses</h6>
+                            <ul class="list-unstyled text-muted ms-4">
+                                {% for address in analysis.key_entities.addresses[:3] %}
+                                    <li>{{ address }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    
+                    {% if analysis.key_entities.phone_numbers %}
+                        <div class="col-md-6 mb-3">
+                            <h6><i class="feather-phone me-2 text-primary"></i> Phone Numbers</h6>
+                            <ul class="list-unstyled text-muted ms-4">
+                                {% for phone in analysis.key_entities.phone_numbers[:3] %}
+                                    <li>{{ phone }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted small">Analysis completed on {{ case.updated_at.strftime('%B %d, %Y') }}</span>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#selectDocumentsModal">
+                            Generate Legal Documents <i class="feather-arrow-right ms-2"></i>
+                        </button>
+                        <a href="{{ url_for('generate', case_id=case.id) }}" class="btn btn-outline-primary">
+                            Skip Selection <i class="feather-fast-forward ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Uploaded Documents -->
+    <div class="col-md-6 mb-4">
+        <div class="card bg-dark shadow">
+            <div class="card-header">
+                <h4 class="mb-0">Uploaded Documents ({{ documents|length }})</h4>
+            </div>
+            <div class="card-body">
+                {% if documents %}
+                    <div class="list-group">
+                        {% for doc in documents %}
+                            <div class="list-group-item bg-dark border-light">
+                                <div class="d-flex align-items-center">
+                                    {% if doc.file_type == 'pdf' %}
+                                        <i class="feather-file-text text-danger me-3 fs-4"></i>
+                                    {% elif doc.file_type in ['jpg', 'jpeg', 'png'] %}
+                                        <i class="feather-image text-info me-3 fs-4"></i>
+                                    {% elif doc.file_type in ['doc', 'docx'] %}
+                                        <i class="feather-file text-primary me-3 fs-4"></i>
+                                    {% else %}
+                                        <i class="feather-file text-muted me-3 fs-4"></i>
+                                    {% endif %}
+                                    
+                                    <div>
+                                        <h6 class="mb-0">{{ doc.filename }}</h6>
+                                        <small class="text-muted">Uploaded {{ doc.uploaded_at.strftime('%B %d, %Y') }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-3">
+                        <a href="{{ url_for('add_files', case_id=case.id) }}" class="btn btn-sm btn-outline-primary">
+                            <i class="feather-plus"></i> Upload More Documents
+                        </a>
+                    </div>
+                {% else %}
+                    <p class="text-center text-muted">No documents uploaded yet.</p>
+                    <div class="text-center">
+                        <a href="{{ url_for('add_files', case_id=case.id) }}" class="btn btn-primary">
+                            <i class="feather-upload"></i> Upload Documents
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Relevant Precedents -->
+    <div class="col-md-6 mb-4">
+        <div class="card bg-dark shadow">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Relevant Legal Precedents</h4>
+                <ul class="nav nav-tabs card-header-tabs" id="precedentTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="top-tab" data-bs-toggle="tab" data-bs-target="#top-precedents" type="button" role="tab" aria-controls="top-precedents" aria-selected="true">Top</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="landmark-tab" data-bs-toggle="tab" data-bs-target="#landmark-precedents" type="button" role="tab" aria-controls="landmark-precedents" aria-selected="false">Landmark</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="recent-tab" data-bs-toggle="tab" data-bs-target="#recent-precedents" type="button" role="tab" aria-controls="recent-precedents" aria-selected="false">Recent</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="topic-tab" data-bs-toggle="tab" data-bs-target="#topic-precedents" type="button" role="tab" aria-controls="topic-precedents" aria-selected="false">By Topic</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="precedentTabsContent">
+                    <!-- Top Precedents Tab -->
+                    <div class="tab-pane fade show active" id="top-precedents" role="tabpanel" aria-labelledby="top-tab">
+                        {% if precedents.top_precedents %}
+                            <div class="list-group">
+                                {% for precedent in precedents.top_precedents %}
+                                    <div class="list-group-item bg-dark border-light">
+                                        <div class="d-flex w-100 justify-content-between align-items-start">
+                                            <h6 class="mb-1">{{ precedent.title }}</h6>
+                                            <span class="badge badge-score 
+                                                {% if precedent.relevance >= 0.8 %}
+                                                    badge-score-high
+                                                {% elif precedent.relevance >= 0.5 %}
+                                                    badge-score-medium
+                                                {% else %}
+                                                    badge-score-low
+                                                {% endif %}
+                                            ">{{ (precedent.relevance * 100)|int }}%</span>
+                                        </div>
+                                        <p class="mb-1 small text-muted">{{ precedent.citation }}</p>
+                                        <p class="mb-1 mt-2">{{ precedent.snippet }}</p>
+                                        <div class="mt-2">
+                                            <a href="{{ precedent.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                View on CanLII <i class="feather-external-link ms-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted">No top precedents found.</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Landmark Cases Tab -->
+                    <div class="tab-pane fade" id="landmark-precedents" role="tabpanel" aria-labelledby="landmark-tab">
+                        {% if precedents.landmark_cases %}
+                            <div class="list-group">
+                                {% for precedent in precedents.landmark_cases %}
+                                    <div class="list-group-item bg-dark border-light">
+                                        <div class="d-flex w-100 justify-content-between align-items-start">
+                                            <h6 class="mb-1">{{ precedent.title }}</h6>
+                                            <span class="badge bg-info">Landmark</span>
+                                        </div>
+                                        <p class="mb-1 small text-muted">{{ precedent.citation }}</p>
+                                        <p class="mb-1 mt-2">{{ precedent.snippet }}</p>
+                                        <div class="mt-2">
+                                            <a href="{{ precedent.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                View on CanLII <i class="feather-external-link ms-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted">No landmark precedents found.</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Recent Developments Tab -->
+                    <div class="tab-pane fade" id="recent-precedents" role="tabpanel" aria-labelledby="recent-tab">
+                        {% if precedents.recent_developments %}
+                            <div class="list-group">
+                                {% for precedent in precedents.recent_developments %}
+                                    <div class="list-group-item bg-dark border-light">
+                                        <div class="d-flex w-100 justify-content-between align-items-start">
+                                            <h6 class="mb-1">{{ precedent.title }}</h6>
+                                            <span class="badge bg-success">Recent</span>
+                                        </div>
+                                        <p class="mb-1 small text-muted">{{ precedent.citation }} • {{ precedent.date }}</p>
+                                        <p class="mb-1 mt-2">{{ precedent.snippet }}</p>
+                                        <div class="mt-2">
+                                            <a href="{{ precedent.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                View on CanLII <i class="feather-external-link ms-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted">No recent precedents found.</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- By Topic Tab -->
+                    <div class="tab-pane fade" id="topic-precedents" role="tabpanel" aria-labelledby="topic-tab">
+                        {% if precedents.precedent_by_topic %}
+                            <div class="accordion" id="topicAccordion">
+                                {% for topic, cases in precedents.precedent_by_topic.items() %}
+                                    <div class="accordion-item bg-dark border-light">
+                                        <h2 class="accordion-header" id="heading{{ loop.index }}">
+                                            <button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+                                                {{ topic|replace('-', ' ')|title }} ({{ cases|length }})
+                                            </button>
+                                        </h2>
+                                        <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#topicAccordion">
+                                            <div class="accordion-body">
+                                                <div class="list-group">
+                                                    {% for precedent in cases %}
+                                                        <div class="list-group-item bg-dark border-light">
+                                                            <div class="d-flex w-100 justify-content-between align-items-start">
+                                                                <h6 class="mb-1">{{ precedent.title }}</h6>
+                                                                <span class="badge bg-secondary">{{ topic|replace('-', ' ')|title }}</span>
+                                                            </div>
+                                                            <p class="mb-1 small text-muted">{{ precedent.citation }}</p>
+                                                            <p class="mb-1 mt-2">{{ precedent.snippet }}</p>
+                                                            <div class="mt-2">
+                                                                <a href="{{ precedent.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                                    View on CanLII <i class="feather-external-link ms-1"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted">No topic-specific precedents found.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">
+                    <i class="feather-info me-1"></i> 
+                    Precedents are previous court decisions that may support your case. Landmark cases establish key legal principles, while recent developments show the current legal landscape.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card bg-dark shadow mb-4">
+    <div class="card-header">
+        <h4 class="mb-0">Recommended Legal Forms</h4>
+    </div>
+    <div class="card-body">
+        {% if recommended_forms %}
+            <div class="row">
+                {% for form in recommended_forms %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ form.name }}</h5>
+                                <p class="card-text text-muted">{{ form.description }}</p>
+                                {% if form.score > 0 %}
+                                    <div class="mb-3">
+                                        <span class="badge badge-score 
+                                            {% if form.score >= 7 %}
+                                                badge-score-high
+                                            {% elif form.score >= 4 %}
+                                                badge-score-medium
+                                            {% else %}
+                                                badge-score-low
+                                            {% endif %}
+                                        ">Relevance: {{ form.score }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <a href="{{ url_for('generate', case_id=case.id) }}?form={{ form.id }}" class="btn btn-primary btn-sm">
+                                    Generate this Form
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No recommended forms available for this case type yet.</p>
+        {% endif %}
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted"><i class="feather-alert-circle me-1"></i> Always review generated documents carefully before submission.</span>
+            <a href="{{ url_for('generate', case_id=case.id) }}" class="btn btn-primary">
+                Generate Documents <i class="feather-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Document Selection Modal -->
+<div class="modal fade" id="selectDocumentsModal" tabindex="-1" aria-labelledby="selectDocumentsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectDocumentsModalLabel">Select Documents & Form</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url_for('generate', case_id=case.id) }}" method="get">
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5>Choose Documents to Include</h5>
+                        <p class="text-muted small">Select which documents should be used when generating your legal forms.</p>
+                        
+                        <div class="list-group">
+                            {% for doc in documents %}
+                                <div class="list-group-item bg-dark border-light">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="doc_ids" value="{{ doc.id }}" id="doc_{{ doc.id }}" checked>
+                                        <label class="form-check-label w-100" for="doc_{{ doc.id }}">
+                                            <div class="d-flex align-items-center">
+                                                {% if doc.file_type == 'pdf' %}
+                                                    <i class="feather-file-text text-danger me-3 fs-4"></i>
+                                                {% elif doc.file_type in ['jpg', 'jpeg', 'png'] %}
+                                                    <i class="feather-image text-info me-3 fs-4"></i>
+                                                {% elif doc.file_type in ['doc', 'docx'] %}
+                                                    <i class="feather-file text-primary me-3 fs-4"></i>
+                                                {% else %}
+                                                    <i class="feather-file text-muted me-3 fs-4"></i>
+                                                {% endif %}
+                                                
+                                                <div>
+                                                    <h6 class="mb-0">{{ doc.filename }}</h6>
+                                                    <small class="text-muted">Uploaded {{ doc.uploaded_at.strftime('%B %d, %Y') }}</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h5>Choose Recommended Form</h5>
+                        <p class="text-muted small">Select which legal form you want to generate.</p>
+                        
+                        <div class="row">
+                            {% for form in recommended_forms %}
+                                <div class="col-12 mb-2">
+                                    <div class="card form-select-card bg-dark border-light">
+                                        <div class="card-body">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="form_id" 
+                                                    id="form_{{ loop.index }}" value="{{ form.id }}"
+                                                    {% if loop.index == 1 %}checked{% endif %}>
+                                                <label class="form-check-label w-100" for="form_{{ loop.index }}">
+                                                    <div class="d-flex w-100 justify-content-between align-items-center">
+                                                        <h6 class="mb-1">{{ form.name }}</h6>
+                                                        <span class="badge bg-primary">Recommended</span>
+                                                    </div>
+                                                    <p class="text-muted small mb-0">{{ form.description }}</p>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Continue to Form Generation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize merit score animation
+        initMeritScores();
+    });
+</script>
+{% endblock %}

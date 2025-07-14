@@ -1,0 +1,25 @@
+{
+  "app_name": "SmartDispute.ai",
+  "tagline": "通过正义赋权加拿大人",
+  "charter_protection": "受加拿大权利与自由宪章保护",
+  "legal_categories": {
+    "family_law": "家庭法",
+    "housing_law": "住房和租户法",
+    "employment_law": "雇佣法",
+    "criminal_law": "刑法",
+    "human_rights": "人权"
+  },
+  "forms": {
+    "t2_application": "T2申请（租户权利）",
+    "t6_application": "T6申请（维护和维修）",
+    "hrto_application": "人权法庭申请"
+  },
+  "dashboard": {
+    "upload_documents": "上传文档",
+    "case_dashboard": "案例仪表板",
+    "merit_score": "案情评分",
+    "legal_analysis": "法律分析",
+    "recommended_actions": "推荐行动"
+  },
+  "legal_disclaimer": "这提供法律信息，不是法律建议。我们不是律师。"
+}

@@ -1,0 +1,16 @@
+# Flask
+FLASK_ENV=production
+FLASK_SECRET_KEY=your_flask_secret_key_here
+
+# PostgreSQL
+DATABASE_URL=postgresql://username:password@host:port/dbname
+
+# PayPal
+Client_ID_paypal=your_paypal_client_id
+Paypal_Secret_key=your_paypal_secret
+
+# Stripe
+Stripe_secret_key=your_stripe_key
+
+# OpenAI
+Open_Ai_Project_Key=your_openai_key

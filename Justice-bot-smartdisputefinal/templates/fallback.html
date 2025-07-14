@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SmartDispute.ai - Fallback Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <style>
+        body {
+            padding-top: 2rem;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .logo {
+            max-width: 200px;
+            margin-bottom: 1rem;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #28a745;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card shadow-sm">
+            <div class="card-body text-center p-5">
+                <h1 class="mb-4">SmartDispute.ai</h1>
+                <h2 class="text-muted mb-4">Port 8080 Fallback Page</h2>
+                
+                <div class="alert alert-success mb-4">
+                    <span class="status-indicator"></span>
+                    Server is running on port 8080!
+                </div>
+                
+                <p class="lead">
+                    If you're seeing this page, that means our server on port 8080 is 
+                    accessible through the Replit proxy system. This is a major improvement!
+                </p>
+                
+                <div class="card bg-dark mt-4">
+                    <div class="card-header">Server Information</div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush bg-dark">
+                            <li class="list-group-item bg-dark">Port: 8080</li>
+                            <li class="list-group-item bg-dark">Server Time: <span id="server-time"></span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-5">
+                    <a href="/health" class="btn btn-outline-primary">Check Health Endpoint</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Set server time
+        document.getElementById('server-time').innerText = new Date().toLocaleString();
+    </script>
+</body>
+</html>

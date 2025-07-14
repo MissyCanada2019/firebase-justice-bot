@@ -1,0 +1,6 @@
+[workflow]
+name = "Port 8080 Adapter"
+entryPoint = "port_adaptor_workflow.py"
+runOnOpen = false
+terminateOn = "shutdown"
+onBoot = false

@@ -1,0 +1,64 @@
+Welcome to Manitoba Laws, the online version of Manitoba legislation.
+This site was updated on May 1, 2023, to make it more accessible and easier to use. See What's new.
+This page provides an overview of the types of laws that can be accessed from the menus above. It also describes how they come into force.
+Acts
+An Act (also called a statute) is a law enacted by the Legislative Assembly. A bill becomes an Act when it receives royal assent. Before receiving royal assent, a bill must pass through various stages of review and approval in the Legislative Assembly. For a description of the legislative process, or to check the content or status of a bill, use the "Legislative Assembly" links above.
+On this site, the Acts are grouped into two main categories: consolidated Acts and unconsolidated Acts.
+Consolidated Acts
+These are Acts of continuing application as amended from time to time. They are grouped into three subcategories: C.C.S.M., municipal Acts and private Acts.
+-
+Continuing Consolidation of the Statutes of Manitoba (C.C.S.M.) These are public Acts of general application.
+The list of Acts includes, for each Act, a link to an information table about amendments to the Act and, if there are any regulations under the Act, a link to its table of regulations.
+Information about amendments and the coming-into-force of a C.C.S.M. Act is found under the "Info" link for that Act in the list of C.C.S.M. Acts. - Municipal Acts. These are public Acts of application to specific municipalities. The list of municipal Acts includes information about amendments to the Acts.
+- Private Acts. These Acts are not of general application. They confer powers or special rights or exemptions on specific individuals or groups. The list of private Acts includes information about amendments to the Acts.
+Unconsolidated Acts
+These are Acts as originally enacted by the Legislative Assembly. They are grouped into two subcategories:
+- Annual Chapters. These are the Acts as enacted by the Legislature, beginning with the 1985-86 legislative session.They are not updated with any amendments. If an Act has been amended and is still in force, the amended version can be found among the consolidated Acts.
+-
+Public Acts (unconsolidated). These are a small subset of the annual chapters. They typically do not amend other Acts, are seldom amended, and are usually effective for a limited time or purpose. Here are two examples:
+- Each year the Legislative Assembly enacts an Appropriation Act giving the government expenditure authority for a fiscal year.
+- Some amending Acts contain transitional provisions that affect the application of the base Act (the Act being amended), but are not enacted as amendments to the base Act.
+Re-enacted Statutes
+In 1987, 1988 and 1990, Manitoba Acts and regulations were re-enacted in English and French in response to a decision of the Supreme Court of Canada about the validity of laws that had been made in English only.
+The re-enacted Acts were published by the Queen's Printer as follows:
+- A 5-volume set of re-enacted C.C.S.M Acts and a 1-volume supplement of amending Acts published under the authority of The Re-enacted Statutes of Manitoba, 1987 Act, S.M. 1987-88, c. 9.
+- A 1-volume set of re-enacted C.C.S.M Acts published under the authority of The Re-enacted Statutes of Manitoba, 1988 Act, S.M. 1988-89, c. 1.
+- A 2-volume set of private Acts published under the authority of The Re-enacted Statutes of Manitoba (Private Acts) Act, 1990, S.M. 1990-91, c. 1.
+- A 1-volume set of re-enacted municipal Acts published under the authority of The Statute Re-enactement and By-law Validation (Municipal) Act, S.M. 1988-89, c. 68.
+The print version of these Acts (except the set of municipal Acts) has been scanned and reformatted for publication on this site. The print version remains the official version.
+Note: This version of the re-enacted Acts has not been updated with any amendments. If any of them has been amended and is still in force, it will be included in the applicable list of current consolidated Acts (C.C.S.M Acts or Private Acts).
+Coming-into-force of an Act
+The last section of an Act usually specifies when the Act (or any part of it) is to come into force. Typically it comes into force on one of the following dates:
+- the day the Act receives royal assent, or a specified number of days after royal assent;
+- a specified date (e.g. "January 1, 2014")
+- a date to be fixed by proclamation; or
+- a date that something occurs (for example, the date that another Act comes into force).
+If an Act (or part of an Act) is to come into force on proclamation, the information table for that Act provides the proclamation status. A separate table of proclamations lists all the proclamations for Acts or provisions coming into force after 2006. It includes a link to the text of each proclamation after 2009. Earlier proclamations were published in Part 1 of the Manitoba Gazette.
+Regulations and Orders
+Regulations and orders are delegated legislation. They are made by a person or body under the authority of an Act passed by the Legislature. The person or body that makes it is specified by the Act. Usually it is the Lieutenant Governor in Council, a member of the Executive Council, or a board, commission or tribunal.
+Regulations
+The regulations on this site are the regulations that have been registered under The Statutes and Regulations Act or the former Regulations Act.
+These regulations are grouped into three categories: consolidated regulations, original unconsolidated regulations and court rules.
+-
+Consolidated regulations. The table of consolidated regulations lists the registered regulations, as amended from time to time, that are currently in force.
+You can access the consolidated regulations under an Act in one of three ways:- by clicking on one of the "Consolidated regulations" links under the Regulations menu above
+- when viewing a list of Acts, by clicking on the Regulations link beside the title of the Act (to see the regulations under that Act)
+- when viewing an Act, by clicking on the "Regulations" link (to see the regulations under that Act)
+When viewing a list of consolidated regulations,
+- you can list only the regulations currently in force or include repealed regulations
+- by clicking the title of a regulation, you can access information about the regulation, including
+- the date it was registered
+- the date it was published
+- a list of the amending regulations with links to those regulations if they were registered after 1999
+- a link to previous versions of the regulation if it was amended after April 1, 2014.
+-
+Original regulations. This is a list of original regulations as registered by the Registrar of Regulations after 1999.
+They are not updated with any amendments. If a regulation has been amended and is still in force, the amended version can be found in the list of consolidated regulations.
+Original regulations registered before 1999 are not available online, but may be found in The Manitoba Gazette or the annual bound volume of regulations published by the King's Printer (formerly the Queen's Printer). - Court rules. These are regulations governing procedures for the Manitoba Court of King's Bench and the Manitoba Court of Appeal.
+Coming-into-force of a regulation
+The coming-into-force of a regulation is governed by the regulation itself, by the Act under which it is made, and by The Statutes and Regulations Act.
+Unless a regulation or the Act under which it is made provides otherwise, the regulation comes into force on the day it is registered by the Registrar of Regulations. The date of registration is always shown on the first page of the regulation.
+Orders
+The orders published on this site are orders that have been made after 2019 in response to an emergency. They include orders made under The Emergency Measures Act, The Public Health Act or The Regulated Health Provisions Act.
+Like regulations, these orders are made under the authority of an enabling Act and have legislative effect, but they are not required to be registered as regulations under The Statutes and Regulations Act. They are effective for the period of time specified in the order. Their effective dates are included in the list of orders.
+Some orders override or affect the application of an Act or a regulation for a period of time specified in the order. When they do, a notice about the order appears under the title of the Act or regulation in the relevant list of consolidated Acts or regulations.

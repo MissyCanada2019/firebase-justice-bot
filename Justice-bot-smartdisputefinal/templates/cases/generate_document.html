@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Generate Document - {{ case.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('cases.view_case', case_id=case.id) }}">{{ case.title }}</a></li>
+                <li class="breadcrumb-item active">Generate Document</li>
+            </ol>
+        </nav>
+        
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0"><i class="fas fa-file-alt"></i> Generate Court Document</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('cases.generate_document', case_id=case.id) }}">
+                    <div class="mb-4">
+                        <h5>Case: {{ case.title }}</h5>
+                        <p class="text-muted">Merit Score: {{ case.merit_score }}/100</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Select Document Type:</label>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="document_type" id="application" value="application_to_court" checked>
+                                    <label class="form-check-label" for="application">
+                                        <strong>Application to Court</strong><br>
+                                        <small class="text-muted">For initiating court proceedings</small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="document_type" id="affidavit" value="affidavit">
+                                    <label class="form-check-label" for="affidavit">
+                                        <strong>Affidavit</strong><br>
+                                        <small class="text-muted">Sworn statement of facts</small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="document_type" id="motion" value="motion_record">
+                                    <label class="form-check-label" for="motion">
+                                        <strong>Motion Record</strong><br>
+                                        <small class="text-muted">For court motions</small>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="document_type" id="factum" value="factum">
+                                    <label class="form-check-label" for="factum">
+                                        <strong>Factum</strong><br>
+                                        <small class="text-muted">Legal arguments document</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> The document will be generated based on your case details and AI analysis. You can edit the document after generation.
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('cases.view_case', case_id=case.id) }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-download"></i> Generate Document
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

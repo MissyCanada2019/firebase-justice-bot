@@ -1,0 +1,6 @@
+The portal also hosts several City applications built on open data:
+- Building Edmonton - Look up the status, cost and other details about City infrastructure projects like facilities, open spaces, transportation, LRT and utilities.
+- Open Budget - View and sort financial data for approved budget years beginning in 2016.
+- Open Performance - View performance measures and trends to understand how we are progressing towards achieving the City's strategic goals.
+Custom Interactive Visualizations
+Tableau Public - Explore a variety of City data in a visual format.
