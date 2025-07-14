@@ -9,6 +9,7 @@ import SiteHeader from '@/components/site-header';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { Icons } from '@/components/icons';
 
 export default function Home() {
   const { user, loading } = useAuth();
