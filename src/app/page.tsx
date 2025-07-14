@@ -1,10 +1,9 @@
+
 'use client';
 import React, { createElement } from 'react';
-
-
 import Link from 'next/link';
-import { Button } from '/home/user/studio/src/components/ui/button'; // Assuming this path is correct now
-import { Card, CardContent, CardHeader, CardTitle } from '/home/user/studio/src/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Gavel, Scale, ShieldCheck } from 'lucide-react';
 import SiteHeader from '@/components/site-header';
 import { useAuth } from '@/hooks/use-auth';
@@ -40,8 +39,8 @@ export default function Home() {
   ];
 
   return (
-    React.createElement("div", { className: "relative isolate min-h-screen flex flex-col" },
-      React.createElement(SiteHeader, null),
+    <div className="relative isolate min-h-screen flex flex-col">
+      <SiteHeader />
       <main className="flex-grow overflow-auto">
         <div className="relative px-6 lg:px-8">
           <div className="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
@@ -83,14 +82,14 @@ export default function Home() {
             <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
               <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                 {features.map((feature) => (
-                  React.createElement(Card, { key: feature.title, className: "hover:shadow-lg transition-shadow duration-300" },
+                  <Card key={feature.title} className="hover:shadow-lg transition-shadow duration-300">
                     <CardHeader>
                       <div className="flex items-center gap-4">
                         {feature.icon}
                         <CardTitle className="font-headline text-xl">{feature.title}</CardTitle>
                       </div>
                     </CardHeader>
-                    React.createElement(CardContent, null,
+                    <CardContent>
                       <p className="text-foreground/80">{feature.description}</p>
                     </CardContent>
                   </Card>
