@@ -1,0 +1,89 @@
+[33m5f1da05[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m i still only see home page '
+[33m525bf6f[m i only see home page
+[33m1494f55[m The NextJS app server is having trouble starting. Please identify what c
+[33m77227b2[m[33m ([m[1;31morigin/master[m[33m)[m Fix Procfile to correctly point to app instance
+[33m2cb7fa1[m Initial commit
+[33mb68774e[m[33m ([m[1;31mmissycanada2019/master[m[33m)[m install
+[33m3471898[m fix: Implement a basic commit feature feat: Add commit messages# Please enter the commit message for your changes. Lines starting
+[33m465b906[m i think we can deploy now
+[33mecdd925[m im getting an error
+[33m027c814[m Autofill + Doc Preview from Assistant/Locker Goal: Turn answers + eviden
+[33m2ec2a5d[m WHAT’S MISSING OR NEEDS SHARPENING: 🧠 AI Assistant (Chat Interface) Not
+[33m1e22dbc[m do we have the subscription models / monthly and yearly/ how about the p
+[33m82d0a35[m # https://dashboard.stripe.com/apikeys # This is your test publishable A
+[33m82713c6[m git clone https://github.com/stripe-samples/checkout-one-time-payments
+[33m4269117[m AI Assistant (Chat Interface) Not mentioned explicitly — this is key for
+[33m67071a8[m I see this error with the app, reported by NextJS, please fix it. The er
+[33m8ab31dd[m terms of use privacy policy media outreach and goverment partnerships sh
+[33meb68bff[m application policy link4
+[33m095a1f1[m api key AIzaSyD-qlOFRqRIl7Qpl90MevvN2nRVSBXYInc
+[33m7f56436[m thats my logo
+[33mcb2600d[m we should have a login option too for the users who are coming back to u
+[33m179065a[m the app needs to take the user data and store it in a database to call o
+[33mdff1b8c[m yyes for email password working right out of the box after registration
+[33m1b2a79b[m The NextJS app server is having trouble starting. Please identify what c
+[33mcd803cb[m I see this error with the app, reported by NextJS, please fix it. The er
+[33me8d01d4[m This is the start of a brand new file.# Please enter the commit message for your changes. Lines starting
+[33m1b57b9b[m This is the start of a brand new file.# Please enter the commit message for your changes. Lines starting
+[33m664752c[m This is the start of a brand new file.This is the start of a brand new file.# Please enter the commit message for your changes. Lines starting
+[33mb40f6ee[m This is the start of a brand new file.# Please enter the commit message for your changes. Lines starting
+[33me7efaa0[m This is the start of a brand new file.# Please enter the commit message for your changes. Lines starting
+[33mfe9c772[m feat: initial commit
+[33m7a8aa30[m /
+[33m823fe50[m hauledover
+[33m6c070cd[m ive tried that how do i fix it again please give me step by step easy to
+[33m2d482e4[m did i mess up the dns
+[33m6620dfb[m The NextJS app server is having trouble starting. Please identify what c
+[33m816ac9c[m https://recaptchaenterprise.googleapis.com/v1/projects/justice-bot-16f26
+[33m2cbf239[m <head>   <script src="https://www.google.com/recaptcha/enterprise.js?ren
+[33md68ede4[m The `npm install` command failed in my project. Analyze the following er
+[33m6a149ae[m <script>   function onClick(e) {     e.preventDefault();     grecaptcha.
+[33m76b28c8[m also why isnt my custom dns working/ i think ive set everything up prope
+[33m2cd2c03[m so the page im looking at with the incorrect logo, that is different the
+[33mc7e3651[m I see this error with the app, reported by NextJS, please fix it. The er
+[33m0d8326d[m A user should be able to come back to their  axe whenever. Yes j think w
+[33m42cffd9[m It’s telling me to run init first
+[33mb02c320[m The top left corner of the homepage the bot is mangled
+[33mfc2e370[m I still don’t see my logo anywhere. I’m not to sure why or what’s happen
+[33m80a9baf[m Can you help me run this from the local machine for deployment
+[33maecc405[m I see this error with the app, reported by NextJS, please fix it. The er
+[33mfeb429e[m The `npm install` command failed in my project. Analyze the following er
+[33m1b4e83e[m https://console.cloud.google.com/navigation-error;errorUrl=%2Frun%2Fdeta
+[33mafb7e7e[m I just want the app to deploy properly
+[33mc2fa03b[m // Import the functions you need from the SDKs you need import { initial
+[33maef4016[m I still don’t see a register joe
+[33m1c46d79[m Tier Price Access Duration Notes 🆓 Free (first 1,000) $0 Full access to
+[33m3988ed4[m Also wanted to let users download their pdf after payments received…… af
+[33m14457c4[m Authentication users again
+[33m0032eb0[m Still can’t login
+[33m42fa37a[m I don’t think it fixed
+[33mbf6b04c[m https://console.cloud.google.com/cloud-build/builds;region=us-central1/e
+[33m8b6c582[m I’d also like to make sure our app includes things like divorce and cust
+[33m15d7e4a[m It should work now. I fixed the server thing I think and also the authen
+[33m61ecf70[m Sign in still failing
+[33m630b319[m help me get to deployment
+[33mbc1a1c6[m There’s no security
+[33maa9b0d9[m There shouldn’t be any place holders it should be filled with knowledge,
+[33m53f87b6[m In the 600x400 placeholders please use relevant charter of rights quotes
+[33m795b00c[m No bugs ?
+[33mc604626[m Next: Add environment variables to your backend with apphosting.yaml. Le
+[33mebb38c6[m But we need to capture a users legal info, for form filing and court pur
+[33m732ac49[m I don’t see a user registration button on the home page only sign in wit
+[33m2048164[m Maybe make one for media too if they want to get in touch
+[33m0be9e8b[m Do we follow PIPPA standards ? Is there security in place for user prote
+[33mfa917a9[m Court locator canlii scrapper scrap the mailing request ditch that low i
+[33m81c09d4[m And now number 3
+[33m71cecfc[m And how about the rest of it ?
+[33maa7e215[m Where is it? No mention of /generate in the journey.
+[33m1e1af60[m experience starting with registration.
+[33m37b74f5[m AI Form Generator (Autofill + Download Restriction) 	•	📄 Missing Featur
+[33mcd12af5[m This is the msg
+[33m03f36b9[m AIzaSyCg2ZAL_nPz1TOIzQY8DOLID_zd7vpMHLg
+[33mfb89ec1[m What do I need now to get it published and linked to my dns Justice-bot.
+[33m53126f2[m Where’s my logo. Can I launch the appnow
+[33m5dfc440[m Add a terms of use to protect me from liability. Add a provacy policy an
+[33m4c3420d[m Where’s my logo and the server is justice-bot.com
+[33mb659f8b[m I see this error with the app, reported by NextJS, please fix it. The er
+[33mb48a223[m You are now assisting in the build of “Justice-Bot”, an AI-powered legal
+[33m74e86b5[m Updated app
+[33m3696b98[m initial scaffold

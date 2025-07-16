@@ -1,0 +1,150 @@
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  BookOpen,
+  Gavel,
+  Landmark,
+  Scale,
+  ShieldCheck,
+  FileText,
+  ArrowRight,
+  CalendarClock,
+  FilePlus2,
+  FileSearch,
+  MapPin,
+  Library,
+  MessageCircle,
+  FolderOpen,
+} from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+
+const features = [
+  {
+    title: 'Ask JusticeBot',
+    description: 'Chat with an AI assistant about your case or legal questions.',
+    icon: MessageCircle,
+    href: '/dashboard/ask-justicebot',
+    isPrimary: true,
+  },
+  {
+    title: 'Submit a Dispute',
+    description: 'Get an AI assessment of your case and suggested next steps.',
+    icon: FileText,
+    href: '/dashboard/submit-dispute',
+    isPrimary: true,
+  },
+  {
+    title: 'Evidence Locker',
+    description: 'Upload and manage all your case-related evidence files.',
+    icon: FolderOpen,
+    href: '/dashboard/evidence-locker',
+    isPrimary: true,
+  },
+  {
+    title: 'Legal Timeline',
+    description: 'Get a step-by-step timeline for your legal process.',
+    icon: CalendarClock,
+    href: '/dashboard/timeline',
+  },
+  {
+    title: 'Generate Legal Form',
+    description: 'Auto-fill legal forms based on your case details.',
+    icon: FilePlus2,
+    href: '/dashboard/generate-form',
+  },
+  {
+    title: 'Court & Aid Locator',
+    description: 'Find the right courthouse and legal aid clinics near you.',
+    icon: MapPin,
+    href: '/dashboard/court-locator',
+  },
+  {
+    title: 'Precedent Finder',
+    description: 'See how similar cases have been decided in the past.',
+    icon: Library,
+    href: '/dashboard/precedent-finder',
+  },
+  {
+    title: 'Charter Analysis',
+    description: 'Analyze documents against the Charter of Rights and Freedoms.',
+    icon: Gavel,
+    href: '/dashboard/charter-analysis',
+  },
+  {
+    title: 'Document Explainer',
+    description: 'Get plain-language explanations for any legal document or form.',
+    icon: FileSearch,
+    href: '/dashboard/document-explainer',
+  },
+  {
+    title: 'Family Law',
+    description: 'Get summaries of family law for any province or territory.',
+    icon: ShieldCheck,
+    href: '/dashboard/family-law',
+  },
+  {
+    title: 'Criminal Law',
+    description: 'Access summaries of criminal law across Canada.',
+    icon: Scale,
+    href: '/dashboard/criminal-law',
+  },
+  {
+    title: 'LTB Law',
+    description: 'Understand Landlord and Tenant Board laws and regulations.',
+    icon: Landmark,
+    href: '/dashboard/ltb-law',
+  },
+  {
+    title: 'Litigation Law',
+    description: 'Explore litigation procedures and generate arguments.',
+    icon: BookOpen,
+    href: '/dashboard/litigation-law',
+  },
+];
+
+export default function DashboardPage() {
+  return (
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight font-headline">
+          Welcome to your Dashboard
+        </h1>
+        <p className="text-muted-foreground">
+          Here are the tools to help you navigate your legal journey.
+        </p>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {features.map((feature) => (
+          <Card key={feature.title} className={`flex flex-col ${feature.isPrimary ? 'border-primary' : ''}`}>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-lg font-medium font-headline">
+                {feature.title}
+              </CardTitle>
+              <feature.icon className="h-6 w-6 text-muted-foreground" />
+            </CardHeader>
+            <CardContent className="flex-grow">
+              <p className="text-sm text-muted-foreground">
+                {feature.description}
+              </p>
+            </CardContent>
+            <div className="p-6 pt-0">
+              <Button asChild className="w-full" variant={feature.isPrimary ? 'default' : 'outline'}>
+                <Link href={feature.href}>
+                  Go to Tool <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
