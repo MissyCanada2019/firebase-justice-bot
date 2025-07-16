@@ -1,4 +1,4 @@
-# JusticeBot.AI on Firebase Studio
+........52# JusticeBot.AI on Firebase Studio
 
 This is your project for JusticeBot.AI, built with Next.js and ready for deployment on Firebase.
 
