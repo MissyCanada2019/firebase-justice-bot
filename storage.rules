@@ -1,8 +1,42 @@
 rules_version = '2';
+
 service firebase.storage {
   match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if false;
+
+    // Function to check if a user is authenticated.
+    // Using functions makes rules more readable and reusable.
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Function to check if the user is the owner of the resource.
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // Function to validate file metadata on upload.
+    // This is a best practice to prevent users from uploading overly large
+    // or malicious files.
+    function isValidFile(maxSizeInMB, allowedContentTypes) {
+      let maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+      let incomingContentType = request.resource.contentType;
+      
+      return request.resource.size < maxSizeInBytes &&
+             (allowedContentTypes.size() == 0 || incomingContentType in allowedContentTypes);
+    }
+
+    // Match user-specific files, like evidence or profile pictures.
+    // This structure ensures users can only access their own data.
+    match /users/{userId}/{fileName} {
+      // Allow read and delete access only to the authenticated owner.
+      // This is a critical security measure to enforce data privacy.
+      allow read, delete: if isAuthenticated() && isOwner(userId);
+
+      // For write operations (create, update), add more specific validation.
+      // We check for ownership and also validate the file itself.
+      allow write: if isAuthenticated() && 
+                      isOwner(userId) && 
+                      isValidFile(10, ['image/jpeg', 'image/png', 'application/pdf']);
     }
   }
 }
