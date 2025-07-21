@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f9f3ef; /* Parchment tone */
+  color: #333;
+  margin: 0;
+  padding: 1rem;
+}
+
+h1, h2, h3 {
+  font-family: 'Merriweather', serif;
+  color: #b71c1c; /* Bold red */
+}
+
+a {
+    color: #b71c1c;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #d32f2f;
+    margin-bottom: 2rem;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+}
+
+.header-title img {
+    width: 40px;
+    margin-right: 1rem;
+}
+
+.button, input[type="submit"] {
+  background-color: #d32f2f; /* Bold red */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover, input[type="submit"]:hover {
+  background-color: #b71c1c; /* Darker red on hover */
+}
+
+.logout-btn {
+  background-color: transparent;
+  color: #d32f2f;
+  border: 2px solid #d32f2f;
+}
+
+.logout-btn:hover {
+    background-color: #d32f2f;
+    color: white;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-family: 'Merriweather', serif;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.charter-quote {
+    font-style: italic;
+    color: #555;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Timeline - Justice-Bot</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            border-left: 3px solid #d32f2f;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -58px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #d32f2f;
+            border: 3px solid #fff;
+        }
+        .timeline-item.completed:before {
+            background-color: #2e7d32; /* Green for completed */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-title">
+                <img src="https://img.icons8.com/color/48/000000/scales-of-justice.png" alt="Scales of Justice Icon">
+                <h1>Case Timeline: LTB T2 Application</h1>
+            </div>
+            <a href="dashboard.html" class="button logout-btn">Back to Dashboard</a>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>Your Step-by-Step Guide</h2>
+                <div class="timeline">
+                    <div class="timeline-item completed">
+                        <h3>Step 1: Form Generation</h3>
+                        <p>Your LTB T2 form has been generated based on the information you provided. You can download it from your case file.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Step 2: Filing with the LTB</h3>
+                        <p>File the generated form with the Landlord and Tenant Board. This can be done online, by mail, or in person. Ensure you have paid the filing fee.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Step 3: Serving Documents</h3>
+                        <p>You must serve the other party (your landlord) with a copy of the filed application. Proof of service is required.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Step 4: Hearing Preparation</h3>
+                        <p>Organize your evidence, prepare your arguments, and arrange for any witnesses. A hearing date will be scheduled by the LTB.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="charter-quote">"Everyone has the right to equal protection and equal benefit of the law without discrimination." - Section 15 of the Canadian Charter of Rights and Freedoms</p>
+            <p>&copy; 2024 Justice-Bot. All Rights Reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

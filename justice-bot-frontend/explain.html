@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Explainer - Justice-Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-title">
+                <img src="https://img.icons8.com/color/48/000000/scales-of-justice.png" alt="Scales of Justice Icon">
+                <h1>Document Explainer</h1>
+            </div>
+            <a href="dashboard.html" class="button logout-btn">Back to Dashboard</a>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>Upload a Document to Explain</h2>
+                <p>Upload a legal form or document (PDF, DOCX) and our AI will break it down for you in plain language.</p>
+                <form id="explain-form">
+                    <div class="form-group">
+                        <label for="document-upload">Select Document</label>
+                        <input type="file" id="document-upload" name="document-upload" required>
+                    </div>
+                    <button type="submit" class="button">Explain Document</button>
+                </form>
+            </div>
+
+            <div class="card" id="explanation-result" style="display: none;">
+                <h2>Explanation of Your Document</h2>
+                <div id="explanation-content">
+                    <!-- AI-generated explanation will be inserted here -->
+                    <h3>Section 1: Parties Involved</h3>
+                    <p>This section lists the names and contact information for all individuals or entities involved in this legal matter. It is crucial that this information is accurate.</p>
+                    
+                    <h3>Section 2: Background</h3>
+                    <p>Here, you should provide a concise summary of the events that led to this dispute. Stick to the facts and be as clear as possible.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="charter-quote">"Everyone has the right to be secure against unreasonable search or seizure." - Section 8 of the Canadian Charter of Rights and Freedoms</p>
+            <p>&copy; 2024 Justice-Bot. All Rights Reserved.</p>
+        </footer>
+    </div>
+    <script>
+        // Mock script to show explanation after form submission
+        document.getElementById('explain-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('explanation-result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
