@@ -2,13 +2,23 @@
   "database": {
     "rules": "database.rules.json"
   },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "storage": {
     "rules": "storage.rules"
   },
-  "functions": {
-    "source": "functions",
-    "runtime": "nodejs18"
-  },
+  "functions": [
+    {
+      "source": "functions",
+      "runtime": "nodejs20",
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run test"
+      ]
+    }
+  ],
   "hosting": {
     "public": "justice-bot-frontend",
     "ignore": [
@@ -18,7 +28,7 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "!**/*.@(js|css|png|jpg|jpeg|svg|gif|webp)",
         "destination": "/index.html"
       }
     ],
@@ -27,7 +37,7 @@
         "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|js|css)",
         "headers": [
           {
-            "key": "Cache-Control",
+            "key": "Cache-control",
             "value": "max-age=31536000"
           }
         ]
@@ -53,5 +63,8 @@
     "ui": {
       "enabled": true
     }
+  },
+  "remoteconfig": {
+    "template": "remoteconfig.template.json"
   }
 }

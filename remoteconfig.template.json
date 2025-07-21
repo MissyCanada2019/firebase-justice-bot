@@ -1,0 +1,12 @@
+{
+  "parameters": {},
+  "version": {
+    "versionNumber": "1",
+    "updateTime": "2025-07-21T09:36:09.156Z",
+    "updateUser": {
+      "email": "kilo-code@example.com"
+    },
+    "updateOrigin": "CONSOLE",
+    "updateType": "INCREMENTAL_UPDATE"
+  }
+}
