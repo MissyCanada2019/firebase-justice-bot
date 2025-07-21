@@ -27,24 +27,30 @@ async function extractText(filePath: string, contentType: string): Promise<strin
 }
 
 export const processEvidence = onObjectFinalized({ cpu: "gcf_gen1" }, async (event) => {
+  console.log("Function triggered for file:", event.data.name);
   const { name: filePath, contentType } = event.data;
 
   if (!filePath.startsWith("evidence/")) {
+    console.log("File is not in evidence folder, skipping.");
     return;
   }
 
+  console.log("Starting text extraction...");
   const text = await extractText(filePath, contentType || "");
   if (!text) {
     console.log("No text extracted.");
     return;
   }
+  console.log("Text extraction successful.");
 
   const db = getFirestore();
   const docId = filePath.split("/").pop()?.split(".")[0];
   if (docId) {
+    console.log("Saving extracted text to Firestore...");
     await db.collection("extractedText").doc(docId).set({
       text: text,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     });
+    console.log("Successfully saved to Firestore.");
   }
 });

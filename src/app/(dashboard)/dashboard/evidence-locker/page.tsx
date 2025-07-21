@@ -8,17 +8,22 @@ import { Button } from '@/components/ui/button';
 import { FolderOpen, UploadCloud, FileText, Trash2, Download, Package, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Progress } from '@/components/ui/progress';
+import { useAuth } from '@/hooks/use-auth';
+import { storage } from '@/lib/firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 interface EvidenceFile {
   file: File;
   id: string;
   progress: number;
+  url?: string;
 }
 
 export default function EvidenceLockerPage() {
   const [files, setFiles] = useState<EvidenceFile[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const newFiles = acceptedFiles.map(file => ({
@@ -43,40 +48,53 @@ export default function EvidenceLockerPage() {
   };
   
   const handleUpload = async () => {
-    if (files.some(f => f.progress > 0)) {
-        toast({ title: "Upload already in progress or completed.", variant: "destructive"});
-        return;
+    if (!user) {
+      toast({ title: "You must be logged in to upload files.", variant: "destructive" });
+      return;
+    }
+
+    if (files.some(f => f.progress > 0 && f.progress < 100)) {
+      toast({ title: "Upload already in progress.", variant: "destructive" });
+      return;
     }
 
     setIsUploading(true);
 
-    // Simulate upload progress
     const uploadPromises = files.map(fileWrapper => {
-        return new Promise<void>(resolve => {
-            const interval = setInterval(() => {
-                setFiles(prev => prev.map(f => {
-                    if (f.id === fileWrapper.id && f.progress < 100) {
-                        return {...f, progress: f.progress + 10};
-                    }
-                    return f;
-                }));
-            }, 200);
+      const storageRef = ref(storage, `evidence/${user.uid}/${fileWrapper.file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, fileWrapper.file);
 
-            setTimeout(() => {
-                clearInterval(interval);
-                 setFiles(prev => prev.map(f => f.id === fileWrapper.id ? {...f, progress: 100} : f));
-                resolve();
-            }, 2200);
-        });
+      return new Promise<void>((resolve, reject) => {
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setFiles(prev => prev.map(f => f.id === fileWrapper.id ? { ...f, progress } : f));
+          },
+          (error) => {
+            console.error("Upload failed:", error);
+            toast({ title: `Upload failed for ${fileWrapper.file.name}`, variant: "destructive" });
+            reject(error);
+          },
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            setFiles(prev => prev.map(f => f.id === fileWrapper.id ? { ...f, url: downloadURL, progress: 100 } : f));
+            resolve();
+          }
+        );
+      });
     });
 
-    await Promise.all(uploadPromises);
-
-    setIsUploading(false);
-    toast({
+    try {
+      await Promise.all(uploadPromises);
+      toast({
         title: "Upload Complete",
         description: `${files.length} file(s) have been successfully processed and saved to your case.`
-    });
+      });
+    } catch (error) {
+      console.error("An error occurred during upload:", error);
+    } finally {
+      setIsUploading(false);
+    }
   }
   
   const isUploaded = files.length > 0 && files.every(f => f.progress === 100);
