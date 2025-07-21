@@ -7,5 +7,19 @@
   },
   "functions": {
     "source": "functions"
+  },
+  "hosting": {
+    "public": "justice-bot-frontend",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }

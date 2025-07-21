@@ -38,6 +38,13 @@
     --sidebar-border: 225 30% 25%;
     --sidebar-ring: 225 73% 57%;
   }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
   .dark {
     --background: 225 30% 10%;
     --foreground: 225 20% 85%;

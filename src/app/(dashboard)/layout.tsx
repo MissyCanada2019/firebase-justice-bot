@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
+import { Toaster } from '@/components/ui/toaster';
 
 export default function DashboardLayout({
   children,
@@ -41,6 +42,7 @@ export default function DashboardLayout({
           <SidebarInset>
             <main className="p-4 sm:p-6 lg:p-8">{children}</main>
           </SidebarInset>
+          <Toaster />
         </div>
       </div>
     </SidebarProvider>

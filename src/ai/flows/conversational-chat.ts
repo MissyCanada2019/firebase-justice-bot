@@ -10,7 +10,6 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { AssessDisputeMeritOutputSchema } from './assess-dispute-merit'; // Re-use existing schema
 
 const ChatMessageSchema = z.object({
   role: z.enum(['user', 'bot']),
@@ -19,7 +18,10 @@ const ChatMessageSchema = z.object({
 
 export const ConversationalChatInputSchema = z.object({
   question: z.string().describe("The user's latest message or question."),
-  caseContext: AssessDisputeMeritOutputSchema.optional().describe(
+  caseContext: z.object({
+    meritScore: z.number().describe('A score from 0 to 100 representing the merit of the case.'),
+    explanation: z.string().describe('An explanation of the strengths and weaknesses of the case.'),
+  }).optional().describe(
     'The full context of the user\'s assessed case, if available.'
   ),
   chatHistory: z

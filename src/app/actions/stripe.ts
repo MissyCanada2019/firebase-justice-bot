@@ -9,7 +9,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-06-20',
+  apiVersion: '2025-06-30.basil',
   typescript: true,
 });
 
@@ -29,7 +29,7 @@ export async function createCheckoutSession(
     const mode = planId === 'single' ? 'payment' : 'subscription';
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ['card', 'paypal', 'interac'] as any,
       mode: mode,
       line_items: [
         {

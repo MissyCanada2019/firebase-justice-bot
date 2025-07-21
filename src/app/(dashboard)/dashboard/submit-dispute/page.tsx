@@ -58,7 +58,7 @@ export default function SubmitDisputePage() {
         defaultValues: {
             caseName: '',
             disputeDetails: '',
-            consent: false,
+            consent: undefined,
         },
     });
 
@@ -103,9 +103,10 @@ export default function SubmitDisputePage() {
             }
 
             const output = await assessDisputeMerit({
+                classification: "",
+                text: values.disputeDetails,
                 caseName: values.caseName,
                 disputeDetails: values.disputeDetails,
-                evidenceText: evidenceText,
             });
 
             await saveCaseAssessment(user.uid, output);

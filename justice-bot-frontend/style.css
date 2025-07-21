@@ -3,6 +3,7 @@
 body {
   font-family: 'Open Sans', sans-serif;
   background-color: #f9f3ef; /* Parchment tone */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-opacity='0.1'%3E%3Cpath d='M50 0 L61.8 38.2 L100 38.2 L69.1 61.8 L80.9 100 L50 76.4 L19.1 100 L30.9 61.8 L0 38.2 L38.2 38.2 Z' fill='%23d32f2f'/%3E%3C/g%3E%3C/svg%3E");
   color: #333;
   margin: 0;
   padding: 1rem;
@@ -10,11 +11,11 @@ body {
 
 h1, h2, h3 {
   font-family: 'Merriweather', serif;
-  color: #b71c1c; /* Bold red */
+  color: #c8102e; /* Canadian Red */
 }
 
 a {
-    color: #b71c1c;
+    color: #c8102e;
     text-decoration: none;
 }
 
@@ -33,7 +34,7 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #d32f2f;
+    border-bottom: 2px solid #c8102e;
     margin-bottom: 2rem;
 }
 
@@ -48,7 +49,7 @@ a:hover {
 }
 
 .button, input[type="submit"] {
-  background-color: #d32f2f; /* Bold red */
+  background-color: #c8102e; /* Canadian Red */
   color: white;
   border: none;
   padding: 12px 24px;
@@ -62,18 +63,21 @@ a:hover {
 }
 
 .button:hover, input[type="submit"]:hover {
-  background-color: #b71c1c; /* Darker red on hover */
+  background-color: #a60a22; /* Darker Canadian Red on hover */
 }
 
 .logout-btn {
   background-color: transparent;
-  color: #d32f2f;
-  border: 2px solid #d32f2f;
+  color: #c8102e;
+  border: 2px solid #c8102e;
 }
 
 .logout-btn:hover {
-    background-color: #d32f2f;
+    background-color: #c8102e;
     color: white;
+}
+.new-case-btn {
+  margin-bottom: 2rem;
 }
 
 .card {
